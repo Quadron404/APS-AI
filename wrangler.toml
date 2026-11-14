@@ -1,0 +1,10 @@
+name = "america-gov"
+main = "src/index.js"
+compatibility_date = "2026-11-14"
+account_id = "01522829f05316893eff23bb4c630deb"
+
+[assets]
+directory = "public"
+binding = "ASSETS"
+
+[vars]

@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Hello, America</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Cormorant+Garamond:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      :root {
+        --bg: #0a0a0b;
+        --text: #ffffff;
+        --text-muted: rgba(255, 255, 255, 0.7);
+        --primary: #0066ff;
+        --primary-hover: #0052cc;
+        --font-ui: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        --font-display: "Cormorant Garamond", Georgia, serif;
+      }
+
+      html, body {
+        height: 100%;
+      }
+
+      body {
+        margin: 0;
+        font-family: var(--font-ui);
+        background: var(--bg);
+        color: var(--text);
+        overflow-x: hidden;
+        -webkit-font-smoothing: antialiased;
+      }
+
+      .glow {
+        position: fixed;
+        top: 25%;
+        left: 50%;
+        width: 700px;
+        height: 350px;
+        background: radial-gradient(circle, rgba(0, 102, 255, 0.16) 0%, transparent 70%);
+        filter: blur(70px);
+        z-index: -1;
+        pointer-events: none;
+        animation: pulse 7s ease-in-out infinite;
+      }
+
+      @keyframes pulse {
+        0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.55; }
+        50% { transform: translate(-50%, -50%) scale(1.2); opacity: 0.85; }
+      }
+
+      header {
+        position: sticky;
+        top: 0;
+        z-index: 50;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 18px 32px;
+        background: rgba(10, 10, 11, 0.35);
+        backdrop-filter: blur(16px) saturate(1.3);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      }
+
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        text-decoration: none;
+        color: var(--text);
+        font-size: 17px;
+        font-weight: 700;
+        letter-spacing: -0.4px;
+        font-family: var(--font-display);
+      }
+
+      .brand svg {
+        width: 22px;
+        height: 22px;
+        flex-shrink: 0;
+      }
+
+      .hero {
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        padding: 0 24px 100px;
+        position: relative;
+        z-index: 10;
+      }
+
+      .hero h1 {
+        font-family: var(--font-display);
+        font-size: clamp(3rem, 10vw, 6.5rem);
+        font-weight: 700;
+        line-height: 0.95;
+        letter-spacing: -0.04em;
+        margin-bottom: 14px;
+        max-width: 900px;
+        animation: fadeInUp 1s ease both;
+      }
+
+      @keyframes fadeInUp {
+        from { opacity: 0; transform: translateY(22px); }
+        to { opacity: 1; transform: translateY(0); }
+      }
+
+      .hero p {
+        font-size: clamp(1rem, 1.9vw, 1.4rem);
+        color: var(--text-muted);
+        margin-bottom: 48px;
+        max-width: 680px;
+        line-height: 1.65;
+        font-weight: 400;
+        animation: fadeInUp 1s ease 0.15s both;
+      }
+
+      .search-container {
+        width: 100%;
+        max-width: 960px;
+        height: 420px;
+        border-radius: 30px;
+        overflow: hidden;
+        position: relative;
+        animation: fadeInUp 1s ease 0.3s both;
+        box-shadow: 0 24px 60px rgba(0, 0, 0, 0.55);
+      }
+
+      .search-container .carousel {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+      }
+
+      .search-container .carousel-track {
+        position: absolute;
+        inset: 0;
+        display: flex;
+        width: 400%;
+        height: 100%;
+        transition: transform 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+        will-change: transform;
+      }
+
+      .search-container .carousel-slide {
+        flex: none;
+        width: 25%;
+        height: 100%;
+        background-size: contain;
+        background-position: center;
+        background-repeat: no-repeat;
+        filter: brightness(1) contrast(1);
+      }
+
+      .search-container .carousel-fade {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        background-size: contain;
+        background-position: center;
+        background-repeat: no-repeat;
+        opacity: 0;
+        transition: opacity 1.2s cubic-bezier(0.4, 0, 0.2, 1), filter 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+        filter: blur(12px) brightness(1) contrast(1);
+        will-change: opacity, filter;
+        pointer-events: none;
+      }
+
+      .search-container .carousel-fade.active {
+        opacity: 1;
+        filter: blur(0) brightness(1) contrast(1);
+      }
+
+      .search-card {
+        position: absolute;
+        top: 32px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 88%;
+        max-width: 760px;
+        background: rgba(20, 20, 21, 0.85);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 999px;
+        padding: 10px 18px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        backdrop-filter: blur(18px) saturate(1.4);
+      }
+
+      .search-bar {
+        display: flex;
+        align-items: center;
+        width: 100%;
+        gap: 10px;
+      }
+
+      .search-input {
+        flex: 1;
+        background: transparent;
+        border: none;
+        color: #fff;
+        font-size: 16px;
+        font-weight: 400;
+        padding: 12px 16px;
+        outline: none;
+        caret-color: var(--primary);
+        font-family: var(--font-ui);
+        -webkit-appearance: none;
+      }
+
+      .search-input::placeholder {
+        color: rgba(255, 255, 255, 0.5);
+      }
+
+      .search-input:focus {
+        outline: none;
+      }
+
+      .icon-btn {
+        background: rgba(255, 255, 255, 0.06);
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        color: rgba(255, 255, 255, 0.75);
+        cursor: pointer;
+        padding: 10px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.2s ease;
+        flex-shrink: 0;
+      }
+
+      .icon-btn:hover {
+        background: rgba(255, 255, 255, 0.12);
+        color: #fff;
+        border-color: rgba(255, 255, 255, 0.25);
+        transform: translateY(-1px);
+      }
+
+      .icon-btn:active {
+        transform: translateY(0);
+        background: rgba(255, 255, 255, 0.16);
+      }
+
+      .icon-btn svg {
+        width: 18px;
+        height: 18px;
+        fill: currentColor;
+      }
+
+      .search-submit {
+        background: var(--primary);
+        border: none;
+        border-radius: 50%;
+        width: 48px;
+        height: 48px;
+        color: #fff;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 6px 16px rgba(0, 102, 255, 0.35);
+        transition: all 0.15s cubic-bezier(0.25, 1, 0.5, 1);
+        flex-shrink: 0;
+        position: relative;
+      }
+
+      .search-submit:hover {
+        background: var(--primary-hover);
+        transform: translateY(-1px);
+        box-shadow: 0 8px 20px rgba(0, 102, 255, 0.45);
+      }
+
+      .search-submit:active {
+        background: #0055a8;
+        transform: translateY(0) scale(0.96);
+        box-shadow: 0 3px 8px rgba(0, 102, 255, 0.3);
+      }
+
+      .search-submit:disabled {
+        background: #48484a;
+        opacity: 1;
+        cursor: not-allowed;
+        transform: none;
+        box-shadow: none;
+      }
+
+      .search-submit .arrow {
+        fill: none;
+        stroke: #fff;
+        stroke-width: 2.4;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+        transition: transform 0.15s ease;
+      }
+
+      .search-submit:hover .arrow {
+        transform: translateX(1px);
+      }
+
+      .sending .arrow {
+        animation: spin 0.9s linear infinite;
+      }
+
+      @keyframes spin {
+        to { transform: rotate(360deg); }
+      }
+
+      .search-card.sending .search-input {
+        opacity: 0.55;
+      }
+
+      @media (max-width: 640px) {
+        header { padding: 14px 20px; }
+        .hero h1 { font-size: 2.7rem; }
+        .hero p { margin-bottom: 32px; }
+        .search-container { height: 320px; border-radius: 24px; }
+        .search-card { top: 24px; width: 92%; max-width: 520px; padding: 10px 14px; gap: 8px; }
+        .search-input { font-size: 15px; padding: 10px 14px; }
+        .search-submit { width: 44px; height: 44px; }
+        .icon-btn { padding: 8px; }
+      }
+    </style>
+  </head>
+  <body>
+
+    <div class="glow"></div>
+
+    <header>
+      <a href="/" class="brand" aria-label="Home">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M4 22h16V2H4zm2-5h12v-2H6zM4 20h16v-2H4z"/>
+        </svg>
+        <span>APS AI</span>
+      </a>
+    </header>
+
+    <main class="hero">
+      <h1>Hello, World</h1>
+      <p>Whatever you need from school, start here.</p>
+
+      <div class="search-container" id="searchContainer">
+        <div class="carousel" id="carousel">
+          <div class="carousel-track" id="carouselTrack">
+            <div class="carousel-slide" style="background-image: url('/img1.jpg')"></div>
+            <div class="carousel-slide" style="background-image: url('/img2.jpg')"></div>
+            <div class="carousel-slide" style="background-image: url('/img3.jpg')"></div>
+            <div class="carousel-slide" style="background-image: url('/img4.jpg')"></div>
+          </div>
+          <div class="carousel-fade" id="carouselFade1" style="background-image: url('/img1.jpg')"></div>
+          <div class="carousel-fade" id="carouselFade2" style="background-image: url('/img2.jpg')"></div>
+          <div class="carousel-fade" id="carouselFade3" style="background-image: url('/img3.jpg')"></div>
+          <div class="carousel-fade" id="carouselFade4" style="background-image: url('/img4.jpg')"></div>
+        </div>
+        <div class="search-card" id="searchCard">
+          <div class="search-bar">
+            <input
+              type="search"
+              class="search-input"
+              placeholder="Try 'Where can I enlist in the armed services?'"
+              aria-label="Search"
+              autocomplete="off"
+            />
+            <button class="icon-btn" aria-label="Attach">
+              <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M21 6H3c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h18c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zm-1 2H4c-.55 0-1 .45-1 1v14c0 .55.45 1 1 1h16c.55 0 1-.45 1-1V8c0-.55-.45-1-1-1zm-6 11c0-.55-.45-1-1-1H7c-.55 0-1 .45-1 1v3H4v-3c0-1.1-.9 2-2 2H2v16h20V9h-6v3zm-4 0c0-.55-.45-1-1-1H7c-.55 0-1 .45-1 1v3H4v-3c0-1.1-.9 2-2 2H2v16h20V9h-6v3z"/></svg>
+            </button>
+            <button class="icon-btn" aria-label="Voice">
+              <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 14c1.66 0 3-1.34 3-3V5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3zm6.5-6h.01l.01-.01.01-.01C19 4.3 17.9 3 16.5 3S14 4.3 14 5.5l.01.01.01.01C14 6.7 15.1 8 16.5 8c1.4 0 2.5-1.3 2.5-2.5zM6.5 5c0-.83.67-1.5 1.5-1.5S9 4.17 9 5v6c0 .83-.67 1.5 1.5 1.5S6 6.83 6 5z"/><path d="M0 0h24v24H0z" fill="none"/></svg>
+            </button>
+            <button class="search-submit" id="searchSubmit" aria-label="Send">
+              <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path class="arrow" d="M5 3l14 18M5 21l14-18"/></svg>
+            </button>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <script>
+      const suggestions = [
+        { img: '/public/img1.jpg', text: 'Try "How do I contact the school administration?"' },
+        { img: '/public/img2.jpg', text: 'Try "Where can I find information about school events and activities?"' },
+        { img: '/public/img3.jpg', text: 'Try "Where can I find the school\'s academic calendar and important dates?"' },
+        { img: '/public/img4.jpg', text: 'Try "How can I find the school\'s facilities and infrastructure?"' },
+      ];
+
+      const input = document.querySelector('.search-input');
+      const submit = document.getElementById('searchSubmit');
+      const card = document.getElementById('searchCard');
+      const track = document.getElementById('carouselTrack');
+      const fades = [
+        document.getElementById('carouselFade1'),
+        document.getElementById('carouselFade2'),
+        document.getElementById('carouselFade3'),
+        document.getElementById('carouselFade4'),
+      ];
+
+      let currentIndex = 0;
+      let timer = null;
+
+      function setSlide(index) {
+        currentIndex = index % suggestions.length;
+        track.style.transform = `translateX(-${currentIndex * 25}%)`;
+        fades.forEach((fade, i) => {
+          fade.classList.toggle('active', i === currentIndex);
+        });
+        input.placeholder = suggestions[currentIndex].text;
+      }
+
+      function startCarousel() {
+        if (timer) clearInterval(timer);
+        timer = setInterval(() => {
+          setSlide(currentIndex + 1);
+        }, 8000);
+      }
+
+      function stopCarousel() {
+        if (timer) {
+          clearInterval(timer);
+          timer = null;
+        }
+      }
+
+      window.addEventListener('beforeunload', stopCarousel);
+
+      setSlide(0);
+      startCarousel();
+
+      let sending = false;
+
+      function setSending(state) {
+        sending = state;
+        if (state) {
+          card.classList.add('sending');
+          submit.classList.add('sending');
+          submit.disabled = true;
+          submit.setAttribute('aria-busy', 'true');
+        } else {
+          card.classList.remove('sending');
+          submit.classList.remove('sending');
+          submit.disabled = false;
+          submit.removeAttribute('aria-busy');
+        }
+      }
+
+      function submitSearch() {
+        const q = input.value.trim();
+        if (!q || sending) return;
+        setSending(true);
+        setTimeout(() => {
+          setSending(false);
+          input.value = '';
+          input.focus();
+        }, 1200);
+      }
+
+      submit.addEventListener('click', submitSearch);
+
+      input.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') submitSearch();
+      });
+
+      input.focus();
+    </script>
+  </body>
+</html>
