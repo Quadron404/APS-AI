@@ -27,10 +27,18 @@
         --primary-active: #0044aa;
         --font-ui: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
         --font-display: "Cormorant Garamond", Georgia, serif;
+        --menu-bg: rgba(18, 20, 24, 0.96);
+        --menu-border: rgba(255, 255, 255, 0.08);
+        --menu-shadow: 0 24px 64px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(255, 255, 255, 0.05) inset;
+        --backdrop-bg: rgba(8, 10, 14, 0.55);
       }
 
       html, body {
         height: 100%;
+      }
+
+      html {
+        scroll-behavior: smooth;
       }
 
       body {
@@ -40,6 +48,11 @@
         color: var(--text);
         overflow-x: hidden;
         -webkit-font-smoothing: antialiased;
+        transition: background-color 0.3s ease;
+      }
+
+      body.menu-open {
+        overflow: hidden;
       }
 
       .glow {
@@ -60,6 +73,7 @@
         50% { transform: translate(-50%, -50%) scale(1.2); opacity: 0.85; }
       }
 
+      /* Header */
       header {
         position: sticky;
         top: 0;
@@ -91,6 +105,273 @@
         flex-shrink: 0;
       }
 
+      /* Menu Button */
+      .menu-button {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 44px;
+        height: 44px;
+        border: none;
+        background: transparent;
+        border-radius: 12px;
+        cursor: pointer;
+        color: var(--text);
+        padding: 0;
+        transition: background-color 0.15s ease, color 0.15s ease;
+        flex-shrink: 0;
+        -webkit-tap-highlight-color: transparent;
+      }
+
+      .menu-button:hover {
+        background: rgba(255, 255, 255, 0.06);
+      }
+
+      .menu-button:active {
+        background: rgba(255, 255, 255, 0.12);
+      }
+
+      .menu-button:focus-visible {
+        outline: 2px solid var(--primary);
+        outline-offset: 2px;
+      }
+
+      .menu-button svg {
+        width: 24px;
+        height: 24px;
+        stroke: currentColor;
+        stroke-width: 2.5;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+        transition: transform 0.25s ease, opacity 0.2s ease;
+      }
+
+      .menu-button[aria-expanded="true"] .menu-line-top {
+        transform: translateY(6px) rotate(45deg);
+      }
+
+      .menu-button[aria-expanded="true"] .menu-line-middle {
+        opacity: 0;
+      }
+
+      .menu-button[aria-expanded="true"] .menu-line-bottom {
+        transform: translateY(-6px) rotate(-45deg);
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .menu-button .menu-line-top,
+        .menu-button .menu-line-middle,
+        .menu-button .menu-line-bottom {
+          transition: none;
+        }
+      }
+
+      /* Menu Backdrop */
+      .menu-backdrop {
+        position: fixed;
+        inset: 0;
+        background: var(--backdrop-bg);
+        backdrop-filter: blur(8px);
+        opacity: 0;
+        visibility: hidden;
+        z-index: 100;
+        transition: opacity 0.35s cubic-bezier(0.4, 0, 0.2, 1), visibility 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+
+      .menu-backdrop.visible {
+        opacity: 1;
+        visibility: visible;
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .menu-backdrop {
+          transition: opacity 0.01s, visibility 0.01s;
+        }
+      }
+
+      /* Menu Panel */
+      .menu-panel {
+        position: fixed;
+        top: 18px;
+        right: 18px;
+        width: 320px;
+        max-width: calc(100vw - 36px);
+        max-height: calc(100vh - 36px);
+        background: var(--menu-bg);
+        border: 1px solid var(--menu-border);
+        border-radius: 40px;
+        box-shadow: var(--menu-shadow);
+        padding: 28px 24px 32px;
+        overflow-y: auto;
+        opacity: 0;
+        visibility: hidden;
+        transform: translateX(24px) translateY(-8px) scale(0.96);
+        z-index: 101;
+        transition: opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1), 
+                    visibility 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+                    transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+      }
+
+      .menu-panel.visible {
+        opacity: 1;
+        visibility: visible;
+        transform: translateX(0) translateY(0) scale(1);
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .menu-panel {
+          transition: opacity 0.01s, visibility 0.01s, transform 0.01s;
+        }
+      }
+
+      @media (max-width: 480px) {
+        .menu-panel {
+          top: 12px;
+          right: 12px;
+          width: calc(100vw - 24px);
+          border-radius: 32px;
+          padding: 24px 20px 28px;
+        }
+      }
+
+      /* Close Button */
+      .menu-close {
+        position: absolute;
+        top: 16px;
+        right: 16px;
+        width: 40px;
+        height: 40px;
+        border: none;
+        background: transparent;
+        border-radius: 12px;
+        cursor: pointer;
+        color: var(--text-muted);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0;
+        transition: background-color 0.15s ease, color 0.15s ease, transform 0.12s ease;
+        flex-shrink: 0;
+        -webkit-tap-highlight-color: transparent;
+      }
+
+      .menu-close:hover {
+        background: rgba(255, 255, 255, 0.06);
+        color: var(--text);
+      }
+
+      .menu-close:active {
+        background: rgba(255, 255, 255, 0.12);
+        transform: scale(0.94);
+      }
+
+      .menu-close:focus-visible {
+        outline: 2px solid var(--primary);
+        outline-offset: 2px;
+      }
+
+      .menu-close svg {
+        width: 22px;
+        height: 22px;
+        stroke: currentColor;
+        stroke-width: 2.5;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+      }
+
+      /* Menu Content */
+      .menu-content {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        margin-top: 16px;
+      }
+
+      .menu-item {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        width: 100%;
+        padding: 16px 20px;
+        border: none;
+        background: transparent;
+        border-radius: 16px;
+        color: var(--text);
+        font-family: var(--font-ui);
+        font-size: 16px;
+        font-weight: 500;
+        text-align: left;
+        cursor: pointer;
+        border-radius: 16px;
+        transition: background-color 0.15s ease, color 0.15s ease, transform 0.12s ease;
+        opacity: 0;
+        transform: translateX(20px);
+        animation: menuItemIn 0.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+      }
+
+      @keyframes menuItemIn {
+        to {
+          opacity: 1;
+          transform: translateX(0);
+        }
+      }
+
+      .menu-item:hover {
+        background: rgba(255, 255, 255, 0.05);
+        color: var(--text);
+      }
+
+      .menu-item:active {
+        background: rgba(255, 255, 255, 0.1);
+        transform: scale(0.98);
+      }
+
+      .menu-item:focus-visible {
+        outline: 2px solid var(--primary);
+        outline-offset: 2px;
+      }
+
+      .menu-item svg {
+        width: 20px;
+        height: 20px;
+        stroke: currentColor;
+        stroke-width: 2;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+        flex-shrink: 0;
+        opacity: 0.7;
+        transition: opacity 0.15s ease;
+      }
+
+      .menu-item:hover svg {
+        opacity: 1;
+      }
+
+      /* Staggered delays */
+      .menu-item:nth-child(1) { animation-delay: 0.06s; }
+      .menu-item:nth-child(2) { animation-delay: 0.12s; }
+      .menu-item:nth-child(3) { animation-delay: 0.18s; }
+      .menu-item:nth-child(4) { animation-delay: 0.24s; }
+      .menu-item:nth-child(5) { animation-delay: 0.30s; }
+      .menu-item:nth-child(6) { animation-delay: 0.36s; }
+
+      @media (prefers-reduced-motion: reduce) {
+        .menu-item {
+          animation: none;
+          opacity: 1;
+          transform: none;
+        }
+      }
+
+      /* Reduced motion for panel/backdrop */
+      @media (prefers-reduced-motion: reduce) {
+        .menu-panel,
+        .menu-backdrop {
+          transition: opacity 0.01s, visibility 0.01s, transform 0.01s;
+        }
+      }
+
+      /* Hero Section */
       .hero {
         min-height: 100vh;
         display: flex;
@@ -129,6 +410,25 @@
         animation: fadeInUp 1s ease 0.15s both;
       }
 
+      .glow {
+        position: fixed;
+        top: 25%;
+        left: 50%;
+        width: 700px;
+        height: 350px;
+        background: radial-gradient(circle, rgba(0, 102, 255, 0.12) 0%, transparent 70%);
+        filter: blur(70px);
+        z-index: -1;
+        pointer-events: none;
+        animation: pulse 7s ease-in-out infinite;
+      }
+
+      @keyframes pulse {
+        0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.55; }
+        50% { transform: translate(-50%, -50%) scale(1.2); opacity: 0.85; }
+      }
+
+      /* Search Container */
       .search-container {
         width: 100%;
         max-width: 960px;
@@ -314,6 +614,48 @@
         }
         .search-submit svg { width: 18px; height: 18px; }
       }
+
+      /* Global styles */
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      html, body {
+        height: 100%;
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        margin: 0;
+        font-family: var(--font-ui);
+        background: var(--bg-gradient);
+        color: var(--text);
+        overflow-x: hidden;
+        -webkit-font-smoothing: antialiased;
+        transition: background-color 0.3s ease;
+      }
+
+      body.menu-open {
+        overflow: hidden;
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        html {
+          scroll-behavior: auto;
+        }
+        *,
+        *::before,
+        *::after {
+          animation-duration: 0.01ms !important;
+          animation-iteration-count: 1 !important;
+          transition-duration: 0.01ms !important;
+        }
+      }
     </style>
   </head>
   <body>
@@ -327,7 +669,65 @@
         </svg>
         <span>APS AI</span>
       </a>
+      <button class="menu-button" id="menuButton" aria-label="Open menu" aria-expanded="false" aria-controls="menuPanel">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <line class="menu-line-top" x1="4" y1="7" x2="20" y2="7"/>
+          <line class="menu-line-middle" x1="4" y1="12" x2="20" y2="12"/>
+          <line class="menu-line-bottom" x1="4" y1="17" x2="20" y2="17"/>
+        </svg>
+      </button>
     </header>
+
+    <!-- Menu Backdrop -->
+    <div class="menu-backdrop" id="menuBackdrop" aria-hidden="true"></div>
+
+    <!-- Menu Panel -->
+    <div class="menu-panel" id="menuPanel" role="dialog" aria-modal="true" aria-label="Navigation menu">
+      <button class="menu-close" id="menuClose" aria-label="Close menu">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <line x1="18" y1="6" x2="6" y2="18"/>
+          <line x1="6" y1="6" x2="18" y2="18"/>
+        </svg>
+      </button>
+      <nav class="menu-content" aria-label="Main navigation">
+        <a href="/" class="menu-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+            <polyline points="9 22 9 12 15 12 15 22"/>
+          </svg>
+          <span>Home</span>
+        </a>
+        <a href="#about" class="menu-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="10"/>
+            <path d="M12 16v-4M12 8h.01"/>
+          </svg>
+          <span>About</span>
+        </a>
+        <a href="#services" class="menu-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <rect x="2" y="3" width="20" height="14" rx="2"/>
+            <path d="M8 21h8M12 17v4"/>
+          </svg>
+          <span>Services</span>
+        </a>
+        <a href="#contact" class="menu-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+            <polyline points="22,6 12,13 2,6"/>
+          </svg>
+          <span>Contact</span>
+        </a>
+        <a href="#login" class="menu-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/>
+            <polyline points="10 17 15 12 10 7"/>
+            <line x1="15" y1="12" x2="3" y2="12"/>
+          </svg>
+          <span>Sign In</span>
+        </a>
+      </nav>
+    </div>
 
     <main class="hero">
       <h1>Hello, World</h1>
@@ -370,6 +770,83 @@
     </main>
 
     <script>
+      /* ---------- Menu Interaction ---------- */
+      (function() {
+        const menuButton = document.getElementById('menuButton');
+        const menuBackdrop = document.getElementById('menuBackdrop');
+        const menuPanel = document.getElementById('menuPanel');
+        const menuClose = document.getElementById('menuClose');
+        const menuItems = menuPanel.querySelectorAll('.menu-item');
+        const body = document.body;
+
+        let lastFocusedElement = null;
+
+        function openMenu() {
+          lastFocusedElement = document.activeElement;
+          menuButton.setAttribute('aria-expanded', 'true');
+          menuBackdrop.classList.add('visible');
+          menuBackdrop.setAttribute('aria-hidden', 'false');
+          menuPanel.classList.add('visible');
+          body.classList.add('menu-open');
+          menuClose.focus();
+          document.addEventListener('keydown', handleKeydown);
+        }
+
+        function closeMenu() {
+          menuButton.setAttribute('aria-expanded', 'false');
+          menuBackdrop.classList.remove('visible');
+          menuBackdrop.setAttribute('aria-hidden', 'true');
+          menuPanel.classList.remove('visible');
+          body.classList.remove('menu-open');
+          document.removeEventListener('keydown', handleKeydown);
+          if (lastFocusedElement) {
+            lastFocusedElement.focus();
+          } else {
+            menuButton.focus();
+          }
+        }
+
+        function handleKeydown(e) {
+          if (e.key === 'Escape') {
+            closeMenu();
+          }
+          // Trap focus within menu
+          if (e.key === 'Tab') {
+            const focusableElements = menuPanel.querySelectorAll(
+              'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+            );
+            const firstElement = focusableElements[0];
+            const lastElement = focusableElements[focusableElements.length - 1];
+            
+            if (e.shiftKey && document.activeElement === firstElement) {
+              e.preventDefault();
+              lastElement.focus();
+            } else if (!e.shiftKey && document.activeElement === lastElement) {
+              e.preventDefault();
+              firstElement.focus();
+            }
+          }
+        }
+
+        menuButton.addEventListener('click', openMenu);
+        menuClose.addEventListener('click', closeMenu);
+        menuBackdrop.addEventListener('click', closeMenu);
+
+        // Close on menu item click (for anchor links)
+        menuItems.forEach(item => {
+          item.addEventListener('click', (e) => {
+            // Allow default anchor behavior, but close menu first
+            closeMenu();
+          });
+        });
+
+        // Prevent clicks inside panel from closing
+        menuPanel.addEventListener('click', (e) => {
+          e.stopPropagation();
+        });
+      })();
+
+      /* ---------- Carousel & Search ---------- */
       const suggestions = [
         { img: '/img1.jpg', aspect: 1536/1085, text: 'Try "How do I contact the school administration?"' },
         { img: '/img2.jpg', aspect: 1536/1151, text: 'Try "Where can I find information about school events and activities?"' },
