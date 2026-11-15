@@ -869,62 +869,12 @@
       .hero p {
         font-size: clamp(1.05rem, 1.8vw, 1.35rem);
         color: var(--text-muted);
-        margin-bottom: 24px;
-        max-width: 720px;
+        margin-bottom: 56px;
+        max-width: 640px;
         line-height: 1.7;
         font-weight: 400;
         letter-spacing: 0.005em;
         animation: fadeInUp 1s cubic-bezier(0.16, 1, 0.3, 1) 0.12s both;
-      }
-
-      .hero-tagline {
-        font-size: clamp(1rem, 1.5vw, 1.15rem);
-        color: var(--text-muted);
-        max-width: 720px;
-        line-height: 1.7;
-        font-weight: 400;
-        margin-bottom: 48px;
-        animation: fadeInUp 1s cubic-bezier(0.16, 1, 0.3, 1) 0.2s both;
-      }
-
-      .hero-cta {
-        display: inline-flex;
-        align-items: center;
-        gap: 10px;
-        padding: 16px 32px;
-        background: var(--primary);
-        color: #fff;
-        font-family: var(--font-ui);
-        font-size: 1rem;
-        font-weight: 500;
-        border-radius: var(--radius-full);
-        text-decoration: none;
-        border: none;
-        cursor: pointer;
-        box-shadow: 0 4px 24px rgba(0, 102, 255, 0.35);
-        transition: transform 0.15s ease, background 0.15s ease, box-shadow 0.15s ease;
-        animation: fadeInUp 1s cubic-bezier(0.16, 1, 0.3, 1) 0.28s both;
-      }
-
-      .hero-cta:hover {
-        background: var(--primary-hover);
-        transform: translateY(-2px);
-        box-shadow: 0 8px 32px rgba(0, 102, 255, 0.45);
-      }
-
-      .hero-cta:active {
-        background: var(--primary-active);
-        transform: translateY(0) scale(0.98);
-      }
-
-      .hero-cta svg {
-        width: 20px;
-        height: 20px;
-        stroke: currentColor;
-        stroke-width: 2.5;
-        stroke-linecap: round;
-        stroke-linejoin: round;
-        flex-shrink: 0;
       }
 
       .glow {
@@ -1939,16 +1889,7 @@
 
     <main class="hero">
       <h1>Hello, World</h1>
-      <p class="hero-tagline">
-        APS AI uses AI to get simple answers only from official school sources.
-        It&rsquo;s free to use, never includes ads, and keeps your privacy protected.
-      </p>
-      <a href="#how-it-works" class="hero-cta" aria-label="See how it works">
-        See how it works
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-          <path d="M5 12h14M12 5l7 7-7 7"/>
-        </svg>
-      </a>
+      <p>Whatever you need from school, start here.</p>
 
       <div class="search-container" id="searchContainer">
         <div class="carousel" id="carousel">
@@ -1973,7 +1914,7 @@
               <input
                 type="search"
                 class="search-input"
-                placeholder="Try &ldquo;How do I contact the school administration?&rdquo;"
+                placeholder="Try 'Where can I enlist in the armed services?'"
                 aria-label="Search"
                 autocomplete="off"
               />
