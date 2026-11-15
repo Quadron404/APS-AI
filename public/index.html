@@ -198,8 +198,8 @@
         opacity: 0;
         visibility: hidden;
         z-index: 100;
-        transition: opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1), 
-                    visibility 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        transition: opacity 0.25s cubic-bezier(0.4, 0, 0.2, 1),
+                    visibility 0.25s cubic-bezier(0.4, 0, 0.2, 1);
       }
 
       .menu-backdrop.visible {
@@ -218,26 +218,26 @@
          ============================================================ */
       .menu-panel {
         position: fixed;
-        top: 20px;
-        right: 20px;
+        top: 16px;
+        right: 26px;
         width: 435px;
         height: 472px;
-        max-height: calc(100vh - 40px);
+        max-height: calc(100vh - 32px);
         background: var(--menu-bg);
         border: 1px solid var(--menu-border);
         border-radius: 40px;
         box-shadow: var(--menu-shadow);
-        padding: 32px 36px 40px;
+        padding: 24px 28px 32px;
         overflow-y: auto;
         display: flex;
         flex-direction: column;
         opacity: 0;
         visibility: hidden;
-        transform: scale(0.96) translateY(-8px) translateX(8px);
+        transform: scale(0.95) translateY(-6px) translateX(6px);
         z-index: 101;
-        transition: opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1),
-                    visibility 0.4s cubic-bezier(0.4, 0, 0.2, 1),
-                    transform 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
+        transition: opacity 0.2s cubic-bezier(0.4, 0, 0.2, 1),
+                    visibility 0.2s cubic-bezier(0.4, 0, 0.2, 1),
+                    transform 0.2s cubic-bezier(0.4, 0, 0.2, 1);
       }
 
       .menu-panel.visible {
@@ -252,68 +252,110 @@
         }
       }
 
+      /* Mobile: compact floating panel at top, not fullscreen */
       @media (max-width: 768px) {
         .menu-panel {
           top: 16px;
           left: 16px;
-          right: 16px;
+          right: 26px;
           width: auto;
-          height: auto;
-          max-height: calc(100vh - 32px);
-          bottom: 16px;
+          height: 429px;
+          max-height: 429px;
+          bottom: auto;
           border-radius: 40px;
-          padding: 28px 24px 36px;
-          transform: scale(0.96) translateY(12px);
+          padding: 20px 20px 24px;
+          transform: scale(0.95) translateY(-6px) translateX(-6px);
         }
       }
 
       @media (max-width: 480px) {
         .menu-panel {
-          top: 12px;
-          left: 12px;
-          right: 12px;
-          bottom: 12px;
+          top: 16px;
+          left: 16px;
+          right: 26px;
+          width: 348px;
+          height: 429px;
+          max-height: 429px;
+          bottom: auto;
           border-radius: 36px;
-          padding: 24px 20px 32px;
+          padding: 16px 16px 20px;
+          transform: scale(0.95) translateY(-6px) translateX(-6px);
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .menu-panel {
+          transition: opacity 0.01s, visibility 0.01s, transform 0.01s;
         }
       }
 
       /* Panel Header - Top Controls */
       .menu-header {
         display: flex;
-        align-items: flex-start;
+        align-items: center;
         justify-content: space-between;
-        margin-bottom: 8px;
+        margin-bottom: 24px;
         position: relative;
         z-index: 10;
       }
 
-      /* Theme Selector (placeholder) */
-      .menu-theme-selector {
-        display: flex;
+      /* Theme Selector - Segmented Control (System/Light/Dark) */
+      .theme-selector {
+        display: inline-flex;
         align-items: center;
-        gap: 8px;
-        padding: 8px 12px;
-        border: none;
-        background: rgba(255, 255, 255, 0.04);
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid var(--menu-border);
         border-radius: 10px;
+        padding: 4px;
+        gap: 2px;
+      }
+
+      .theme-option {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 6px 12px;
+        border: none;
+        background: transparent;
+        border-radius: 8px;
         color: var(--text-muted);
         font-family: var(--font-ui);
         font-size: 13px;
         font-weight: 500;
         cursor: pointer;
-        transition: background-color 0.15s ease, color 0.15s ease;
+        transition: all 0.15s ease;
         -webkit-tap-highlight-color: transparent;
+        white-space: nowrap;
       }
 
-      .menu-theme-selector:hover {
-        background: rgba(255, 255, 255, 0.08);
+      .theme-option:hover {
         color: var(--text);
       }
 
-      .menu-theme-selector:focus-visible {
+      .theme-option.active {
+        background: var(--primary);
+        color: #fff;
+        box-shadow: 0 2px 8px rgba(0, 102, 255, 0.3);
+      }
+
+      .theme-option:focus-visible {
         outline: 2px solid var(--primary);
         outline-offset: 2px;
+      }
+
+      .theme-option svg {
+        width: 14px;
+        height: 14px;
+        stroke: currentColor;
+        stroke-width: 2;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+        flex-shrink: 0;
+      }
+
+      @media (max-width: 480px) {
+        .theme-option { padding: 5px 10px; font-size: 12px; }
+        .theme-option svg { width: 12px; height: 12px; }
       }
 
       /* Close Button */
@@ -321,11 +363,11 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        width: 48px;
-        height: 48px;
+        width: 44px;
+        height: 44px;
         border: none;
         background: transparent;
-        border-radius: 14px;
+        border-radius: 12px;
         cursor: pointer;
         color: var(--text-muted);
         padding: 0;
@@ -350,8 +392,8 @@
       }
 
       .menu-close svg {
-        width: 24px;
-        height: 24px;
+        width: 22px;
+        height: 22px;
         stroke: currentColor;
         stroke-width: 2.5;
         stroke-linecap: round;
@@ -364,8 +406,7 @@
       }
 
       @media (max-width: 480px) {
-        .menu-close { width: 44px; height: 44px; }
-        .menu-theme-selector { padding: 6px 10px; font-size: 12px; }
+        .menu-close { width: 40px; height: 40px; }
       }
 
       /* ============================================================
@@ -378,7 +419,7 @@
         align-items: center;
         justify-content: center;
         gap: 0;
-        padding: 40px 20px 20px;
+        padding: 28px 16px 20px;
         width: 100%;
       }
 
@@ -387,13 +428,13 @@
         width: 100%;
         max-width: 600px;
         text-align: center;
-        padding: 22px 32px;
+        padding: 18px 24px;
         margin: 0;
         border: none;
         background: transparent;
         color: var(--text);
         font-family: var(--font-ui);
-        font-size: clamp(22px, 3.5vw, 30px);
+        font-size: clamp(20px, 3vw, 26px);
         font-weight: 400;
         line-height: 1.2;
         letter-spacing: -0.01em;
@@ -401,8 +442,8 @@
         cursor: pointer;
         position: relative;
         opacity: 0;
-        transform: translateY(20px);
-        animation: navLinkIn 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+        transform: translateY(16px);
+        animation: navLinkIn 0.45s cubic-bezier(0.4, 0, 0.2, 1) forwards;
         transition: color 0.2s ease;
       }
 
@@ -416,14 +457,14 @@
       .menu-nav-link::after {
         content: '';
         position: absolute;
-        bottom: 12px;
+        bottom: 10px;
         left: 50%;
         width: 0;
         height: 2px;
         background: var(--primary);
         transform: translateX(-50%);
         opacity: 0;
-        transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.2s ease;
+        transition: width 0.25s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.2s ease;
       }
 
       .menu-nav-link:hover {
@@ -450,13 +491,24 @@
         border-radius: 8px;
       }
 
+      /* Active page indicator */
+      .menu-nav-link[aria-current="page"] {
+        color: var(--text);
+      }
+
+      .menu-nav-link[aria-current="page"]::after {
+        width: 100%;
+        opacity: 1;
+        background: var(--primary);
+      }
+
       /* Staggered delays */
-      .menu-nav-link:nth-child(1) { animation-delay: 0.08s; }
-      .menu-nav-link:nth-child(2) { animation-delay: 0.16s; }
-      .menu-nav-link:nth-child(3) { animation-delay: 0.24s; }
-      .menu-nav-link:nth-child(4) { animation-delay: 0.32s; }
-      .menu-nav-link:nth-child(5) { animation-delay: 0.40s; }
-      .menu-nav-link:nth-child(6) { animation-delay: 0.48s; }
+      .menu-nav-link:nth-child(1) { animation-delay: 0.06s; }
+      .menu-nav-link:nth-child(2) { animation-delay: 0.12s; }
+      .menu-nav-link:nth-child(3) { animation-delay: 0.18s; }
+      .menu-nav-link:nth-child(4) { animation-delay: 0.24s; }
+      .menu-nav-link:nth-child(5) { animation-delay: 0.30s; }
+      .menu-nav-link:nth-child(6) { animation-delay: 0.36s; }
 
       @media (prefers-reduced-motion: reduce) {
         .menu-nav-link {
@@ -466,23 +518,13 @@
         }
       }
 
-      @media (max-width: 768px) {
-        .menu-main-nav {
-          padding: 32px 12px 16px;
-        }
-        .menu-nav-link {
-          padding: 18px 24px;
-          font-size: clamp(20px, 4vw, 26px);
-        }
-      }
-
       @media (max-width: 480px) {
         .menu-main-nav {
-          padding: 28px 8px 12px;
+          padding: 20px 12px 12px;
         }
         .menu-nav-link {
-          padding: 16px 16px;
-          font-size: clamp(18px, 4.5vw, 22px);
+          padding: 14px 16px;
+          font-size: clamp(18px, 4vw, 22px);
         }
       }
 
@@ -494,8 +536,8 @@
         align-items: center;
         justify-content: center;
         flex-wrap: wrap;
-        gap: 24px 32px;
-        padding: 24px 20px 16px;
+        gap: 16px 24px;
+        padding: 20px 16px 8px;
         width: 100%;
         border-top: 1px solid var(--menu-border);
         margin-top: auto;
@@ -504,20 +546,20 @@
       .menu-secondary-link {
         display: inline-flex;
         align-items: center;
-        padding: 8px 4px;
+        padding: 6px 4px;
         border: none;
         background: transparent;
         color: var(--text-soft);
         font-family: var(--font-ui);
-        font-size: 13px;
+        font-size: 12px;
         font-weight: 500;
         text-decoration: none;
         cursor: pointer;
         transition: color 0.2s ease, transform 0.12s ease;
         white-space: nowrap;
         opacity: 0;
-        transform: translateY(12px);
-        animation: secondaryLinkIn 0.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+        transform: translateY(10px);
+        animation: secondaryLinkIn 0.4s cubic-bezier(0.4, 0, 0.2, 1) forwards;
       }
 
       @keyframes secondaryLinkIn {
@@ -542,10 +584,10 @@
         border-radius: 4px;
       }
 
-      .menu-secondary-link:nth-child(1) { animation-delay: 0.5s; }
-      .menu-secondary-link:nth-child(2) { animation-delay: 0.56s; }
-      .menu-secondary-link:nth-child(3) { animation-delay: 0.62s; }
-      .menu-secondary-link:nth-child(4) { animation-delay: 0.68s; }
+      .menu-secondary-link:nth-child(1) { animation-delay: 0.4s; }
+      .menu-secondary-link:nth-child(2) { animation-delay: 0.44s; }
+      .menu-secondary-link:nth-child(3) { animation-delay: 0.48s; }
+      .menu-secondary-link:nth-child(4) { animation-delay: 0.52s; }
 
       @media (prefers-reduced-motion: reduce) {
         .menu-secondary-link {
@@ -555,20 +597,12 @@
         }
       }
 
-      @media (max-width: 768px) {
-        .menu-secondary-nav {
-          gap: 20px 28px;
-          padding: 20px 16px 12px;
-        }
-        .menu-secondary-link { font-size: 12px; }
-      }
-
       @media (max-width: 480px) {
         .menu-secondary-nav {
-          gap: 16px 24px;
-          padding: 16px 12px 8px;
+          gap: 12px 20px;
+          padding: 16px 12px 4px;
         }
-        .menu-secondary-link { font-size: 12px; }
+        .menu-secondary-link { font-size: 11px; }
       }
 
       /* ============================================================
@@ -892,19 +926,35 @@
     <!-- Menu Panel -->
     <div class="menu-panel" id="menuPanel" role="dialog" aria-modal="true" aria-label="Navigation menu">
       <div class="menu-header">
-        <div class="menu-theme-selector" id="themeSelector" tabindex="0" role="button" aria-label="Theme selector">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <circle cx="12" cy="12" r="5"/>
-            <line x1="12" y1="1" x2="12" y2="3"/>
-            <line x1="12" y1="21" x2="12" y2="23"/>
-            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
-            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
-            <line x1="1" y1="12" x2="3" y2="12"/>
-            <line x1="21" y1="12" x2="23" y2="12"/>
-            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
-            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
-          </svg>
-          <span>Theme</span>
+        <!-- Theme Selector - Segmented Control -->
+        <div class="theme-selector" role="group" aria-label="Theme selector">
+          <button class="theme-option" data-theme="system" aria-pressed="true" aria-label="System theme">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <rect x="2" y="3" width="20" height="14" rx="2"/>
+              <path d="M8 21h8M12 17v4"/>
+            </svg>
+            <span>System</span>
+          </button>
+          <button class="theme-option" data-theme="light" aria-pressed="false" aria-label="Light theme">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <circle cx="12" cy="12" r="5"/>
+              <line x1="12" y1="1" x2="12" y2="3"/>
+              <line x1="12" y1="21" x2="12" y2="23"/>
+              <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
+              <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+              <line x1="1" y1="12" x2="3" y2="12"/>
+              <line x1="21" y1="12" x2="23" y2="12"/>
+              <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
+              <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+            </svg>
+            <span>Light</span>
+          </button>
+          <button class="theme-option" data-theme="dark" aria-pressed="false" aria-label="Dark theme">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+            </svg>
+            <span>Dark</span>
+          </button>
         </div>
         <button class="menu-close" id="menuClose" aria-label="Close menu">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
@@ -915,7 +965,7 @@
       </div>
 
       <nav class="menu-main-nav" aria-label="Main navigation">
-        <a href="/" class="menu-nav-link">Home</a>
+        <a href="/" class="menu-nav-link" aria-current="page">Home</a>
         <a href="#about" class="menu-nav-link">About</a>
         <a href="#services" class="menu-nav-link">Services</a>
         <a href="#insights" class="menu-nav-link">Insights</a>
@@ -982,10 +1032,11 @@
         const menuClose = document.getElementById('menuClose');
         const menuNavLinks = menuPanel.querySelectorAll('.menu-nav-link');
         const menuSecondaryLinks = menuPanel.querySelectorAll('.menu-secondary-link');
-        const themeSelector = document.getElementById('themeSelector');
+        const themeOptions = menuPanel.querySelectorAll('.theme-option');
         const body = document.body;
 
         let lastFocusedElement = null;
+        let currentTheme = 'system';
 
         function openMenu() {
           lastFocusedElement = document.activeElement;
@@ -1046,19 +1097,39 @@
           link.addEventListener('click', closeMenu);
         });
 
-        // Theme selector placeholder
-        themeSelector.addEventListener('click', (e) => {
-          e.stopPropagation();
-          // Theme toggle logic would go here
-          console.log('Theme selector clicked');
+        // Theme selector functionality
+        themeOptions.forEach(option => {
+          option.addEventListener('click', () => {
+            // Remove active from all
+            themeOptions.forEach(opt => {
+              opt.classList.remove('active');
+              opt.setAttribute('aria-pressed', 'false');
+            });
+            // Add active to clicked
+            option.classList.add('active');
+            option.setAttribute('aria-pressed', 'true');
+            currentTheme = option.dataset.theme;
+            // Apply theme
+            applyTheme(currentTheme);
+          });
+
+          option.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+              e.preventDefault();
+              option.click();
+            }
+          });
         });
 
-        themeSelector.addEventListener('keydown', (e) => {
-          if (e.key === 'Enter' || e.key === ' ') {
-            e.preventDefault();
-            themeSelector.click();
+        function applyTheme(theme) {
+          const root = document.documentElement;
+          root.removeAttribute('data-theme');
+          if (theme !== 'system') {
+            root.setAttribute('data-theme', theme);
           }
-        });
+          // In a real app, you'd also save to localStorage and apply CSS variables
+          console.log('Theme changed to:', theme);
+        }
 
         // Prevent clicks inside panel from closing
         menuPanel.addEventListener('click', (e) => {
