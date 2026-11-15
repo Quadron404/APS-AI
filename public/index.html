@@ -10,22 +10,28 @@
       href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Cormorant+Garamond:wght@300;400;500;600;700&display=swap"
       rel="stylesheet"
     />
-    <style>
-      * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-      }
+<style>
+        * {
+          margin: 0;
+          padding: 0;
+          box-sizing: border-box;
+        }
 
-      :root {
-        --bg: #0a0a0b;
-        --text: #ffffff;
-        --text-muted: rgba(255, 255, 255, 0.7);
-        --primary: #0066ff;
-        --primary-hover: #0052cc;
-        --font-ui: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-        --font-display: "Cormorant Garamond", Georgia, serif;
-      }
+        :root {
+          --bg: #0a0a0b;
+          --text: #ffffff;
+          --text-muted: rgba(255, 255, 255, 0.7);
+          --primary: #8b0000;
+          --primary-hover: #a00000;
+          --font-ui: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+          --font-display: "Cormorant Garamond", Georgia, serif;
+          --menu-panel-bg: #0b0d12;
+          --menu-border: rgba(255, 255, 255, 0.08);
+          --menu-shadow-1: 0 0 0 1px rgba(255, 255, 255, 0.05);
+          --menu-shadow-2: 0 2px 24px rgba(0, 0, 0, 0.3);
+          --menu-shadow-3: 0 8px 42px rgba(0, 0, 0, 0.25);
+          --menu-shadow-4: 0 18px 95px rgba(0, 0, 0, 0.2);
+        }
 
       html, body {
         height: 100%;
@@ -87,6 +93,296 @@
         width: 22px;
         height: 22px;
         flex-shrink: 0;
+      }
+
+      .menu-btn {
+        background: transparent;
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        color: var(--text);
+        cursor: pointer;
+        padding: 10px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.2s ease;
+        flex-shrink: 0;
+        z-index: 60;
+      }
+
+      .menu-btn:hover {
+        background: rgba(255, 255, 255, 0.08);
+        border-color: rgba(255, 255, 255, 0.2);
+      }
+
+      .menu-btn:active {
+        background: rgba(255, 255, 255, 0.12);
+        transform: scale(0.96);
+      }
+
+      .menu-btn svg {
+        width: 22px;
+        height: 22px;
+        stroke: currentColor;
+        stroke-width: 2;
+      }
+
+      .menu-btn[aria-expanded="true"] {
+        background: rgba(255, 255, 255, 0.1);
+        border-color: rgba(255, 255, 255, 0.25);
+      }
+
+      /* Menu Backdrop */
+      .menu-backdrop {
+        position: fixed;
+        inset: 0;
+        z-index: 55;
+        background: rgba(0, 0, 0, 0);
+        backdrop-filter: blur(0px);
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.35s cubic-bezier(0.25, 1, 0.5, 1),
+                    backdrop-filter 0.35s cubic-bezier(0.25, 1, 0.5, 1),
+                    background 0.35s cubic-bezier(0.25, 1, 0.5, 1);
+      }
+
+      .menu-backdrop.is-open {
+        opacity: 1;
+        pointer-events: auto;
+        background: rgba(0, 0, 0, 0.55);
+        backdrop-filter: blur(8px);
+      }
+
+      /* Menu Panel */
+      .menu-panel {
+        position: fixed;
+        top: 16px;
+        right: 16px;
+        z-index: 60;
+        width: min(435px, calc(100% - 32px));
+        max-height: calc(100dvh - 32px);
+        border-radius: 40px;
+        overflow: hidden;
+        opacity: 0;
+        visibility: hidden;
+        transform: translateY(-8px) scale(0.98);
+        transition: opacity 0.35s cubic-bezier(0.25, 1, 0.5, 1),
+                    transform 0.35s cubic-bezier(0.25, 1, 0.5, 1),
+                    visibility 0.35s cubic-bezier(0.25, 1, 0.5, 1);
+        pointer-events: none;
+      }
+
+      .menu-panel.is-open {
+        opacity: 1;
+        visibility: visible;
+        transform: translateY(0) scale(1);
+        pointer-events: auto;
+      }
+
+      .menu-panel-shadow {
+        position: absolute;
+        inset: 0;
+        border-radius: 40px;
+        background: var(--menu-panel-bg);
+        box-shadow:
+          var(--menu-shadow-1),
+          var(--menu-shadow-2),
+          var(--menu-shadow-3),
+          var(--menu-shadow-4);
+        opacity: 0;
+        transition: opacity 0.3s ease 0.05s;
+      }
+
+      .menu-panel.is-open .menu-panel-shadow {
+        opacity: 1;
+      }
+
+      .menu-panel-content {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        gap: clamp(1rem, 3dvh, 2rem);
+        padding: 40px;
+        padding-bottom: 64px;
+        max-height: inherit;
+        overflow-y: auto;
+        overscroll-contain: contain;
+      }
+
+      .menu-header {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 16px;
+        padding-bottom: 8px;
+      }
+
+      .menu-title {
+        font-family: var(--font-display);
+        font-size: clamp(1.5rem, 4vw, 2rem);
+        font-weight: 700;
+        letter-spacing: -0.02em;
+        line-height: 1.1;
+        margin: 0;
+      }
+
+      .menu-close-btn {
+        position: relative;
+        flex-shrink: 0;
+        width: 44px;
+        height: 44px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        color: var(--text);
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition:
+          background-color 0.2s cubic-bezier(0.22, 1, 0.36, 1),
+          border-color 0.2s cubic-bezier(0.22, 1, 0.36, 1),
+          transform 0.2s cubic-bezier(0.22, 1, 0.36, 1);
+      }
+
+      .menu-close-btn:hover {
+        background: rgba(255, 255, 255, 0.1);
+        border-color: rgba(255, 255, 255, 0.2);
+      }
+
+      .menu-close-btn:active {
+        background: rgba(255, 255, 255, 0.15);
+        transform: scale(0.92);
+      }
+
+      .menu-close-btn svg {
+        width: 20px;
+        height: 20px;
+        stroke: currentColor;
+      }
+
+      .menu-nav {
+        margin-top: 8px;
+      }
+
+      .menu-list {
+        list-style: none;
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+      }
+
+      .menu-item {
+        display: block;
+        padding: 16px 20px;
+        border-radius: 16px;
+        color: var(--text);
+        text-decoration: none;
+        font-size: 16px;
+        font-weight: 500;
+        letter-spacing: -0.01em;
+        background: transparent;
+        border: 1px solid transparent;
+        transition:
+          background-color 0.18s cubic-bezier(0.22, 1, 0.36, 1),
+          border-color 0.18s cubic-bezier(0.22, 1, 0.36, 1),
+          color 0.18s cubic-bezier(0.22, 1, 0.36, 1);
+        opacity: 0;
+        transform: translateX(-16px);
+        animation: menuItemIn 0.4s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+      }
+
+      .menu-item:hover {
+        background: rgba(255, 255, 255, 0.06);
+        border-color: rgba(255, 255, 255, 0.12);
+      }
+
+      .menu-item:active {
+        background: rgba(255, 255, 255, 0.1);
+        border-color: rgba(255, 255, 255, 0.18);
+      }
+
+      @keyframes menuItemIn {
+        to {
+          opacity: 1;
+          transform: translateX(0);
+        }
+      }
+
+      /* Staggered animation delays */
+      .menu-list li:nth-child(1) .menu-item { animation-delay: 0.08s; }
+      .menu-list li:nth-child(2) .menu-item { animation-delay: 0.14s; }
+      .menu-list li:nth-child(3) .menu-item { animation-delay: 0.2s; }
+      .menu-list li:nth-child(4) .menu-item { animation-delay: 0.26s; }
+      .menu-list li:nth-child(5) .menu-item { animation-delay: 0.32s; }
+      .menu-list li:nth-child(6) .menu-item { animation-delay: 0.38s; }
+      .menu-list li:nth-child(7) .menu-item { animation-delay: 0.44s; }
+      .menu-list li:nth-child(8) .menu-item { animation-delay: 0.5s; }
+
+      /* Reduced motion */
+      @media (prefers-reduced-motion: reduce) {
+        .menu-backdrop,
+        .menu-panel,
+        .menu-panel-shadow,
+        .menu-close-btn,
+        .menu-item {
+          transition: none !important;
+          animation: none !important;
+        }
+        .menu-item {
+          opacity: 1;
+          transform: none;
+        }
+        .menu-backdrop.is-open,
+        .menu-panel.is-open {
+          transition: none;
+        }
+      }
+
+      /* Mobile adjustments */
+      @media (max-width: 640px) {
+        header { padding: 14px 20px; }
+        .menu-btn { padding: 8px; }
+        .menu-btn svg { width: 20px; height: 20px; }
+        
+        .menu-panel {
+          top: 12px;
+          right: 12px;
+          left: 12px;
+          width: auto;
+          max-height: calc(100dvh - 24px);
+          border-radius: 32px;
+        }
+
+        .menu-panel-shadow {
+          border-radius: 32px;
+        }
+
+        .menu-panel-content {
+          padding: 32px 24px;
+          padding-bottom: 48px;
+          gap: clamp(0.75rem, 2.5dvh, 1.5rem);
+        }
+
+        .menu-title {
+          font-size: 1.5rem;
+        }
+
+        .menu-close-btn {
+          width: 40px;
+          height: 40px;
+        }
+
+        .menu-close-btn svg {
+          width: 18px;
+          height: 18px;
+        }
+
+        .menu-item {
+          padding: 18px 20px;
+          font-size: 17px;
+          border-radius: 14px;
+        }
       }
 
       .hero {
@@ -350,7 +646,39 @@
         </svg>
         <span>APS AI</span>
       </a>
+      <button class="menu-btn" id="menuBtn" aria-label="Open menu" aria-expanded="false" aria-controls="menuPanel">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <line x1="4" y1="6" x2="20" y2="6"></line>
+          <line x1="4" y1="12" x2="20" y2="12"></line>
+          <line x1="4" y1="18" x2="20" y2="18"></line>
+        </svg>
+      </button>
     </header>
+
+    <div class="menu-backdrop" id="menuBackdrop" aria-hidden="true"></div>
+
+    <div class="menu-panel" id="menuPanel" role="dialog" aria-modal="true" aria-labelledby="menuTitle">
+      <div class="menu-panel-shadow" aria-hidden="true"></div>
+      <div class="menu-panel-content">
+        <div class="menu-header">
+          <h2 id="menuTitle" class="menu-title">Menu</h2>
+          <button class="menu-close-btn" id="menuCloseBtn" aria-label="Close menu">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <line x1="18" y1="6" x2="6" y2="18"></line>
+              <line x1="6" y1="6" x2="18" y2="18"></line>
+            </svg>
+          </button>
+        </div>
+        <nav class="menu-nav" aria-label="Main navigation">
+          <ul class="menu-list">
+            <li><a href="/" class="menu-item">Home</a></li>
+            <li><a href="#about" class="menu-item">About</a></li>
+            <li><a href="#services" class="menu-item">Services</a></li>
+            <li><a href="#contact" class="menu-item">Contact</a></li>
+          </ul>
+        </nav>
+      </div>
+    </div>
 
     <main class="hero">
       <h1>Hello, World</h1>
@@ -477,6 +805,94 @@
       });
 
       input.focus();
+
+      // Menu interaction
+      const menuBtn = document.getElementById('menuBtn');
+      const menuPanel = document.getElementById('menuPanel');
+      const menuBackdrop = document.getElementById('menuBackdrop');
+      const menuCloseBtn = document.getElementById('menuCloseBtn');
+      const menuItems = document.querySelectorAll('.menu-item');
+
+      let lastFocusedElement = null;
+      let isMenuOpen = false;
+
+      function openMenu() {
+        if (isMenuOpen) return;
+        lastFocusedElement = document.activeElement;
+        
+        document.body.style.overflow = 'hidden';
+        menuBtn.setAttribute('aria-expanded', 'true');
+        menuBtn.setAttribute('aria-label', 'Close menu');
+        menuBackdrop.classList.add('is-open');
+        menuPanel.classList.add('is-open');
+        menuCloseBtn.focus();
+        isMenuOpen = true;
+      }
+
+      function closeMenu() {
+        if (!isMenuOpen) return;
+        
+        menuBtn.setAttribute('aria-expanded', 'false');
+        menuBtn.setAttribute('aria-label', 'Open menu');
+        menuBackdrop.classList.remove('is-open');
+        menuPanel.classList.remove('is-open');
+        
+        // Restore scroll after animation completes
+        setTimeout(() => {
+          document.body.style.overflow = '';
+          if (lastFocusedElement) {
+            lastFocusedElement.focus();
+          }
+        }, 350);
+        
+        isMenuOpen = false;
+      }
+
+      function toggleMenu() {
+        if (isMenuOpen) {
+          closeMenu();
+        } else {
+          openMenu();
+        }
+      }
+
+      // Event listeners
+      menuBtn.addEventListener('click', toggleMenu);
+      menuCloseBtn.addEventListener('click', closeMenu);
+      menuBackdrop.addEventListener('click', closeMenu);
+
+      // Close on Escape key
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && isMenuOpen) {
+          closeMenu();
+        }
+      });
+
+      // Close on menu item click (for anchor links)
+      menuItems.forEach(item => {
+        item.addEventListener('click', (e) => {
+          const href = item.getAttribute('href');
+          if (href && href.startsWith('#')) {
+            e.preventDefault();
+            closeMenu();
+            const target = document.querySelector(href);
+            if (target) {
+              target.scrollIntoView({ behavior: 'smooth' });
+              target.focus();
+            }
+          } else {
+            closeMenu();
+          }
+        });
+      });
+
+      // Trap focus in menu when open
+      document.addEventListener('focusin', (e) => {
+        if (isMenuOpen && !menuPanel.contains(e.target)) {
+          e.preventDefault();
+          menuCloseBtn.focus();
+        }
+      });
     </script>
   </body>
 </html>
