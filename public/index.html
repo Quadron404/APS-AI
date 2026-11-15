@@ -1165,6 +1165,25 @@
         justify-content: center;
       }
 
+      .visual-image-wrapper {
+        width: 100%;
+        height: 100%;
+        border-radius: var(--radius-2xl);
+        overflow: hidden;
+        box-shadow: var(--shadow-xl);
+      }
+
+      .visual-image-wrapper img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.6s ease;
+      }
+
+      .section:hover .visual-image-wrapper img {
+        transform: scale(1.02);
+      }
+
       /* Section 1: Intro - Connected orbs */
       .visual-orb {
         position: absolute;
@@ -1936,95 +1955,49 @@
     <section class="section section-intro" aria-labelledby="intro-heading">
       <div class="section-container">
         <div class="section-content">
-          <h2 id="intro-heading" class="section-heading">An animated sphere of school website previews rotates, illustrating school websites brought together in one place.</h2>
+          <h2 id="intro-heading" class="section-heading">APS AI uses artificial intelligence to make finding school information simple and accessible.</h2>
           <p class="section-text">
-            Your school information. One place.
-          </p>
-          <p class="section-text">
-            No more wandering from page to page. APS AI brings school information together in one place.
+            It brings together information from official school websites and documents to provide clear answers, help you discover important updates, and explore everything your school has to offer — all in one place.
           </p>
         </div>
         <div class="section-visual" aria-hidden="true">
-          <div class="visual-orb visual-orb-1"></div>
-          <div class="visual-orb visual-orb-2"></div>
-          <div class="visual-orb visual-orb-3"></div>
-          <div class="visual-connections">
-            <svg class="connection-lines" viewBox="0 0 400 400" preserveAspectRatio="none">
-              <defs>
-                <filter id="glow">
-                  <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
-                  <feMerge>
-                    <feMergeNode in="coloredBlur"/>
-                    <feMergeNode in="SourceGraphic"/>
-                  </feMerge>
-                </filter>
-              </defs>
-              <path class="connection-path" d="M100,200 Q200,100 300,200 Q200,300 100,200" stroke="var(--primary)" stroke-width="1.5" fill="none" filter="url(#glow)" opacity="0.6"/>
-              <path class="connection-path" d="M200,100 Q250,200 200,300 Q150,200 200,100" stroke="var(--primary)" stroke-width="1" fill="none" opacity="0.4"/>
-              <circle class="pulse-ring" cx="200" cy="200" r="80" stroke="var(--primary)" stroke-width="1" fill="none" opacity="0.3"/>
-            </svg>
+          <div class="visual-image-wrapper">
+            <img src="/section1.jpg" alt="APS AI brings school information together" loading="lazy" />
           </div>
         </div>
       </div>
     </section>
 
-    <!-- SECTION 2: SCHOOL INFORMATION IN ONE PLACE -->
+    <!-- SECTION 2: YOUR SCHOOL. EVERYTHING IN ONE PLACE. -->
     <section class="section section-oneplace" aria-labelledby="oneplace-heading">
       <div class="section-container">
         <div class="section-visual" aria-hidden="true">
-          <div class="visual-grid">
-            <div class="grid-item"><span class="grid-icon">🏫</span></div>
-            <div class="grid-item"><span class="grid-icon">📅</span></div>
-            <div class="grid-item"><span class="grid-icon">📚</span></div>
-            <div class="grid-item"><span class="grid-icon">🏟️</span></div>
-            <div class="grid-item center"><span class="grid-icon core">🔍</span></div>
-            <div class="grid-item"><span class="grid-icon">👥</span></div>
-            <div class="grid-item"><span class="grid-icon">📋</span></div>
-            <div class="grid-item"><span class="grid-icon">🚌</span></div>
-            <div class="grid-item"><span class="grid-icon">🍎</span></div>
+          <div class="visual-image-wrapper">
+            <img src="/section2.jpg" alt="Your school information in one place" loading="lazy" />
           </div>
-          <div class="grid-connections"></div>
         </div>
         <div class="section-content">
-          <h2 id="oneplace-heading" class="section-heading">Your school information. One place.</h2>
+          <h2 id="oneplace-heading" class="section-heading">## 1. Your School. Everything in One Place.</h2>
           <p class="section-text">
-            No more wandering from page to page. APS AI brings school information together in one place.
+            No more searching through multiple webpages, scattered documents or different sources to find what you need. APS AI brings important school information together in one convenient place, making it easier to discover school updates, explore academic information, find important contacts and get answers to your questions — all through one simple experience.
           </p>
         </div>
       </div>
     </section>
 
-<!-- SECTION 3: PRIVACY -->
+<!-- SECTION 3: YOUR PRIVACY MATTERS -->
     <section class="section section-privacy" aria-labelledby="privacy-heading">
       <div class="section-container">
-        <div class="section-content">
-          <h2 id="privacy-heading" class="section-heading">APS AI keeps your data private.</h2>
-          <p class="section-text">
-            Your personal information isn&rsquo;t collected or stored, and your conversation disappears when you leave.
-          </p>
-          <p class="section-text">
-            <a href="#privacy" class="section-link">Learn about privacy</a>
-          </p>
-        </div>
         <div class="section-visual" aria-hidden="true">
-          <div class="visual-shield">
-            <svg viewBox="0 0 200 200" aria-hidden="true">
-              <defs>
-                <linearGradient id="shieldGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                  <stop offset="0%" stop-color="var(--primary)" stop-opacity="0.3"/>
-                  <stop offset="100%" stop-color="var(--primary)" stop-opacity="0.05"/>
-                </linearGradient>
-              </defs>
-              <path d="M100,10 L190,40 L190,100 Q190,160 100,190 Q10,160 10,100 Q10,40 100,10 Z" fill="url(#shieldGradient)" stroke="var(--primary)" stroke-width="1.5" opacity="0.6"/>
-              <circle cx="100" cy="100" r="30" fill="none" stroke="var(--primary)" stroke-width="1" opacity="0.4"/>
-              <path d="M100,85 L95,100 L100,105" fill="none" stroke="var(--primary)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" opacity="0.8"/>
-            </svg>
+          <div class="visual-image-wrapper">
+            <img src="/section3.jpg" alt="Your privacy matters" loading="lazy" />
           </div>
-          <div class="shield-rings">
-            <div class="ring"></div>
-            <div class="ring"></div>
-            <div class="ring"></div>
-          </div>
+        </div>
+        <div class="section-content">
+          <h2 id="privacy-heading" class="section-heading">## 2. Your Privacy Matters.</h2>
+          <p class="section-text">
+            Your trust matters to us. APS AI is designed to make accessing school information convenient while respecting your privacy. We believe finding answers should feel simple, comfortable and secure. Discover how APS AI handles your information and the measures in place to protect your privacy.
+          </p>
         </div>
       </div>
     </section>
@@ -2033,36 +2006,14 @@
     <section class="section section-sources" aria-labelledby="sources-heading">
       <div class="section-container">
         <div class="section-visual" aria-hidden="true">
-          <div class="visual-document">
-            <div class="doc-header"></div>
-            <div class="doc-lines">
-              <div class="doc-line"></div>
-              <div class="doc-line short"></div>
-              <div class="doc-line"></div>
-              <div class="doc-line"></div>
-              <div class="doc-line short"></div>
-              <div class="doc-line"></div>
-            </div>
-            <div class="doc-source-badge">
-              <span>Official Source</span>
-            </div>
-          </div>
-          <div class="doc-particles">
-            <div class="particle"></div>
-            <div class="particle"></div>
-            <div class="particle"></div>
-            <div class="particle"></div>
-            <div class="particle"></div>
-            <div class="particle"></div>
+          <div class="visual-image-wrapper">
+            <img src="/section4.jpg" alt="Clear answers from official school sources" loading="lazy" />
           </div>
         </div>
         <div class="section-content">
-          <h2 id="sources-heading" class="section-heading">Clear answers. Official school sources.</h2>
+          <h2 id="sources-heading" class="section-heading">## 3. Clear Answers. Official School Sources.</h2>
           <p class="section-text">
-            Every answer is exclusively sourced from official school websites and documents.
-          </p>
-          <p class="section-text">
-            <a href="#sources" class="section-link">Learn about sources</a>
+            School information should be easy to find and easy to understand. APS AI helps you discover answers using information from official school websites and documents made available to the platform. From school activities and academic details to facilities, administration and important announcements, find relevant information without having to search through multiple pages yourself.
           </p>
         </div>
       </div>
@@ -2071,37 +2022,16 @@
     <!-- SECTION 5: NO APP TO DOWNLOAD -->
     <section class="section section-noapp" aria-labelledby="noapp-heading">
       <div class="section-container">
-        <div class="section-content">
-          <h2 id="noapp-heading" class="section-heading">No app to download.</h2>
-          <p class="section-text">
-            Just open APS AI in your browser on your phone, tablet, or computer.
-          </p>
-        </div>
         <div class="section-visual" aria-hidden="true">
-          <div class="devices-showcase">
-            <div class="device device-phone">
-              <div class="device-frame">
-                <div class="device-screen">
-                  <div class="mini-search"></div>
-                </div>
-              </div>
-            </div>
-            <div class="device device-tablet">
-              <div class="device-frame">
-                <div class="device-screen">
-                  <div class="mini-search"></div>
-                </div>
-              </div>
-            </div>
-            <div class="device device-laptop">
-              <div class="device-frame">
-                <div class="device-screen">
-                  <div class="mini-search-wide"></div>
-                </div>
-              </div>
-            </div>
+          <div class="visual-image-wrapper">
+            <img src="/section5.jpg" alt="No app to download - use APS AI in your browser" loading="lazy" />
           </div>
-          <div class="device-connection-lines"></div>
+        </div>
+        <div class="section-content">
+          <h2 id="noapp-heading" class="section-heading">## 4. No App to Download.</h2>
+          <p class="section-text">
+            No installations. No complicated setup. No additional application to worry about. APS AI works directly in your web browser, whether you&rsquo;re using a phone, tablet, laptop or desktop computer. Simply open the website, ask your question and explore the information you need — whenever and wherever you need it.
+          </p>
         </div>
       </div>
     </section>
