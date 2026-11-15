@@ -220,7 +220,7 @@
         top: 16px;
         right: 16px;
         width: 435px;
-        height: 472px;
+        height: 520px;
         background: transparent;
         border: none;
         border-radius: 0;
@@ -234,7 +234,7 @@
         transform-origin: top right;
         z-index: 101;
         will-change: transform, opacity;
-        transition: all 0.28s cubic-bezier(0.34, 1.56, 0.64, 1);
+        transition: all 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94);
       }
 
       .menu-panel.visible {
@@ -256,8 +256,8 @@
           left: 16px;
           right: 16px;
           width: auto;
-          height: 429px;
-          max-height: 429px;
+          height: 500px;
+          max-height: 500px;
           bottom: auto;
           border-radius: 0;
           padding: 0;
@@ -271,8 +271,8 @@
           left: 16px;
           right: 16px;
           width: auto;
-          height: 429px;
-          max-height: 429px;
+          height: 500px;
+          max-height: 500px;
           bottom: auto;
           border-radius: 0;
           padding: 0;
@@ -299,25 +299,24 @@
         border: 1px solid var(--menu-border);
         border-radius: 40px;
         box-shadow: var(--menu-shadow);
-        padding: 24px 24px 48px;
-        overflow-y: auto;
-        overscroll-behavior: contain;
+        padding: 24px 24px 32px;
+        overflow: hidden;
         gap: clamp(1rem, 3dvh, 2rem);
       }
 
       @media (max-width: 768px) {
         .menu-inner {
           border-radius: 40px;
-          padding: 40px 40px 64px;
-          gap: 2.75rem;
+          padding: 24px 20px 32px;
+          gap: 2rem;
         }
       }
 
       @media (max-width: 480px) {
         .menu-inner {
           border-radius: 36px;
-          padding: 40px 40px 64px;
-          gap: 2.75rem;
+          padding: 20px 16px 28px;
+          gap: 1.5rem;
         }
       }
 
@@ -1054,13 +1053,12 @@
           <!-- Theme Selector - Radio Group (System/Light/Dark) -->
           <div class="theme-selector" role="radiogroup" aria-label="Theme selector">
             <label class="theme-option">
-              <input type="radio" name="theme" value="system" checked aria-label="System theme" class="sr-only">
+              <input type="radio" name="theme" value="system" aria-label="System theme" class="sr-only">
               <span class="theme-option-content">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                   <rect x="2" y="3" width="20" height="14" rx="2"/>
                   <path d="M8 21h8M12 17v4"/>
                 </svg>
-                <span>System</span>
               </span>
             </label>
             <label class="theme-option">
@@ -1077,16 +1075,14 @@
                   <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
                   <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
                 </svg>
-                <span>Light</span>
               </span>
             </label>
             <label class="theme-option">
-              <input type="radio" name="theme" value="dark" aria-label="Dark theme" class="sr-only">
+              <input type="radio" name="theme" value="dark" checked aria-label="Dark theme" class="sr-only">
               <span class="theme-option-content">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                   <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
                 </svg>
-                <span>Dark</span>
               </span>
             </label>
           </div>
@@ -1101,15 +1097,17 @@
         <nav class="menu-main-nav" aria-label="Menu">
           <ul class="menu-nav-list">
             <li><a href="/" class="menu-nav-link" aria-current="page">Home</a></li>
+            <li><a href="#how-it-works" class="menu-nav-link">How it works</a></li>
+            <li><a href="#privacy" class="menu-nav-link">Privacy</a></li>
             <li><a href="#about" class="menu-nav-link">About</a></li>
-            <li><a href="#services" class="menu-nav-link">Services</a></li>
-            <li><a href="#insights" class="menu-nav-link">Insights</a></li>
-            <li><a href="#contact" class="menu-nav-link">Contact</a></li>
-            <li><a href="#login" class="menu-nav-link">Sign In</a></li>
+            <li><a href="#coming-soon" class="menu-nav-link">Coming soon</a></li>
+            <li><a href="#releases" class="menu-nav-link">Releases</a></li>
+            <li><a href="#faq" class="menu-nav-link">FAQ</a></li>
+            <li><a href="#feedback" class="menu-nav-link">Feedback</a></li>
           </ul>
         </nav>
 
-        <nav class="menu-secondary-nav" aria-label="Secondary navigation">
+        <nav class="menu-secondary-nav" aria-label="Secondary navigation" style="display: none;">
           <ul class="menu-secondary-list">
             <li><a href="#privacy" class="menu-secondary-link">Privacy</a></li>
             <li><a href="#terms" class="menu-secondary-link">Terms</a></li>
