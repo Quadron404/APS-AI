@@ -1091,8 +1091,624 @@
       }
 
       /* ============================================================
-         GLOBAL STYLES
+         SCROLL-DOWN SECTIONS
          ============================================================ */
+      .section {
+        padding: 120px 40px;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .section-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 80px;
+        align-items: center;
+      }
+
+      .section-content {
+        text-align: left;
+      }
+
+      .section-heading {
+        font-family: var(--font-display);
+        font-size: clamp(2.25rem, 5vw, 3.5rem);
+        font-weight: 700;
+        line-height: 1.05;
+        letter-spacing: -0.025em;
+        color: var(--text);
+        margin-bottom: 24px;
+      }
+
+      .section-text {
+        font-size: clamp(1.05rem, 1.6vw, 1.2rem);
+        line-height: 1.75;
+        color: var(--text-muted);
+        max-width: 540px;
+        margin-bottom: 16px;
+      }
+
+      .section-text:last-child {
+        margin-bottom: 0;
+      }
+
+      .section-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        color: var(--primary);
+        font-weight: 500;
+        text-decoration: none;
+        font-size: 0.95rem;
+        transition: gap 0.2s ease, color 0.2s ease;
+      }
+
+      .section-link:hover {
+        gap: 12px;
+        color: var(--primary-hover);
+      }
+
+      /* Section visuals */
+      .section-visual {
+        position: relative;
+        width: 100%;
+        height: 400px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      /* Section 1: Intro - Connected orbs */
+      .visual-orb {
+        position: absolute;
+        border-radius: 50%;
+        background: radial-gradient(circle at 30% 30%, rgba(0, 102, 255, 0.4), rgba(0, 102, 255, 0.05) 70%);
+        filter: blur(40px);
+        animation: orbFloat 8s ease-in-out infinite;
+      }
+
+      .visual-orb-1 {
+        width: 200px;
+        height: 200px;
+        top: 10%;
+        left: 15%;
+        animation-delay: 0s;
+      }
+
+      .visual-orb-2 {
+        width: 150px;
+        height: 150px;
+        top: 50%;
+        right: 10%;
+        animation-delay: 2s;
+      }
+
+      .visual-orb-3 {
+        width: 120px;
+        height: 120px;
+        bottom: 15%;
+        left: 30%;
+        animation-delay: 4s;
+      }
+
+      @keyframes orbFloat {
+        0%, 100% { transform: translate(0, 0) scale(1); }
+        33% { transform: translate(20px, -20px) scale(1.1); }
+        66% { transform: translate(-15px, 15px) scale(0.95); }
+      }
+
+      .visual-connections {
+        position: absolute;
+        inset: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .connection-lines {
+        width: 100%;
+        height: 100%;
+        animation: rotateSlow 60s linear infinite;
+      }
+
+      .connection-path {
+        transition: stroke-dashoffset 2s ease;
+      }
+
+      .pulse-ring {
+        animation: pulseRing 3s ease-out infinite;
+      }
+
+      @keyframes pulseRing {
+        0% { r: 60; opacity: 0.4; }
+        100% { r: 120; opacity: 0; }
+      }
+
+      @keyframes rotateSlow {
+        from { transform: rotate(0deg); }
+        to { transform: rotate(360deg); }
+      }
+
+      /* Section 2: One Place - Grid */
+      .visual-grid {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 24px;
+        padding: 20px;
+      }
+
+      .grid-item {
+        position: relative;
+        aspect-ratio: 1;
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid var(--border-subtle);
+        border-radius: var(--radius-xl);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.3s ease;
+      }
+
+      .grid-item:hover {
+        background: rgba(255, 255, 255, 0.06);
+        border-color: var(--border-default);
+        transform: translateY(-4px);
+      }
+
+      .grid-item.center {
+        grid-column: 2;
+        grid-row: 2;
+        background: linear-gradient(135deg, rgba(0, 102, 255, 0.15), rgba(0, 102, 255, 0.05));
+        border-color: var(--primary);
+      }
+
+      .grid-item.center:hover {
+        background: linear-gradient(135deg, rgba(0, 102, 255, 0.2), rgba(0, 102, 255, 0.08));
+      }
+
+      .grid-icon {
+        font-size: 2rem;
+        filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.3));
+      }
+
+      .grid-icon.core {
+        font-size: 2.5rem;
+        animation: pulseIcon 2s ease-in-out infinite;
+      }
+
+      @keyframes pulseIcon {
+        0%, 100% { transform: scale(1); }
+        50% { transform: scale(1.1); }
+      }
+
+      .grid-connections::before,
+      .grid-connections::after {
+        content: "";
+        position: absolute;
+        background: linear-gradient(90deg, transparent, var(--primary), transparent);
+        opacity: 0.3;
+      }
+
+      .grid-connections::before {
+        top: 50%;
+        left: 0;
+        right: 0;
+        height: 1px;
+        transform: translateY(-50%);
+      }
+
+      .grid-connections::after {
+        left: 50%;
+        top: 0;
+        bottom: 0;
+        width: 1px;
+        transform: translateX(-50%);
+      }
+
+      @media (max-width: 768px) {
+        .visual-grid {
+          grid-template-columns: repeat(3, 1fr);
+          gap: 16px;
+          padding: 16px;
+        }
+      }
+
+      /* Section 3: Privacy - Shield */
+      .visual-shield {
+        position: relative;
+        width: 280px;
+        height: 280px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .shield-rings {
+        position: absolute;
+        inset: -40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .ring {
+        position: absolute;
+        border: 1px solid rgba(0, 102, 255, 0.2);
+        border-radius: 50%;
+        animation: ringExpand 4s ease-out infinite;
+      }
+
+      .ring:nth-child(1) { width: 280px; height: 280px; animation-delay: 0s; }
+      .ring:nth-child(2) { width: 320px; height: 320px; animation-delay: 1.3s; }
+      .ring:nth-child(3) { width: 360px; height: 360px; animation-delay: 2.6s; }
+
+      @keyframes ringExpand {
+        0% { transform: scale(0.8); opacity: 0.4; }
+        100% { transform: scale(1.2); opacity: 0; }
+      }
+
+      /* Section 4: Sources - Document */
+      .visual-document {
+        position: relative;
+        width: 320px;
+        background: var(--bg-surface-elevated);
+        border: 1px solid var(--border-default);
+        border-radius: var(--radius-lg);
+        padding: 24px;
+        box-shadow: var(--shadow-lg);
+      }
+
+      .doc-header {
+        height: 8px;
+        background: linear-gradient(90deg, var(--primary), transparent);
+        border-radius: var(--radius-sm) var(--radius-sm) 0 0;
+        margin: -24px -24px 20px;
+      }
+
+      .doc-lines {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+      }
+
+      .doc-line {
+        height: 10px;
+        background: linear-gradient(90deg, var(--text-muted), transparent);
+        border-radius: 4px;
+        opacity: 0.4;
+        animation: docLineReveal 1.5s ease-out forwards;
+        opacity: 0;
+      }
+
+      .doc-line.short {
+        width: 60%;
+      }
+
+      .doc-line:nth-child(1) { animation-delay: 0.1s; }
+      .doc-line:nth-child(2) { animation-delay: 0.2s; }
+      .doc-line:nth-child(3) { animation-delay: 0.3s; }
+      .doc-line:nth-child(4) { animation-delay: 0.4s; }
+      .doc-line:nth-child(5) { animation-delay: 0.5s; }
+      .doc-line:nth-child(6) { animation-delay: 0.6s; }
+
+      @keyframes docLineReveal {
+        from { width: 0; opacity: 0; }
+        to { width: 100%; opacity: 0.4; }
+      }
+
+      .doc-line.short {
+        animation-name: docLineRevealShort;
+      }
+
+      @keyframes docLineRevealShort {
+        from { width: 0; opacity: 0; }
+        to { width: 60%; opacity: 0.4; }
+      }
+
+      .doc-source-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        margin-top: 20px;
+        padding: 6px 12px;
+        background: var(--primary-soft);
+        border-radius: var(--radius-full);
+        font-size: 0.75rem;
+        font-weight: 600;
+        color: var(--primary);
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+      }
+
+      .doc-particles {
+        position: absolute;
+        inset: -40px;
+      }
+
+      .particle {
+        position: absolute;
+        width: 4px;
+        height: 4px;
+        background: var(--primary);
+        border-radius: 50%;
+        opacity: 0;
+        animation: particleFloat 6s ease-in-out infinite;
+      }
+
+      .particle:nth-child(1) { top: 20%; left: 10%; animation-delay: 0s; }
+      .particle:nth-child(2) { top: 30%; right: 15%; animation-delay: 1s; }
+      .particle:nth-child(3) { bottom: 25%; left: 5%; animation-delay: 2s; }
+      .particle:nth-child(4) { bottom: 30%; right: 10%; animation-delay: 3s; }
+      .particle:nth-child(5) { top: 50%; left: 5%; animation-delay: 4s; }
+      .particle:nth-child(6) { top: 15%; right: 5%; animation-delay: 5s; }
+
+      @keyframes particleFloat {
+        0%, 100% { transform: translate(0, 0); opacity: 0; }
+        20% { opacity: 0.6; }
+        50% { transform: translate(20px, -20px); opacity: 0.3; }
+        80% { opacity: 0; }
+      }
+
+      /* Section 5: No App - Devices */
+      .devices-showcase {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: flex-end;
+        justify-content: center;
+        gap: 40px;
+        padding-bottom: 40px;
+      }
+
+      .device {
+        transition: transform 0.4s ease;
+      }
+
+      .device:hover {
+        transform: translateY(-8px);
+      }
+
+      .device-frame {
+        background: #1a1a2e;
+        border-radius: var(--radius-lg);
+        padding: 8px;
+        box-shadow: var(--shadow-xl);
+      }
+
+      .device-phone .device-frame {
+        width: 80px;
+        height: 160px;
+        border-radius: 36px;
+        border: 8px solid #1a1a2e;
+      }
+
+      .device-tablet .device-frame {
+        width: 160px;
+        height: 220px;
+        border-radius: 24px;
+        border: 6px solid #1a1a2e;
+      }
+
+      .device-laptop .device-frame {
+        width: 280px;
+        height: 180px;
+        border-radius: 16px;
+        border: 4px solid #1a1a2e;
+        position: relative;
+      }
+
+      .device-laptop .device-frame::before {
+        content: "";
+        position: absolute;
+        bottom: -12px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 60px;
+        height: 6px;
+        background: #1a1a2e;
+        border-radius: 0 0 8px 8px;
+      }
+
+      .device-screen {
+        width: 100%;
+        height: 100%;
+        background: var(--bg-deep);
+        border-radius: inherit;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 16px;
+        overflow: hidden;
+      }
+
+      .mini-search {
+        width: 100%;
+        height: 36px;
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid var(--border-subtle);
+        border-radius: var(--radius-full);
+        display: flex;
+        align-items: center;
+        padding: 0 16px;
+      }
+
+      .mini-search-wide {
+        width: 100%;
+        height: 44px;
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid var(--border-subtle);
+        border-radius: var(--radius-full);
+        display: flex;
+        align-items: center;
+        padding: 0 20px;
+      }
+
+      .mini-search::before,
+      .mini-search-wide::before {
+        content: "";
+        width: 16px;
+        height: 16px;
+        background: url("data:image/svg+xml,%3Csvg viewBox='0 0 24 24' fill='none' stroke='%23666' stroke-width='2'%3E%3Ccircle cx='11' cy='11' r='8'/%3E%3Cline x1='21' y1='21' x2='16.65' y2='16.65'/%3E%3C/svg%3E") center/contain no-repeat;
+      }
+
+      .device-connection-lines {
+        position: absolute;
+        top: 50%;
+        left: 0;
+        right: 0;
+        height: 1px;
+        background: linear-gradient(90deg, transparent, var(--primary), transparent);
+        opacity: 0.2;
+      }
+
+      @media (max-width: 768px) {
+        .devices-showcase {
+          flex-direction: column;
+          align-items: center;
+          gap: 24px;
+          padding-bottom: 20px;
+        }
+        .device-laptop .device-frame {
+          width: 240px;
+          height: 150px;
+        }
+      }
+
+      /* Footer */
+      .site-footer {
+        padding: 60px 40px 30px;
+        border-top: 1px solid var(--border-subtle);
+        background: var(--bg-surface);
+        margin-top: auto;
+      }
+
+      .footer-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        gap: 24px;
+      }
+
+      .footer-brand {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .footer-brand-link {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        text-decoration: none;
+        color: var(--text);
+        font-size: 18px;
+        font-weight: 700;
+        letter-spacing: -0.4px;
+        font-family: var(--font-display);
+      }
+
+      .footer-tagline {
+        color: var(--text-soft);
+        font-size: 0.95rem;
+      }
+
+      .footer-nav {
+        margin: 8px 0;
+      }
+
+      .footer-links {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: center;
+        gap: 24px;
+        list-style: none;
+        padding: 0;
+        margin: 0;
+      }
+
+      .footer-links a {
+        color: var(--text-muted);
+        text-decoration: none;
+        font-size: 0.9rem;
+        font-weight: 500;
+        transition: color 0.2s ease;
+      }
+
+      .footer-links a:hover {
+        color: var(--text);
+      }
+
+      .footer-copyright {
+        color: var(--text-soft);
+        font-size: 0.85rem;
+        margin-top: 16px;
+      }
+
+      @media (max-width: 768px) {
+        .section {
+          padding: 80px 24px;
+        }
+
+        .section-container {
+          grid-template-columns: 1fr;
+          gap: 40px;
+          text-align: center;
+        }
+
+        .section-content {
+          text-align: center;
+        }
+
+        .section-heading {
+          text-align: center;
+        }
+
+        .section-text {
+          margin-left: auto;
+          margin-right: auto;
+        }
+
+        .section-visual {
+          height: 300px;
+        }
+
+        .visual-grid {
+          grid-template-columns: repeat(3, 1fr);
+          gap: 12px;
+          padding: 12px;
+        }
+      }
+
+      @media (max-width: 480px) {
+        .section {
+          padding: 60px 20px;
+        }
+
+        .section-heading {
+          font-size: clamp(1.75rem, 6vw, 2.5rem);
+        }
+
+        .section-visual {
+          height: 250px;
+        }
+
+        .devices-showcase {
+          flex-direction: column;
+          align-items: center;
+          gap: 20px;
+        }
+      }
       * {
         margin: 0;
         padding: 0;
@@ -1311,6 +1927,198 @@
       </div>
     </main>
 
+    <!-- SECTION 1: INTRODUCING APS AI -->
+    <section class="section section-intro" aria-labelledby="intro-heading">
+      <div class="section-container">
+        <div class="section-content">
+          <h2 id="intro-heading" class="section-heading">APS AI brings school information together.</h2>
+          <p class="section-text">
+            Find clear answers about school administration, events, academics, facilities and important information in one place.
+          </p>
+        </div>
+        <div class="section-visual" aria-hidden="true">
+          <div class="visual-orb visual-orb-1"></div>
+          <div class="visual-orb visual-orb-2"></div>
+          <div class="visual-orb visual-orb-3"></div>
+          <div class="visual-connections">
+            <svg class="connection-lines" viewBox="0 0 400 400" preserveAspectRatio="none">
+              <defs>
+                <filter id="glow">
+                  <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+                  <feMerge>
+                    <feMergeNode in="coloredBlur"/>
+                    <feMergeNode in="SourceGraphic"/>
+                  </feMerge>
+                </filter>
+              </defs>
+              <path class="connection-path" d="M100,200 Q200,100 300,200 Q200,300 100,200" stroke="var(--primary)" stroke-width="1.5" fill="none" filter="url(#glow)" opacity="0.6"/>
+              <path class="connection-path" d="M200,100 Q250,200 200,300 Q150,200 200,100" stroke="var(--primary)" stroke-width="1" fill="none" opacity="0.4"/>
+              <circle class="pulse-ring" cx="200" cy="200" r="80" stroke="var(--primary)" stroke-width="1" fill="none" opacity="0.3"/>
+            </svg>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 2: SCHOOL INFORMATION IN ONE PLACE -->
+    <section class="section section-oneplace" aria-labelledby="oneplace-heading">
+      <div class="section-container">
+        <div class="section-visual" aria-hidden="true">
+          <div class="visual-grid">
+            <div class="grid-item"><span class="grid-icon">🏫</span></div>
+            <div class="grid-item"><span class="grid-icon">📅</span></div>
+            <div class="grid-item"><span class="grid-icon">📚</span></div>
+            <div class="grid-item"><span class="grid-icon">🏟️</span></div>
+            <div class="grid-item center"><span class="grid-icon core">🔍</span></div>
+            <div class="grid-item"><span class="grid-icon">👥</span></div>
+            <div class="grid-item"><span class="grid-icon">📋</span></div>
+            <div class="grid-item"><span class="grid-icon">🚌</span></div>
+            <div class="grid-item"><span class="grid-icon">🍎</span></div>
+          </div>
+          <div class="grid-connections"></div>
+        </div>
+        <div class="section-content">
+          <h2 id="oneplace-heading" class="section-heading">Your school information. One place.</h2>
+          <p class="section-text">
+            No more searching through different pages and documents. APS AI helps bring important school information together so you can find what you need more easily.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 3: PRIVACY -->
+    <section class="section section-privacy" aria-labelledby="privacy-heading">
+      <div class="section-container">
+        <div class="section-content">
+          <h2 id="privacy-heading" class="section-heading">Your privacy matters.</h2>
+          <p class="section-text">
+            APS AI processes your questions to provide helpful answers. We don't sell your data or use it for advertising. Conversation history is stored locally in your browser to improve your experience. You can clear your history at any time.
+          </p>
+          <p class="section-text">
+            <a href="#privacy" class="section-link">Read our privacy policy →</a>
+          </p>
+        </div>
+        <div class="section-visual" aria-hidden="true">
+          <div class="visual-shield">
+            <svg viewBox="0 0 200 200" aria-hidden="true">
+              <defs>
+                <linearGradient id="shieldGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stop-color="var(--primary)" stop-opacity="0.3"/>
+                  <stop offset="100%" stop-color="var(--primary)" stop-opacity="0.05"/>
+                </linearGradient>
+              </defs>
+              <path d="M100,10 L190,40 L190,100 Q190,160 100,190 Q10,160 10,100 Q10,40 100,10 Z" fill="url(#shieldGradient)" stroke="var(--primary)" stroke-width="1.5" opacity="0.6"/>
+              <circle cx="100" cy="100" r="30" fill="none" stroke="var(--primary)" stroke-width="1" opacity="0.4"/>
+              <path d="M100,85 L95,100 L100,105" fill="none" stroke="var(--primary)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" opacity="0.8"/>
+            </svg>
+          </div>
+          <div class="shield-rings">
+            <div class="ring"></div>
+            <div class="ring"></div>
+            <div class="ring"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 4: CLEAR ANSWERS. OFFICIAL SCHOOL SOURCES. -->
+    <section class="section section-sources" aria-labelledby="sources-heading">
+      <div class="section-container">
+        <div class="section-visual" aria-hidden="true">
+          <div class="visual-document">
+            <div class="doc-header"></div>
+            <div class="doc-lines">
+              <div class="doc-line"></div>
+              <div class="doc-line short"></div>
+              <div class="doc-line"></div>
+              <div class="doc-line"></div>
+              <div class="doc-line short"></div>
+              <div class="doc-line"></div>
+            </div>
+            <div class="doc-source-badge">
+              <span>Official Source</span>
+            </div>
+          </div>
+          <div class="doc-particles">
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+          </div>
+        </div>
+        <div class="section-content">
+          <h2 id="sources-heading" class="section-heading">Clear answers. Official school sources.</h2>
+          <p class="section-text">
+            Find school information through the official sources made available to APS AI. Answers reference the documents and pages they come from so you can verify and explore further.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 5: NO APP TO DOWNLOAD -->
+    <section class="section section-noapp" aria-labelledby="noapp-heading">
+      <div class="section-container">
+        <div class="section-content">
+          <h2 id="noapp-heading" class="section-heading">No app to download.</h2>
+          <p class="section-text">
+            Simply open APS AI in your browser on your phone, tablet or computer. No installation. No updates. Works everywhere.
+          </p>
+        </div>
+        <div class="section-visual" aria-hidden="true">
+          <div class="devices-showcase">
+            <div class="device device-phone">
+              <div class="device-frame">
+                <div class="device-screen">
+                  <div class="mini-search"></div>
+                </div>
+              </div>
+            </div>
+            <div class="device device-tablet">
+              <div class="device-frame">
+                <div class="device-screen">
+                  <div class="mini-search"></div>
+                </div>
+              </div>
+            </div>
+            <div class="device device-laptop">
+              <div class="device-frame">
+                <div class="device-screen">
+                  <div class="mini-search-wide"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="device-connection-lines"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="site-footer" role="contentinfo">
+      <div class="footer-container">
+        <div class="footer-brand">
+          <a href="/" class="footer-brand-link" aria-label="APS AI Home">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M4 22h16V2H4zm2-5h12v-2H6zM4 20h16v-2H4z"/>
+            </svg>
+            <span>APS AI</span>
+          </a>
+          <p class="footer-tagline">School information, simplified.</p>
+        </div>
+        <nav class="footer-nav" aria-label="Footer navigation">
+          <ul class="footer-links">
+            <li><a href="#privacy">Privacy</a></li>
+            <li><a href="#terms">Terms</a></li>
+            <li><a href="#accessibility">Accessibility</a></li>
+            <li><a href="#help">Help</a></li>
+          </ul>
+        </nav>
+        <p class="footer-copyright">&copy; 2025 APS AI. All rights reserved.</p>
+      </div>
+    </footer>
+
       </div>
     </div>
 
@@ -1506,6 +2314,66 @@
       });
 
       input.focus();
+
+      /* ============================================================
+         SCROLL REVEAL ANIMATIONS
+         ============================================================ */
+      (function() {
+        const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        if (prefersReducedMotion) return;
+
+        const observer = new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('revealed');
+              observer.unobserve(entry.target);
+            }
+          });
+        }, {
+          rootMargin: '0px 0px -10% 0px',
+          threshold: 0.1
+        });
+
+        document.querySelectorAll('.section').forEach(section => {
+          section.style.opacity = '0';
+          section.style.transform = 'translateY(30px)';
+          section.style.transition = 'opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1)';
+          observer.observe(section);
+        });
+
+        document.querySelectorAll('.section.revealed').forEach(section => {
+          section.style.opacity = '1';
+          section.style.transform = 'translateY(0)';
+        });
+      })();
+
+      /* ============================================================
+         THEME INITIALIZATION
+         ============================================================ */
+      (function() {
+        const root = document.documentElement;
+        const themeRadios = document.querySelectorAll('.theme-option input[type="radio"]');
+        let currentTheme = 'dark';
+
+        function applyTheme(theme) {
+          root.removeAttribute('data-theme');
+          if (theme !== 'system') {
+            root.setAttribute('data-theme', theme);
+          }
+        }
+
+        // Apply dark theme on load
+        applyTheme('dark');
+
+        themeRadios.forEach(radio => {
+          radio.addEventListener('change', () => {
+            if (radio.checked) {
+              currentTheme = radio.value;
+              applyTheme(currentTheme);
+            }
+          });
+        });
+      })();
     </script>
   </body>
 </html>
