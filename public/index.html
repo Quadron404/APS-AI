@@ -2337,6 +2337,9 @@
           entries.forEach(entry => {
             if (entry.isIntersecting) {
               entry.target.classList.add('revealed');
+              // Remove inline styles so CSS .section.revealed can take over
+              entry.target.style.opacity = '';
+              entry.target.style.transform = '';
               observer.unobserve(entry.target);
             }
           });
@@ -2352,9 +2355,10 @@
           observer.observe(section);
         });
 
+        // Handle sections already in view on load
         document.querySelectorAll('.section.revealed').forEach(section => {
-          section.style.opacity = '1';
-          section.style.transform = 'translateY(0)';
+          section.style.opacity = '';
+          section.style.transform = '';
         });
       })();
 
