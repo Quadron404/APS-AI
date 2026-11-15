@@ -1062,29 +1062,13 @@
       @media (max-width: 640px) {
         header { padding: 16px 20px; }
         .hero { 
-          padding: 0; 
+          padding: 24px 16px 0; 
           min-height: 100vh;
           display: flex;
           flex-direction: column;
-          position: relative;
         }
-        .hero > h1,
-        .hero > p {
-          position: absolute;
-          left: 16px;
-          right: 16px;
-          text-align: center;
-          z-index: 10;
-        }
-        .hero > h1 { 
-          top: 88px; 
-          font-size: 2.5rem; 
-        }
-        .hero > p { 
-          top: 150px; 
-          margin-bottom: 0; 
-          font-size: 1.1rem; 
-        }
+        .hero h1 { font-size: 2.5rem; }
+        .hero p { margin-bottom: 24px; }
         .search-container { 
           border-radius: 0 0 var(--radius-2xl) var(--radius-2xl);
           aspect-ratio: auto;
@@ -1093,24 +1077,9 @@
           width: 100%;
           box-shadow: none;
           animation: none;
-          position: relative;
-          height: calc(100vh - 88px);
-          min-height: calc(100vh - 88px);
         }
         .search-container .carousel {
           border-radius: 0 0 var(--radius-2xl) var(--radius-2xl);
-          height: 100%;
-        }
-        .search-container .carousel-track {
-          height: 100%;
-        }
-        .search-container .carousel-slide {
-          height: 100%;
-        }
-        .search-container .carousel-slide img {
-          height: 100%;
-          object-fit: cover;
-          object-position: center top;
         }
         .search-card { 
           position: fixed;
@@ -1130,6 +1099,34 @@
           backdrop-filter: blur(24px) saturate(1.5);
           z-index: 20;
         }
+        .search-bar { gap: 10px; }
+        .search-input { 
+          font-size: 15px; 
+          padding: 14px 4px; 
+          white-space: normal; 
+          overflow: visible;
+          text-overflow: clip;
+          line-height: 1.35;
+          min-height: 40px;
+        }
+        .search-submit { 
+          width: 44px; 
+          height: 44px; 
+        }
+        .search-submit svg { width: 18px; height: 18px; }
+        
+        /* Hero carousel fills viewport on mobile */
+        .hero .search-container {
+          position: relative;
+          height: calc(100vh - 160px);
+          min-height: 400px;
+        }
+        
+        /* Push first section below the fold */
+        .section-intro {
+          margin-top: 48px;
+        }
+      }
         .search-bar { gap: 10px; }
         .search-input { 
           font-size: 15px; 
