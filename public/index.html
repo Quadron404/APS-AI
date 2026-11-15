@@ -1061,33 +1061,71 @@
 
       @media (max-width: 640px) {
         header { padding: 16px 20px; }
-        .hero { padding: 40px 20px 60px; }
+        .hero { 
+          padding: 24px 16px 0; 
+          min-height: 100vh;
+          display: flex;
+          flex-direction: column;
+        }
         .hero h1 { font-size: 2.5rem; }
-        .hero p { margin-bottom: 40px; }
-        .search-container { border-radius: var(--radius-xl); aspect-ratio: 16 / 9.5; }
+        .hero p { margin-bottom: 24px; }
+        .search-container { 
+          border-radius: 0 0 var(--radius-2xl) var(--radius-2xl);
+          aspect-ratio: auto;
+          flex: 1;
+          max-width: 100%;
+          width: 100%;
+          box-shadow: none;
+          animation: none;
+        }
+        .search-container .carousel {
+          border-radius: 0 0 var(--radius-2xl) var(--radius-2xl);
+        }
         .search-card { 
-          top: 24px; 
-          width: 92%; 
-          max-width: 520px; 
-          padding: 10px 16px; 
-          gap: 10px; 
+          position: fixed;
+          top: auto;
+          bottom: 24px;
+          left: 16px;
+          right: 16px;
+          transform: none;
+          width: auto;
+          max-width: none;
+          padding: 14px 18px;
+          gap: 10px;
           border-radius: var(--radius-full);
+          background: var(--bg-card);
+          border: 1px solid var(--border-default);
+          box-shadow: var(--shadow-card);
+          backdrop-filter: blur(24px) saturate(1.5);
+          z-index: 20;
         }
         .search-bar { gap: 10px; }
         .search-input { 
-          font-size: 14px; 
-          padding: 12px 4px; 
+          font-size: 15px; 
+          padding: 14px 4px; 
           white-space: normal; 
           overflow: visible;
           text-overflow: clip;
           line-height: 1.35;
-          min-height: 36px;
+          min-height: 40px;
         }
         .search-submit { 
-          width: 40px; 
-          height: 40px; 
+          width: 44px; 
+          height: 44px; 
         }
-        .search-submit svg { width: 18px; height: 18px; }
+        .search-submit svg { width: 20px; height: 20px; }
+        
+        /* Hero carousel fills viewport on mobile */
+        .hero .search-container {
+          position: relative;
+          height: calc(100vh - 160px);
+          min-height: 400px;
+        }
+        
+        /* Push first section below the fold */
+        .section-intro {
+          margin-top: 48px;
+        }
       }
 
       /* ============================================================
@@ -1125,6 +1163,14 @@
         letter-spacing: -0.025em;
         color: var(--text);
         margin-bottom: 24px;
+        opacity: 0;
+        transform: translateY(20px);
+        transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1), transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+      }
+
+      .section.revealed .section-heading {
+        opacity: 1;
+        transform: translateY(0);
       }
 
       .section-text {
@@ -1133,6 +1179,15 @@
         color: var(--text-muted);
         max-width: 540px;
         margin-bottom: 16px;
+        opacity: 0;
+        transform: translateY(16px);
+        transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1), transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+        transition-delay: 0.1s;
+      }
+
+      .section.revealed .section-text {
+        opacity: 1;
+        transform: translateY(0);
       }
 
       .section-text:last-child {
@@ -1977,7 +2032,7 @@
           </div>
         </div>
         <div class="section-content">
-          <h2 id="oneplace-heading" class="section-heading">## 1. Your School. Everything in One Place.</h2>
+          <h2 id="oneplace-heading" class="section-heading">1. Your School. Everything in One Place.</h2>
           <p class="section-text">
             No more searching through multiple webpages, scattered documents or different sources to find what you need. APS AI brings important school information together in one convenient place, making it easier to discover school updates, explore academic information, find important contacts and get answers to your questions — all through one simple experience.
           </p>
@@ -1994,7 +2049,7 @@
           </div>
         </div>
         <div class="section-content">
-          <h2 id="privacy-heading" class="section-heading">## 2. Your Privacy Matters.</h2>
+          <h2 id="privacy-heading" class="section-heading">Your Privacy Matters.</h2>
           <p class="section-text">
             Your trust matters to us. APS AI is designed to make accessing school information convenient while respecting your privacy. We believe finding answers should feel simple, comfortable and secure. Discover how APS AI handles your information and the measures in place to protect your privacy.
           </p>
@@ -2011,7 +2066,7 @@
           </div>
         </div>
         <div class="section-content">
-          <h2 id="sources-heading" class="section-heading">## 3. Clear Answers. Official School Sources.</h2>
+          <h2 id="sources-heading" class="section-heading">Clear Answers. Official School Sources.</h2>
           <p class="section-text">
             School information should be easy to find and easy to understand. APS AI helps you discover answers using information from official school websites and documents made available to the platform. From school activities and academic details to facilities, administration and important announcements, find relevant information without having to search through multiple pages yourself.
           </p>
@@ -2028,7 +2083,7 @@
           </div>
         </div>
         <div class="section-content">
-          <h2 id="noapp-heading" class="section-heading">## 4. No App to Download.</h2>
+          <h2 id="noapp-heading" class="section-heading">No App to Download.</h2>
           <p class="section-text">
             No installations. No complicated setup. No additional application to worry about. APS AI works directly in your web browser, whether you&rsquo;re using a phone, tablet, laptop or desktop computer. Simply open the website, ask your question and explore the information you need — whenever and wherever you need it.
           </p>
