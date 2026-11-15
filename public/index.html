@@ -869,12 +869,62 @@
       .hero p {
         font-size: clamp(1.05rem, 1.8vw, 1.35rem);
         color: var(--text-muted);
-        margin-bottom: 56px;
-        max-width: 640px;
+        margin-bottom: 24px;
+        max-width: 720px;
         line-height: 1.7;
         font-weight: 400;
         letter-spacing: 0.005em;
         animation: fadeInUp 1s cubic-bezier(0.16, 1, 0.3, 1) 0.12s both;
+      }
+
+      .hero-tagline {
+        font-size: clamp(1rem, 1.5vw, 1.15rem);
+        color: var(--text-muted);
+        max-width: 720px;
+        line-height: 1.7;
+        font-weight: 400;
+        margin-bottom: 48px;
+        animation: fadeInUp 1s cubic-bezier(0.16, 1, 0.3, 1) 0.2s both;
+      }
+
+      .hero-cta {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        padding: 16px 32px;
+        background: var(--primary);
+        color: #fff;
+        font-family: var(--font-ui);
+        font-size: 1rem;
+        font-weight: 500;
+        border-radius: var(--radius-full);
+        text-decoration: none;
+        border: none;
+        cursor: pointer;
+        box-shadow: 0 4px 24px rgba(0, 102, 255, 0.35);
+        transition: transform 0.15s ease, background 0.15s ease, box-shadow 0.15s ease;
+        animation: fadeInUp 1s cubic-bezier(0.16, 1, 0.3, 1) 0.28s both;
+      }
+
+      .hero-cta:hover {
+        background: var(--primary-hover);
+        transform: translateY(-2px);
+        box-shadow: 0 8px 32px rgba(0, 102, 255, 0.45);
+      }
+
+      .hero-cta:active {
+        background: var(--primary-active);
+        transform: translateY(0) scale(0.98);
+      }
+
+      .hero-cta svg {
+        width: 20px;
+        height: 20px;
+        stroke: currentColor;
+        stroke-width: 2.5;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+        flex-shrink: 0;
       }
 
       .glow {
@@ -1889,7 +1939,16 @@
 
     <main class="hero">
       <h1>Hello, World</h1>
-      <p>Whatever you need from school, start here.</p>
+      <p class="hero-tagline">
+        APS AI uses AI to get simple answers only from official school sources.
+        It&rsquo;s free to use, never includes ads, and keeps your privacy protected.
+      </p>
+      <a href="#how-it-works" class="hero-cta" aria-label="See how it works">
+        See how it works
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M5 12h14M12 5l7 7-7 7"/>
+        </svg>
+      </a>
 
       <div class="search-container" id="searchContainer">
         <div class="carousel" id="carousel">
@@ -1914,7 +1973,7 @@
               <input
                 type="search"
                 class="search-input"
-                placeholder="Try 'Where can I enlist in the armed services?'"
+                placeholder="Try &ldquo;How do I contact the school administration?&rdquo;"
                 aria-label="Search"
                 autocomplete="off"
               />
@@ -1931,9 +1990,12 @@
     <section class="section section-intro" aria-labelledby="intro-heading">
       <div class="section-container">
         <div class="section-content">
-          <h2 id="intro-heading" class="section-heading">APS AI brings school information together.</h2>
+          <h2 id="intro-heading" class="section-heading">An animated sphere of school website previews rotates, illustrating school websites brought together in one place.</h2>
           <p class="section-text">
-            Find clear answers about school administration, events, academics, facilities and important information in one place.
+            Your school information. One place.
+          </p>
+          <p class="section-text">
+            No more wandering from page to page. APS AI brings school information together in one place.
           </p>
         </div>
         <div class="section-visual" aria-hidden="true">
@@ -1980,22 +2042,22 @@
         <div class="section-content">
           <h2 id="oneplace-heading" class="section-heading">Your school information. One place.</h2>
           <p class="section-text">
-            No more searching through different pages and documents. APS AI helps bring important school information together so you can find what you need more easily.
+            No more wandering from page to page. APS AI brings school information together in one place.
           </p>
         </div>
       </div>
     </section>
 
-    <!-- SECTION 3: PRIVACY -->
+<!-- SECTION 3: PRIVACY -->
     <section class="section section-privacy" aria-labelledby="privacy-heading">
       <div class="section-container">
         <div class="section-content">
-          <h2 id="privacy-heading" class="section-heading">Your privacy matters.</h2>
+          <h2 id="privacy-heading" class="section-heading">APS AI keeps your data private.</h2>
           <p class="section-text">
-            APS AI processes your questions to provide helpful answers. We don't sell your data or use it for advertising. Conversation history is stored locally in your browser to improve your experience. You can clear your history at any time.
+            Your personal information isn&rsquo;t collected or stored, and your conversation disappears when you leave.
           </p>
           <p class="section-text">
-            <a href="#privacy" class="section-link">Read our privacy policy →</a>
+            <a href="#privacy" class="section-link">Learn about privacy</a>
           </p>
         </div>
         <div class="section-visual" aria-hidden="true">
@@ -2051,7 +2113,10 @@
         <div class="section-content">
           <h2 id="sources-heading" class="section-heading">Clear answers. Official school sources.</h2>
           <p class="section-text">
-            Find school information through the official sources made available to APS AI. Answers reference the documents and pages they come from so you can verify and explore further.
+            Every answer is exclusively sourced from official school websites and documents.
+          </p>
+          <p class="section-text">
+            <a href="#sources" class="section-link">Learn about sources</a>
           </p>
         </div>
       </div>
@@ -2063,7 +2128,7 @@
         <div class="section-content">
           <h2 id="noapp-heading" class="section-heading">No app to download.</h2>
           <p class="section-text">
-            Simply open APS AI in your browser on your phone, tablet or computer. No installation. No updates. Works everywhere.
+            Just open APS AI in your browser on your phone, tablet, or computer.
           </p>
         </div>
         <div class="section-visual" aria-hidden="true">
