@@ -49,10 +49,12 @@
         overflow-x: hidden;
         -webkit-font-smoothing: antialiased;
         transition: background-color 0.3s ease;
+        scrollbar-gutter: stable;
       }
 
       body.menu-open {
         overflow: hidden;
+        padding-right: var(--scrollbar-width, 0px);
       }
 
       .glow {
@@ -783,6 +785,8 @@
 
         function openMenu() {
           lastFocusedElement = document.activeElement;
+          const scrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
+          document.documentElement.style.setProperty('--scrollbar-width', scrollbarWidth + 'px');
           menuButton.setAttribute('aria-expanded', 'true');
           menuBackdrop.classList.add('visible');
           menuBackdrop.setAttribute('aria-hidden', 'false');
@@ -798,6 +802,7 @@
           menuBackdrop.setAttribute('aria-hidden', 'true');
           menuPanel.classList.remove('visible');
           body.classList.remove('menu-open');
+          document.documentElement.style.removeProperty('--scrollbar-width');
           document.removeEventListener('keydown', handleKeydown);
           if (lastFocusedElement) {
             lastFocusedElement.focus();
