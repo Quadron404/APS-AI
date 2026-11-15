@@ -30,7 +30,7 @@
         --font-display: "Cormorant Garamond", Georgia, serif;
         --menu-bg: rgba(18, 20, 24, 0.98);
         --menu-border: rgba(255, 255, 255, 0.06);
-        --menu-shadow: 0 32px 96px rgba(0, 0, 0, 0.7), 0 0 0 1px rgba(255, 255, 255, 0.04) inset;
+        --menu-shadow: 0 0 0 1px rgba(255, 255, 255, 0.04), 0 2px 24px rgba(0, 0, 0, 0.1), 0 8px 42px rgba(0, 0, 0, 0.1), 0 18px 95px rgba(0, 0, 0, 0.05);
         --backdrop-bg: rgba(8, 10, 14, 0.5);
       }
 
@@ -198,8 +198,7 @@
         opacity: 0;
         visibility: hidden;
         z-index: 100;
-        transition: opacity 0.25s cubic-bezier(0.4, 0, 0.2, 1),
-                    visibility 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+        transition: opacity 0.25s ease, visibility 0.25s ease;
       }
 
       .menu-backdrop.visible {
@@ -214,36 +213,34 @@
       }
 
       /* ============================================================
-         MENU PANEL
+         MENU PANEL (Outer Dialog - Transparent, matches america.gov)
          ============================================================ */
       .menu-panel {
         position: fixed;
         top: 16px;
-        right: 26px;
+        right: 16px;
         width: 435px;
         height: 472px;
-        background: var(--menu-bg);
-        border: 1px solid var(--menu-border);
-        border-radius: 40px;
-        box-shadow: var(--menu-shadow);
-        padding: 20px 24px 24px;
+        background: transparent;
+        border: none;
+        border-radius: 0;
+        box-shadow: none;
+        padding: 0;
         display: flex;
         flex-direction: column;
         opacity: 0;
         visibility: hidden;
-        transform: translateZ(0) scale(0) translateY(20px) translateX(-20px);
+        transform: scale(0.96) translateY(-8px);
         transform-origin: top right;
         z-index: 101;
         will-change: transform, opacity;
-        transition: opacity 0.15s cubic-bezier(0.34, 1.56, 0.64, 1),
-                    visibility 0.15s cubic-bezier(0.34, 1.56, 0.64, 1),
-                    transform 0.22s cubic-bezier(0.34, 1.56, 0.64, 1);
+        transition: opacity 0.2s ease, visibility 0.2s ease, transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
       }
 
       .menu-panel.visible {
         opacity: 1;
         visibility: visible;
-        transform: translateZ(0) scale(1) translateY(0) translateX(0);
+        transform: scale(1) translateY(0);
       }
 
       @media (prefers-reduced-motion: reduce) {
@@ -257,15 +254,14 @@
         .menu-panel {
           top: 16px;
           left: 16px;
-          right: 26px;
+          right: 16px;
           width: auto;
           height: 429px;
           max-height: 429px;
           bottom: auto;
-          border-radius: 40px;
-          padding: 16px 16px 20px;
-          transform: translateZ(0) scale(0) translateY(20px) translateX(-20px);
-          transform-origin: top right;
+          border-radius: 0;
+          padding: 0;
+          transform: scale(0.96) translateY(-8px);
         }
       }
 
@@ -273,15 +269,14 @@
         .menu-panel {
           top: 16px;
           left: 16px;
-          right: 26px;
-          width: 348px;
+          right: 16px;
+          width: auto;
           height: 429px;
           max-height: 429px;
           bottom: auto;
-          border-radius: 36px;
-          padding: 12px 14px 16px;
-          transform: translateZ(0) scale(0) translateY(20px) translateX(-20px);
-          transform-origin: top right;
+          border-radius: 0;
+          padding: 0;
+          transform: scale(0.96) translateY(-8px);
         }
       }
 
@@ -291,12 +286,49 @@
         }
       }
 
-      /* Panel Header - Top Controls */
+      /* ============================================================
+         INNER PANEL WRAPPER (Styled Content - matches america.gov inner div)
+         ============================================================ */
+      .menu-inner {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        height: 100%;
+        background: var(--menu-bg);
+        border: 1px solid var(--menu-border);
+        border-radius: 40px;
+        box-shadow: var(--menu-shadow);
+        padding: 24px 24px 48px;
+        overflow-y: auto;
+        overscroll-behavior: contain;
+        gap: clamp(1rem, 3dvh, 2rem);
+      }
+
+      @media (max-width: 768px) {
+        .menu-inner {
+          border-radius: 40px;
+          padding: 40px 40px 64px;
+          gap: 2.75rem;
+        }
+      }
+
+      @media (max-width: 480px) {
+        .menu-inner {
+          border-radius: 36px;
+          padding: 40px 40px 64px;
+          gap: 2.75rem;
+        }
+      }
+
+      /* ============================================================
+         PANEL HEADER - TOP CONTROLS
+         ============================================================ */
       .menu-header {
         display: flex;
         align-items: center;
         justify-content: space-between;
-        margin-bottom: 16px;
+        margin-bottom: 8px;
         position: relative;
         z-index: 10;
       }
@@ -538,8 +570,8 @@
         align-items: center;
         justify-content: center;
         flex-wrap: wrap;
-        gap: 16px 24px;
-        padding: 20px 16px 8px;
+        gap: 12px 18px;
+        padding: 12px 12px 4px;
         width: 100%;
         border-top: 1px solid var(--menu-border);
         margin-top: auto;
@@ -548,20 +580,20 @@
       .menu-secondary-link {
         display: inline-flex;
         align-items: center;
-        padding: 6px 4px;
+        padding: 4px 2px;
         border: none;
         background: transparent;
         color: var(--text-soft);
         font-family: var(--font-ui);
-        font-size: 12px;
+        font-size: 11px;
         font-weight: 500;
         text-decoration: none;
         cursor: pointer;
         transition: color 0.2s ease, transform 0.12s ease;
         white-space: nowrap;
         opacity: 0;
-        transform: translateY(10px);
-        animation: secondaryLinkIn 0.4s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+        transform: translateY(8px);
+        animation: secondaryLinkIn 0.35s cubic-bezier(0.4, 0, 0.2, 1) forwards;
       }
 
       @keyframes secondaryLinkIn {
@@ -586,10 +618,10 @@
         border-radius: 4px;
       }
 
-      .menu-secondary-link:nth-child(1) { animation-delay: 0.4s; }
-      .menu-secondary-link:nth-child(2) { animation-delay: 0.44s; }
-      .menu-secondary-link:nth-child(3) { animation-delay: 0.48s; }
-      .menu-secondary-link:nth-child(4) { animation-delay: 0.52s; }
+      .menu-secondary-link:nth-child(1) { animation-delay: 0.3s; }
+      .menu-secondary-link:nth-child(2) { animation-delay: 0.34s; }
+      .menu-secondary-link:nth-child(3) { animation-delay: 0.38s; }
+      .menu-secondary-link:nth-child(4) { animation-delay: 0.42s; }
 
       @media (prefers-reduced-motion: reduce) {
         .menu-secondary-link {
@@ -601,10 +633,10 @@
 
       @media (max-width: 480px) {
         .menu-secondary-nav {
-          gap: 12px 20px;
-          padding: 16px 12px 4px;
+          gap: 8px 14px;
+          padding: 8px 8px 0;
         }
-        .menu-secondary-link { font-size: 11px; }
+        .menu-secondary-link { font-size: 10px; }
       }
 
       /* ============================================================
@@ -800,7 +832,7 @@
         color: #6a6f7a;
         cursor: not-allowed;
         transform: none;
-        box-shadow: none;
+        box-shadow: none.
       }
 
       .search-submit svg {
@@ -822,7 +854,7 @@
       }
 
       .search-card.sending .search-input {
-        opacity: 0.55;
+        opacity: 0.55.
       }
 
       @media (max-width: 640px) {
@@ -880,24 +912,24 @@
         overflow-x: hidden;
         -webkit-font-smoothing: antialiased;
         transition: background-color 0.3s ease;
-        scrollbar-gutter: stable;
+        scrollbar-gutter: stable.
       }
 
       body.menu-open {
         overflow: hidden;
-        padding-right: var(--scrollbar-width, 0px);
+        padding-right: var(--scrollbar-width, 0px).
       }
 
       @media (prefers-reduced-motion: reduce) {
         html {
-          scroll-behavior: auto;
+          scroll-behavior: auto.
         }
         *,
         *::before,
         *::after {
-          animation-duration: 0.01ms !important;
-          animation-iteration-count: 1 !important;
-          transition-duration: 0.01ms !important;
+          animation-duration: 0.01ms !important.
+          animation-iteration-count: 1 !important.
+          transition-duration: 0.01ms !important.
         }
       }
     </style>
@@ -925,62 +957,66 @@
     <!-- Menu Backdrop -->
     <div class="menu-backdrop" id="menuBackdrop" aria-hidden="true"></div>
 
-    <!-- Menu Panel -->
+    <!-- Menu Panel (Outer Dialog - Transparent, matches america.gov) -->
     <div class="menu-panel" id="menuPanel" role="dialog" aria-modal="true" aria-label="Navigation menu">
-      <div class="menu-header">
-        <!-- Theme Selector - Segmented Control -->
-        <div class="theme-selector" role="group" aria-label="Theme selector">
-          <button class="theme-option" data-theme="system" aria-pressed="true" aria-label="System theme">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <rect x="2" y="3" width="20" height="14" rx="2"/>
-              <path d="M8 21h8M12 17v4"/>
+      <!-- Inner Panel Wrapper (Styled Content - matches america.gov inner div) -->
+      <div class="menu-inner">
+        <!-- Panel Header - Top Controls -->
+        <div class="menu-header">
+          <!-- Theme Selector - Segmented Control (System/Light/Dark) -->
+          <div class="theme-selector" role="group" aria-label="Theme selector">
+            <button class="theme-option" data-theme="system" aria-pressed="true" aria-label="System theme">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <rect x="2" y="3" width="20" height="14" rx="2"/>
+                <path d="M8 21h8M12 17v4"/>
+              </svg>
+              <span>System</span>
+            </button>
+            <button class="theme-option" data-theme="light" aria-pressed="false" aria-label="Light theme">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <circle cx="12" cy="12" r="5"/>
+                <line x1="12" y1="1" x2="12" y2="3"/>
+                <line x1="12" y1="21" x2="12" y2="23"/>
+                <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
+                <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+                <line x1="1" y1="12" x2="3" y2="12"/>
+                <line x1="21" y1="12" x2="23" y2="12"/>
+                <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
+                <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+              </svg>
+              <span>Light</span>
+            </button>
+            <button class="theme-option" data-theme="dark" aria-pressed="false" aria-label="Dark theme">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+              </svg>
+              <span>Dark</span>
+            </button>
+          </div>
+          <button class="menu-close" id="menuClose" aria-label="Close menu">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <line x1="18" y1="6" x2="6" y2="18"/>
+              <line x1="6" y1="6" x2="18" y2="18"/>
             </svg>
-            <span>System</span>
-          </button>
-          <button class="theme-option" data-theme="light" aria-pressed="false" aria-label="Light theme">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <circle cx="12" cy="12" r="5"/>
-              <line x1="12" y1="1" x2="12" y2="3"/>
-              <line x1="12" y1="21" x2="12" y2="23"/>
-              <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
-              <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
-              <line x1="1" y1="12" x2="3" y2="12"/>
-              <line x1="21" y1="12" x2="23" y2="12"/>
-              <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
-              <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
-            </svg>
-            <span>Light</span>
-          </button>
-          <button class="theme-option" data-theme="dark" aria-pressed="false" aria-label="Dark theme">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
-            </svg>
-            <span>Dark</span>
           </button>
         </div>
-        <button class="menu-close" id="menuClose" aria-label="Close menu">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <line x1="18" y1="6" x2="6" y2="18"/>
-            <line x1="6" y1="6" x2="18" y2="18"/>
-          </svg>
-        </button>
+
+        <nav class="menu-main-nav" aria-label="Main navigation">
+          <a href="/" class="menu-nav-link" aria-current="page">Home</a>
+          <a href="#about" class="menu-nav-link">About</a>
+          <a href="#services" class="menu-nav-link">Services</a>
+          <a href="#insights" class="menu-nav-link">Insights</a>
+          <a href="#contact" class="menu-nav-link">Contact</a>
+          <a href="#login" class="menu-nav-link">Sign In</a>
+        </nav>
+
+        <nav class="menu-secondary-nav" aria-label="Secondary navigation">
+          <a href="#privacy" class="menu-secondary-link">Privacy</a>
+          <a href="#terms" class="menu-secondary-link">Terms</a>
+          <a href="#accessibility" class="menu-secondary-link">Accessibility</a>
+          <a href="#help" class="menu-secondary-link">Help</a>
+        </nav>
       </div>
-
-      <nav class="menu-main-nav" aria-label="Main navigation">
-        <a href="/" class="menu-nav-link" aria-current="page">Home</a>
-        <a href="#about" class="menu-nav-link">About</a>
-        <a href="#services" class="menu-nav-link">Services</a>
-        <a href="#insights" class="menu-nav-link">Insights</a>
-        <a href="#contact" class="menu-nav-link">Contact</a>
-        <a href="#login" class="menu-nav-link">Sign In</a>
-      </nav>
-
-      <nav class="menu-secondary-nav" aria-label="Secondary navigation">
-        <a href="#privacy" class="menu-secondary-link">Privacy</a>
-        <a href="#terms" class="menu-secondary-link">Terms</a>
-        <a href="#accessibility" class="menu-secondary-link">Accessibility</a>
-        <a href="#help" class="menu-secondary-link">Help</a>
-      </nav>
     </div>
 
     <main class="hero">
@@ -1129,7 +1165,6 @@
           if (theme !== 'system') {
             root.setAttribute('data-theme', theme);
           }
-          // In a real app, you'd also save to localStorage and apply CSS variables
           console.log('Theme changed to:', theme);
         }
 
