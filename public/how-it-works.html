@@ -137,6 +137,11 @@
         flex-direction: column;
         overflow-y: auto;
         position: relative;
+        scrollbar-width: none;
+      }
+
+      .page-surface::-webkit-scrollbar {
+        display: none;
       }
 
       .page-surface::before {
