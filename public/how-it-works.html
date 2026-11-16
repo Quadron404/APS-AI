@@ -7,7 +7,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Cormorant+Garamond:wght@300;400;500;600;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap"
       rel="stylesheet"
     />
     <style>
@@ -23,7 +23,6 @@
         --bg-surface: #101216;
         --bg-surface-elevated: #14171c;
         --bg-card: rgba(18, 20, 24, 0.92);
-        --bg-card-hover: rgba(22, 24, 28, 0.94);
         --text: #ffffff;
         --text-muted: rgba(255, 255, 255, 0.6);
         --text-soft: rgba(255, 255, 255, 0.35);
@@ -32,7 +31,6 @@
         --accent-soft: rgba(74, 14, 23, 0.14);
         --border-subtle: rgba(255, 255, 255, 0.05);
         --border-default: rgba(255, 255, 255, 0.08);
-        --border-strong: rgba(255, 255, 255, 0.12);
         --font-ui: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
         --font-display: "Cormorant Garamond", Georgia, serif;
         --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
@@ -162,6 +160,7 @@
         .page-surface {
           border-radius: var(--radius-xl);
           overflow-y: auto;
+          max-height: none;
         }
       }
 
@@ -172,6 +171,7 @@
         .page-surface {
           border-radius: var(--radius-lg);
           overflow-y: auto;
+          max-height: none;
         }
       }
 
@@ -781,10 +781,10 @@
       }
 
       /* ============================================================
-         PAGE SECTIONS
+         PAGE SECTIONS - PREMIUM EDITORIAL
          ============================================================ */
       .section {
-        padding: 140px 40px;
+        padding: 160px 40px;
         position: relative;
         overflow: hidden;
       }
@@ -802,26 +802,27 @@
 
       .section-eyebrow {
         font-family: var(--font-ui);
-        font-size: 0.85rem;
-        font-weight: 600;
-        letter-spacing: 0.12em;
+        font-size: 0.8rem;
+        font-weight: 700;
+        letter-spacing: 0.16em;
         text-transform: uppercase;
-        color: rgba(74, 14, 23, 0.5);
-        margin-bottom: 16px;
+        color: rgba(74, 14, 23, 0.45);
+        margin-bottom: 12px;
         display: block;
       }
 
       .section-heading {
         font-family: var(--font-display);
-        font-size: clamp(2.75rem, 7vw, 5rem);
+        font-size: clamp(3rem, 9vw, 6rem);
         font-weight: 700;
         line-height: 1.05;
-        letter-spacing: -0.03em;
+        letter-spacing: -0.04em;
         color: var(--text);
         margin-bottom: 32px;
+        max-width: 900px;
         opacity: 0;
-        transform: translateY(20px);
-        transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+        transform: translateY(24px);
+        transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
       }
 
       .section.revealed .section-heading {
@@ -833,13 +834,13 @@
         font-size: clamp(1.05rem, 1.6vw, 1.25rem);
         line-height: 1.8;
         color: var(--text-muted);
-        max-width: 620px;
+        max-width: 520px;
         margin-bottom: 24px;
         font-weight: 400;
         letter-spacing: 0.005em;
         opacity: 0;
-        transform: translateY(16px);
-        transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+        transform: translateY(20px);
+        transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
         transition-delay: 0.1s;
       }
 
@@ -852,74 +853,82 @@
         margin-bottom: 0;
       }
 
-      .text-lead {
-        font-size: clamp(1.2rem, 2vw, 1.5rem);
-        color: var(--text);
-        font-weight: 500;
-      }
-
       /* ============================================================
-         FEATURE ROWS (alternating text / visual)
+         EDITORIAL ROWS - alternating text / visual
          ============================================================ */
-      .feature-row {
+      .editorial-row {
         display: flex;
         align-items: center;
-        gap: 100px;
-        margin-bottom: 150px;
+        gap: 120px;
+        margin-bottom: 200px;
       }
 
-      .feature-row.visual-first {
+      .editorial-row.visual-first {
         flex-direction: row-reverse;
       }
 
-      .feature-content {
+      .editorial-content {
         flex: 1;
         min-width: 0;
       }
 
-      .feature-visual {
+      .editorial-visual {
         flex: 1;
         min-width: 0;
         position: relative;
-        height: 520px;
+        height: 600px;
         display: flex;
         align-items: center;
         justify-content: center;
       }
 
-      .feature-heading {
+      .editorial-heading {
         font-family: var(--font-display);
-        font-size: clamp(1.75rem, 4vw, 2.5rem);
+        font-size: clamp(2rem, 5vw, 3rem);
         font-weight: 700;
         line-height: 1.15;
         letter-spacing: -0.02em;
         color: var(--text);
-        margin-bottom: 20px;
+        margin-bottom: 24px;
       }
 
-      .feature-text {
+      .editorial-text {
         font-size: clamp(1rem, 1.5vw, 1.15rem);
-        line-height: 1.75;
+        line-height: 1.8;
         color: var(--text-muted);
-        max-width: 520px;
+        max-width: 560px;
         margin-bottom: 0;
         font-weight: 400;
+        opacity: 0;
+        transform: translateY(20px);
+        transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        transition-delay: 0.1s;
+      }
+
+      .section.revealed .editorial-text,
+      .editorial-row.revealed .editorial-text {
+        opacity: 1;
+        transform: translateY(0);
       }
 
       @media (max-width: 768px) {
-        .feature-row {
+        .editorial-row {
           flex-direction: column;
-          gap: 40px;
-          margin-bottom: 100px;
+          gap: 60px;
+          margin-bottom: 140px;
         }
-        .feature-row.visual-first {
+        .editorial-row.visual-first {
           flex-direction: column;
         }
-        .feature-visual {
-          height: 380px;
+        .editorial-visual {
+          height: 420px;
         }
-        .feature-content {
-          text-align: left;
+        .section {
+          padding: 120px 24px;
+        }
+        .section-heading {
+          font-size: clamp(2.2rem, 10vw, 3.5rem);
+          margin-bottom: 24px;
         }
       }
 
@@ -928,10 +937,10 @@
           padding: 90px 20px;
         }
         .section-heading {
-          font-size: clamp(2rem, 8vw, 3rem);
+          font-size: clamp(1.9rem, 11vw, 2.6rem);
         }
-        .feature-visual {
-          height: 320px;
+        .editorial-visual {
+          height: 340px;
         }
       }
 
@@ -955,11 +964,11 @@
         object-fit: cover;
         object-position: center;
         display: block;
-        transition: transform 0.6s ease;
+        transition: transform 0.7s ease;
       }
 
-      .feature-visual:hover .visual-frame img {
-        transform: scale(1.02);
+      .editorial-visual:hover .visual-frame img {
+        transform: scale(1.03);
       }
 
       .glass-panel {
@@ -968,10 +977,7 @@
         border: 1px solid var(--border-default);
         border-radius: var(--radius-xl);
         box-shadow: var(--shadow-card);
-        backdrop-filter: blur(20px) saturate(1.4);
-        display: flex;
-        align-items: center;
-        justify-content: center;
+        backdrop-filter: blur(24px) saturate(1.4);
         overflow: hidden;
       }
 
@@ -987,6 +993,7 @@
         position: absolute;
       }
 
+      /* ---------- Animations ---------- */
       @keyframes floatSlow {
         0%, 100% { transform: translate(0, 0) rotate(0deg); }
         33% { transform: translate(12px, -12px) rotate(1deg); }
@@ -1004,23 +1011,46 @@
         to { transform: rotate(360deg); }
       }
 
+      @keyframes spherePulse {
+        0%, 100% { transform: scale(1); opacity: 0.9; }
+        50% { transform: scale(1.04); opacity: 1; }
+      }
+
+      @keyframes ringExpand {
+        0% { transform: scale(0.7); opacity: 0.5; }
+        100% { transform: scale(1.3); opacity: 0; }
+      }
+
       /* ---------- Opening: connected sphere ---------- */
       .sphere-stage {
         position: relative;
         width: 100%;
-        height: 640px;
+        height: 700px;
         display: flex;
         align-items: center;
         justify-content: center;
       }
 
+      .sphere-glow {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 620px;
+        height: 620px;
+        background: radial-gradient(circle, rgba(74, 14, 23, 0.3), transparent 70%);
+        filter: blur(55px);
+        transform: translate(-50%, -50%);
+        z-index: 1;
+        animation: spherePulse 10s ease-in-out infinite 2s;
+      }
+
       .sphere {
         position: relative;
-        width: 420px;
-        height: 420px;
+        width: 460px;
+        height: 460px;
         border-radius: 50%;
         background:
-          radial-gradient(circle at 35% 35%, rgba(74, 14, 23, 0.35), transparent 55%),
+          radial-gradient(circle at 35% 35%, rgba(74, 14, 23, 0.4), transparent 55%),
           radial-gradient(circle at 65% 65%, rgba(255, 255, 255, 0.08), transparent 60%);
         border: 1px solid var(--border-subtle);
         box-shadow:
@@ -1028,16 +1058,14 @@
           0 30px 60px rgba(0, 0, 0, 0.6);
         animation: spherePulse 8s ease-in-out infinite;
         z-index: 2;
-      }
-
-      @keyframes spherePulse {
-        0%, 100% { transform: scale(1); opacity: 0.9; }
-        50% { transform: scale(1.04); opacity: 1; }
+        display: flex;
+        align-items: center;
+        justify-content: center;
       }
 
       .sphere-core {
         position: absolute;
-        inset: 40px;
+        inset: 44px;
         border-radius: 50%;
         border: 1px solid rgba(74, 14, 23, 0.4);
         background: rgba(74, 14, 23, 0.15);
@@ -1050,19 +1078,19 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        animation: rotateSlow 24s linear infinite;
+        animation: rotateSlow 26s linear infinite;
       }
 
       .preview-panel {
         position: absolute;
-        width: 150px;
-        height: 150px;
+        width: 170px;
+        height: 170px;
         border-radius: var(--radius-xl);
         overflow: hidden;
         border: 1px solid var(--border-default);
         box-shadow: var(--shadow-lg);
         background: var(--bg-deep);
-        animation: floatSlow 7s ease-in-out infinite;
+        animation: floatSlow 8s ease-in-out infinite;
       }
 
       .preview-panel img {
@@ -1073,25 +1101,12 @@
         display: block;
       }
 
-      .preview-panel:nth-child(1) { top: 10%; left: 8%; animation-delay: 0s; width: 140px; height: 140px; }
-      .preview-panel:nth-child(2) { top: 18%; right: 8%; animation-delay: 1.5s; }
-      .preview-panel:nth-child(3) { bottom: 18%; left: 12%; animation-delay: 3s; }
-      .preview-panel:nth-child(4) { bottom: 10%; right: 12%; animation-delay: 4.5s; }
+      .preview-panel:nth-child(1) { top: 10%; left: 8%; animation-delay: 0s; width: 160px; height: 160px; }
+      .preview-panel:nth-child(2) { top: 18%; right: 8%; animation-delay: 1.6s; }
+      .preview-panel:nth-child(3) { bottom: 18%; left: 12%; animation-delay: 3.2s; }
+      .preview-panel:nth-child(4) { bottom: 10%; right: 12%; animation-delay: 4.8s; }
 
-      .sphere-glow {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        width: 560px;
-        height: 560px;
-        background: radial-gradient(circle, rgba(74, 14, 23, 0.25), transparent 70%);
-        filter: blur(45px);
-        transform: translate(-50%, -50%);
-        z-index: 1;
-        animation: spherePulse 10s ease-in-out infinite 2s;
-      }
-
-      /* ---------- Stacked document / webpage preview ---------- */
+      /* ---------- Trust: stacked document preview ---------- */
       .preview-stack {
         position: relative;
         width: 100%;
@@ -1101,10 +1116,23 @@
         justify-content: center;
       }
 
+      .stack-glow {
+        position: absolute;
+        top: 8%;
+        left: 8%;
+        right: 8%;
+        bottom: 8%;
+        background:
+          radial-gradient(circle at 20% 30%, rgba(74, 14, 23, 0.3), transparent 50%),
+          radial-gradient(circle at 80% 70%, rgba(255, 255, 255, 0.06), transparent 60%);
+        filter: blur(55px);
+        z-index: 0;
+      }
+
       .stack-item {
         position: absolute;
-        width: 230px;
-        height: 300px;
+        width: 250px;
+        height: 340px;
         border-radius: var(--radius-xl);
         overflow: hidden;
         border: 1px solid var(--border-default);
@@ -1121,23 +1149,10 @@
         display: block;
       }
 
-      .stack-item:nth-child(1) { top: 10%; left: 5%; transform: rotate(-3deg); z-index: 3; animation: floatSlow 8s ease-in-out infinite; }
-      .stack-item:nth-child(2) { top: 5%; left: 28%; transform: rotate(2deg); z-index: 4; animation: floatSlowRev 9s ease-in-out infinite 1s; }
-      .stack-item:nth-child(3) { top: 35%; left: 16%; transform: rotate(-2deg); z-index: 5; animation: floatSlow 7s ease-in-out infinite 2s; }
-      .stack-item:nth-child(4) { top: 30%; left: 42%; transform: rotate(3deg); z-index: 2; animation: floatSlowRev 8.5s ease-in-out infinite 0.5s; }
-
-      .stack-glow {
-        position: absolute;
-        top: 10%;
-        left: 10%;
-        right: 10%;
-        bottom: 10%;
-        background:
-          radial-gradient(circle at 20% 30%, rgba(74, 14, 23, 0.25), transparent 50%),
-          radial-gradient(circle at 80% 70%, rgba(255, 255, 255, 0.06), transparent 60%);
-        filter: blur(50px);
-        z-index: 0;
-      }
+      .stack-item:nth-child(1) { top: 10%; left: 6%; transform: rotate(-3deg); z-index: 3; animation: floatSlow 8s ease-in-out infinite; }
+      .stack-item:nth-child(2) { top: 6%; left: 30%; transform: rotate(2deg); z-index: 4; animation: floatSlowRev 9s ease-in-out infinite 1s; }
+      .stack-item:nth-child(3) { top: 36%; left: 16%; transform: rotate(-2deg); z-index: 5; animation: floatSlow 7s ease-in-out infinite 2s; }
+      .stack-item:nth-child(4) { top: 30%; left: 44%; transform: rotate(3deg); z-index: 2; animation: floatSlowRev 8.5s ease-in-out infinite 0.5s; }
 
       /* ---------- Collage grid ---------- */
       .info-collage {
@@ -1180,11 +1195,11 @@
         position: relative;
         z-index: 2;
         font-family: var(--font-display);
-        font-size: 0.95rem;
+        font-size: 1rem;
         font-weight: 600;
         color: var(--text);
         letter-spacing: -0.01em;
-        text-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+        text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
       }
 
       .collage-cell:nth-child(1) { grid-column: 1; grid-row: 1 / 3; animation: floatSlow 8s ease-in-out infinite; }
@@ -1199,61 +1214,6 @@
         display: flex;
         align-items: center;
         justify-content: center;
-      }
-
-      .shield {
-        position: relative;
-        width: 340px;
-        height: 380px;
-        clip-path: polygon(50% 0%, 100% 28%, 100% 78%, 50% 100%, 0% 78%, 0% 28%);
-        background: var(--bg-card);
-        border: 1px solid var(--border-default);
-        box-shadow: var(--shadow-card);
-        backdrop-filter: blur(24px) saturate(1.4);
-        z-index: 2;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        padding: 40px 28px;
-        text-align: center;
-      }
-
-      .shield-icon {
-        width: 64px;
-        height: 64px;
-        border-radius: 50%;
-        border: 1px solid var(--border-default);
-        background: rgba(74, 14, 23, 0.2);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        margin-bottom: 24px;
-        box-shadow: 0 0 24px rgba(74, 14, 23, 0.35);
-      }
-
-      .shield-icon svg {
-        width: 30px;
-        height: 30px;
-        stroke: #fff;
-        stroke-width: 2;
-        stroke-linecap: round;
-        stroke-linejoin: round;
-      }
-
-      .shield-text {
-        font-family: var(--font-display);
-        font-size: 1.3rem;
-        font-weight: 600;
-        color: var(--text);
-        margin-bottom: 8px;
-        letter-spacing: -0.01em;
-      }
-
-      .shield-text-sub {
-        font-size: 0.95rem;
-        color: var(--text-muted);
-        line-height: 1.6;
       }
 
       .shield-rings {
@@ -1271,13 +1231,65 @@
         animation: ringExpand 5s ease-out infinite;
       }
 
-      .ring:nth-child(1) { width: 420px; height: 420px; animation-delay: 0s; }
-      .ring:nth-child(2) { width: 520px; height: 520px; animation-delay: 1.6s; }
-      .ring:nth-child(3) { width: 620px; height: 620px; animation-delay: 3.2s; }
+      .ring:nth-child(1) { width: 440px; height: 440px; animation-delay: 0s; }
+      .ring:nth-child(2) { width: 560px; height: 560px; animation-delay: 1.6s; }
+      .ring:nth-child(3) { width: 680px; height: 680px; animation-delay: 3.2s; }
 
-      @keyframes ringExpand {
-        0% { transform: scale(0.7); opacity: 0.5; }
-        100% { transform: scale(1.3); opacity: 0; }
+      .shield {
+        position: relative;
+        width: 380px;
+        height: 420px;
+        clip-path: polygon(50% 0%, 100% 28%, 100% 78%, 50% 100%, 0% 78%, 0% 28%);
+        background: var(--bg-card);
+        border: 1px solid var(--border-default);
+        box-shadow: var(--shadow-card);
+        backdrop-filter: blur(28px) saturate(1.4);
+        z-index: 2;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 48px 32px;
+        text-align: center;
+      }
+
+      .shield-icon {
+        width: 72px;
+        height: 72px;
+        border-radius: 50%;
+        border: 1px solid var(--border-default);
+        background: rgba(74, 14, 23, 0.2);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 28px;
+        box-shadow: 0 0 28px rgba(74, 14, 23, 0.4);
+      }
+
+      .shield-icon svg {
+        width: 34px;
+        height: 34px;
+        stroke: #fff;
+        stroke-width: 2;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+      }
+
+      .shield-text {
+        font-family: var(--font-display);
+        font-size: 1.5rem;
+        font-weight: 600;
+        color: var(--text);
+        margin-bottom: 10px;
+        letter-spacing: -0.01em;
+      }
+
+      .shield-text-sub {
+        font-size: 1rem;
+        color: var(--text-muted);
+        line-height: 1.7;
+        max-width: 280px;
+        margin: 0 auto;
       }
 
       /* ---------- Device mockups ---------- */
@@ -1289,7 +1301,7 @@
         align-items: flex-end;
         justify-content: center;
         gap: 40px;
-        padding-bottom: 40px;
+        padding-bottom: 50px;
       }
 
       .device {
@@ -1297,48 +1309,48 @@
       }
 
       .device:hover {
-        transform: translateY(-10px);
+        transform: translateY(-12px);
       }
 
       .device-frame {
         background: #1a1a2e;
         border-radius: var(--radius-lg);
-        padding: 10px;
+        padding: 12px;
         box-shadow: var(--shadow-xl);
         position: relative;
       }
 
       .device-phone .device-frame {
-        width: 90px;
-        height: 180px;
-        border-radius: 40px;
-        border: 10px solid #1a1a2e;
+        width: 100px;
+        height: 200px;
+        border-radius: 44px;
+        border: 12px solid #1a1a2e;
       }
 
       .device-tablet .device-frame {
-        width: 190px;
-        height: 260px;
-        border-radius: 28px;
-        border: 8px solid #1a1a2e;
+        width: 210px;
+        height: 290px;
+        border-radius: 32px;
+        border: 10px solid #1a1a2e;
       }
 
       .device-laptop .device-frame {
-        width: 340px;
-        height: 210px;
-        border-radius: 20px;
-        border: 6px solid #1a1a2e;
+        width: 380px;
+        height: 240px;
+        border-radius: 24px;
+        border: 8px solid #1a1a2e;
       }
 
       .device-laptop .device-frame::before {
         content: "";
         position: absolute;
-        bottom: -14px;
+        bottom: -16px;
         left: 50%;
         transform: translateX(-50%);
-        width: 70px;
-        height: 8px;
+        width: 80px;
+        height: 10px;
         background: #1a1a2e;
-        border-radius: 0 0 10px 10px;
+        border-radius: 0 0 12px 12px;
       }
 
       .device-screen {
@@ -1350,29 +1362,29 @@
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        padding: 18px;
+        padding: 20px;
         overflow: hidden;
         border: 1px solid var(--border-subtle);
       }
 
       .device-screen.mini {
-        padding: 12px;
+        padding: 14px;
       }
 
       .conversation {
         display: flex;
         flex-direction: column;
-        gap: 10px;
+        gap: 12px;
         width: 100%;
       }
 
       .bubble {
         display: inline-block;
-        padding: 10px 14px;
-        border-radius: 14px;
-        font-size: 0.9rem;
-        line-height: 1.5;
-        max-width: 85%;
+        padding: 12px 16px;
+        border-radius: 16px;
+        font-size: 0.95rem;
+        line-height: 1.6;
+        max-width: 88%;
         box-shadow: var(--shadow-sm);
       }
 
@@ -1392,34 +1404,34 @@
       }
 
       .bubble.source {
-        font-size: 0.75rem;
+        font-size: 0.8rem;
         color: var(--text-soft);
-        padding: 6px 10px;
-        max-width: 80%;
+        padding: 8px 12px;
+        max-width: 82%;
         background: rgba(74, 14, 23, 0.2);
         border: 1px solid rgba(74, 14, 23, 0.35);
-        border-radius: 10px;
-        margin-top: 4px;
+        border-radius: 12px;
+        margin-top: 6px;
       }
 
       .mini-search {
         width: 100%;
-        height: 40px;
+        height: 44px;
         background: rgba(255, 255, 255, 0.05);
         border: 1px solid var(--border-subtle);
         border-radius: var(--radius-full);
         display: flex;
         align-items: center;
-        padding: 0 18px;
-        margin-bottom: 14px;
+        padding: 0 20px;
+        margin-bottom: 16px;
       }
 
       .mini-search::before {
         content: "";
-        width: 16px;
-        height: 16px;
+        width: 18px;
+        height: 18px;
         background: url("data:image/svg+xml,%3Csvg viewBox='0 0 24 24' fill='none' stroke='%23666' stroke-width='2'%3E%3Ccircle cx='11' cy='11' r='8'/%3E%3Cline x1='21' y1='21' x2='16.65' y2='16.65'/%3E%3C/svg%3E") center/contain no-repeat;
-        margin-right: 10px;
+        margin-right: 12px;
         flex-shrink: 0;
       }
 
@@ -1428,7 +1440,7 @@
         background: transparent;
         border: none;
         color: var(--text);
-        font-size: 0.85rem;
+        font-size: 0.9rem;
         outline: none;
       }
 
@@ -1441,7 +1453,7 @@
         border-radius: 5px;
         background: linear-gradient(90deg, var(--text-muted), transparent);
         opacity: 0.35;
-        margin: 7px 0;
+        margin: 8px 0;
       }
 
       .answer-line.short { width: 55%; }
@@ -1461,61 +1473,65 @@
         .device-stage {
           flex-direction: column;
           align-items: center;
-          gap: 24px;
-          padding-bottom: 20px;
+          gap: 30px;
+          padding-bottom: 30px;
         }
         .device-laptop .device-frame {
-          width: 280px;
-          height: 170px;
+          width: 320px;
+          height: 200px;
+        }
+        .device-tablet .device-frame {
+          width: 190px;
+          height: 260px;
         }
       }
 
-      /* ---------- Example panels ---------- */
+      /* ---------- Example / tip panels ---------- */
       .example-panel {
         background: var(--bg-card);
         border: 1px solid var(--border-default);
         border-radius: var(--radius-xl);
-        padding: 24px;
+        padding: 28px;
         margin-top: 16px;
         box-shadow: var(--shadow-card);
-        backdrop-filter: blur(20px) saturate(1.4);
+        backdrop-filter: blur(24px) saturate(1.4);
         width: 100%;
       }
 
       .example-label {
-        font-size: 0.8rem;
-        font-weight: 600;
-        letter-spacing: 0.1em;
+        font-size: 0.75rem;
+        font-weight: 700;
+        letter-spacing: 0.14em;
         text-transform: uppercase;
-        color: rgba(74, 14, 23, 0.5);
-        margin-bottom: 14px;
+        color: rgba(74, 14, 23, 0.45);
+        margin-bottom: 16px;
         display: block;
       }
 
       .conversation-demo {
         display: flex;
         flex-direction: column;
-        gap: 10px;
+        gap: 12px;
       }
 
       .source-panel {
-        margin-top: 10px;
-        padding: 12px 16px;
+        margin-top: 12px;
+        padding: 14px 18px;
         background: rgba(74, 14, 23, 0.15);
         border: 1px solid rgba(74, 14, 23, 0.3);
         border-radius: var(--radius-lg);
         display: flex;
         align-items: center;
-        gap: 10px;
-        font-size: 0.85rem;
+        gap: 12px;
+        font-size: 0.9rem;
         color: var(--text-muted);
       }
 
       .source-panel::before {
         content: "";
-        width: 10px;
-        height: 10px;
-        border-radius: 2px;
+        width: 12px;
+        height: 12px;
+        border-radius: 3px;
         background: var(--accent);
         flex-shrink: 0;
       }
@@ -1525,12 +1541,49 @@
         font-weight: 600;
       }
 
+      /* ---------- Play animation button ---------- */
+      .play-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        margin-top: 20px;
+        padding: 12px 24px;
+        background: var(--accent);
+        color: #fff;
+        border: none;
+        border-radius: var(--radius-full);
+        font-family: var(--font-ui);
+        font-size: 0.9rem;
+        font-weight: 600;
+        cursor: pointer;
+        box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.08) inset, 0 12px 30px rgba(74, 14, 23, 0.45);
+        transition: background 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+      }
+
+      .play-btn:hover {
+        background: var(--accent-hover);
+        transform: translateY(-2px);
+      }
+
+      .play-btn:active {
+        transform: translateY(0);
+      }
+
+      .play-btn svg {
+        width: 18px;
+        height: 18px;
+        stroke: currentColor;
+        stroke-width: 2.5;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+      }
+
       /* ============================================================
          CTA / CLOSING
          ============================================================ */
       .close-section {
         text-align: center;
-        padding: 160px 40px;
+        padding: 180px 40px;
         position: relative;
         overflow: hidden;
       }
@@ -1543,16 +1596,17 @@
       .close-section .section-text {
         margin-left: auto;
         margin-right: auto;
+        max-width: 700px;
       }
 
       .close-glow {
         position: absolute;
-        top: 20%;
+        top: 15%;
         left: 50%;
-        width: 600px;
-        height: 300px;
-        background: radial-gradient(circle, rgba(74, 14, 23, 0.2), transparent 60%);
-        filter: blur(60px);
+        width: 700px;
+        height: 350px;
+        background: radial-gradient(circle, rgba(74, 14, 23, 0.25), transparent 60%);
+        filter: blur(70px);
         z-index: -1;
       }
 
@@ -1560,14 +1614,14 @@
         display: inline-flex;
         align-items: center;
         gap: 10px;
-        margin-top: 32px;
-        padding: 16px 32px;
+        margin-top: 40px;
+        padding: 18px 40px;
         background: var(--accent);
         color: #fff;
         border: none;
         border-radius: var(--radius-full);
         font-family: var(--font-ui);
-        font-size: 1.05rem;
+        font-size: 1.1rem;
         font-weight: 600;
         letter-spacing: -0.01em;
         text-decoration: none;
@@ -1603,7 +1657,7 @@
 
       /* Footer */
       .site-footer {
-        padding: 60px 40px 30px;
+        padding: 80px 40px 40px;
         border-top: 1px solid var(--border-subtle);
         background: var(--bg-surface);
       }
@@ -1615,14 +1669,14 @@
         flex-direction: column;
         align-items: center;
         text-align: center;
-        gap: 24px;
+        gap: 28px;
       }
 
       .footer-brand {
         display: flex;
         flex-direction: column;
         align-items: center;
-        gap: 8px;
+        gap: 10px;
       }
 
       .footer-brand-link {
@@ -1631,7 +1685,7 @@
         gap: 10px;
         text-decoration: none;
         color: var(--text);
-        font-size: 18px;
+        font-size: 19px;
         font-weight: 700;
         letter-spacing: -0.4px;
         font-family: var(--font-display);
@@ -1639,11 +1693,11 @@
 
       .footer-tagline {
         color: var(--text-soft);
-        font-size: 0.95rem;
+        font-size: 1rem;
       }
 
       .footer-nav {
-        margin: 8px 0;
+        margin: 10px 0;
       }
 
       .footer-links {
@@ -1651,7 +1705,7 @@
         flex-wrap: wrap;
         align-items: center;
         justify-content: center;
-        gap: 24px;
+        gap: 30px;
         list-style: none;
         padding: 0;
         margin: 0;
@@ -1660,7 +1714,7 @@
       .footer-links a {
         color: var(--text-muted);
         text-decoration: none;
-        font-size: 0.9rem;
+        font-size: 0.95rem;
         font-weight: 500;
         transition: color 0.2s ease;
       }
@@ -1671,13 +1725,13 @@
 
       .footer-copyright {
         color: var(--text-soft);
-        font-size: 0.85rem;
-        margin-top: 16px;
+        font-size: 0.9rem;
+        margin-top: 20px;
       }
 
       @media (max-width: 768px) {
         .section {
-          padding: 100px 24px;
+          padding: 110px 24px;
         }
         .section-container {
           text-align: center;
@@ -1690,7 +1744,7 @@
           margin-right: auto;
         }
         .close-section {
-          padding: 110px 24px;
+          padding: 130px 24px;
         }
       }
     </style>
@@ -1789,11 +1843,11 @@
         </div>
 
         <main>
-          <!-- PAGE INTRODUCTION -->
+          <!-- INTRODUCTION -->
           <section class="section works-intro" aria-labelledby="intro-heading">
             <div class="section-container">
-              <div class="feature-row">
-                <div class="feature-content">
+              <div class="editorial-row">
+                <div class="editorial-content">
                   <span class="section-eyebrow">Introduction</span>
                   <h2 id="intro-heading" class="section-heading">APS AI starts with a question.</h2>
                   <p class="section-text text-lead">
@@ -1805,8 +1859,14 @@
                   <p class="section-text">
                     From school activities and academic information to administration, facilities and important announcements, APS AI brings school information into one convenient experience. Instead of searching across different sources yourself, start with a question and let APS AI help you find relevant information.
                   </p>
+                  <button class="play-btn" aria-label="Play introduction animation">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                      <polygon points="5 3 19 12 5 21 5 3"/>
+                    </svg>
+                    Play introduction
+                  </button>
                 </div>
-                <div class="feature-visual">
+                <div class="editorial-visual">
                   <div class="sphere-stage">
                     <div class="sphere-glow"></div>
                     <div class="sphere">
@@ -1827,19 +1887,19 @@
           <!-- WHY YOU CAN TRUST APS AI -->
           <section class="section works-trust" aria-labelledby="trust-heading">
             <div class="section-container">
-              <div class="feature-content" style="max-width: 620px; margin: 0 auto 90px; text-align: center;">
+              <div class="editorial-content" style="max-width: 560px; margin: 0 auto 120px; text-align: center;">
                 <span class="section-eyebrow">Why you can trust APS AI</span>
-                <h2 class="section-heading" style="margin-bottom: 0;">Why you can trust APS AI</h2>
+                <h2 class="section-heading" style="margin-left: auto; margin-right: auto; margin-bottom: 0;">Why you can trust APS AI</h2>
               </div>
 
-              <div class="feature-row">
-                <div class="feature-content">
-                  <h3 class="feature-heading">Straight from the source.</h3>
-                  <p class="feature-text">
+              <div class="editorial-row">
+                <div class="editorial-content">
+                  <h3 class="editorial-heading">Straight from the source.</h3>
+                  <p class="editorial-text">
                     APS AI helps you discover school information using official school websites and documents made available to the platform. Its purpose is to make relevant information easier to find and understand, while keeping the original source at the centre of the experience.
                   </p>
                 </div>
-                <div class="feature-visual">
+                <div class="editorial-visual">
                   <div class="preview-stack">
                     <div class="stack-glow"></div>
                     <div class="stack-item"><img src="/section1.jpg" alt="Official school website preview" loading="lazy" /></div>
@@ -1850,36 +1910,36 @@
                 </div>
               </div>
 
-              <div class="feature-row visual-first">
-                <div class="feature-visual">
-                  <div class="visual-frame" style="height: 100%; width: 90%;">
-                    <div class="glass-panel" style="top: 12%; left: 6%; width: 42%; height: 76%;">
+              <div class="editorial-row visual-first">
+                <div class="editorial-visual">
+                  <div class="visual-frame" style="height: 100%; width: 92%;">
+                    <div class="glass-panel" style="top: 10%; left: 6%; width: 44%; height: 80%;">
                       <img src="/img1.jpg" alt="Simple interface preview" loading="lazy" style="opacity: 0.85;" />
                     </div>
-                    <div class="glass-panel" style="top: 4%; right: 6%; width: 34%; height: 60%; animation: floatSlow 8s ease-in-out infinite 1s;">
+                    <div class="glass-panel" style="top: 4%; right: 6%; width: 36%; height: 64%; animation: floatSlow 8s ease-in-out infinite 1s;">
                       <img src="/img2.jpg" alt="Question and answer preview" loading="lazy" style="opacity: 0.8;" />
                     </div>
-                    <div class="glass-panel" style="bottom: 8%; left: 20%; width: 48%; height: 52%; animation: floatSlowRev 10s ease-in-out infinite 2s;">
+                    <div class="glass-panel" style="bottom: 8%; left: 22%; width: 52%; height: 56%; animation: floatSlowRev 10s ease-in-out infinite 2s;">
                       <img src="/img3.jpg" alt="Exploration preview" loading="lazy" style="opacity: 0.8;" />
                     </div>
                   </div>
                 </div>
-                <div class="feature-content">
-                  <h3 class="feature-heading">Simple to use. Easy to explore.</h3>
-                  <p class="feature-text">
+                <div class="editorial-content">
+                  <h3 class="editorial-heading">Simple to use. Easy to explore.</h3>
+                  <p class="editorial-text">
                     You don't need to learn complicated menus or search through multiple sections of a website. Simply enter your question in natural language and explore the relevant school information APS AI helps you discover.
                   </p>
                 </div>
               </div>
 
-              <div class="feature-row">
-                <div class="feature-content">
-                  <h3 class="feature-heading">Everything begins with your school.</h3>
-                  <p class="feature-text">
+              <div class="editorial-row">
+                <div class="editorial-content">
+                  <h3 class="editorial-heading">Everything begins with your school.</h3>
+                  <p class="editorial-text">
                     Whether you are looking for academic details, school activities, facilities, administration or important announcements, APS AI is designed around the information that matters in a school environment.
                   </p>
                 </div>
-                <div class="feature-visual">
+                <div class="editorial-visual">
                   <div class="info-collage">
                     <div class="collage-cell"><img src="/section1.jpg" alt="Academic calendar panel" loading="lazy" /><div class="collage-label">Academic calendar</div></div>
                     <div class="collage-cell"><img src="/section2.jpg" alt="Announcement panel" loading="lazy" /><div class="collage-label">Announcements</div></div>
@@ -1888,8 +1948,8 @@
                 </div>
               </div>
 
-              <div class="feature-row visual-first">
-                <div class="feature-visual">
+              <div class="editorial-row visual-first">
+                <div class="editorial-visual">
                   <div class="shield-stage">
                     <div class="shield-rings">
                       <div class="ring"></div>
@@ -1907,11 +1967,17 @@
                     </div>
                   </div>
                 </div>
-                <div class="feature-content">
-                  <h3 class="feature-heading">Your privacy matters.</h3>
-                  <p class="feature-text">
+                <div class="editorial-content">
+                  <h3 class="editorial-heading">Your privacy matters.</h3>
+                  <p class="editorial-text">
                     Finding school information should feel straightforward and comfortable. APS AI communicates clearly how information is handled and what privacy protections are implemented. Learn about the platform's privacy practices before making any claims about data storage, account requirements or anonymity.
                   </p>
+                  <button class="play-btn" aria-label="Play privacy animation" style="margin-top: 24px;">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                      <polygon points="5 3 19 12 5 21 5 3"/>
+                    </svg>
+                    Play privacy
+                  </button>
                 </div>
               </div>
             </div>
@@ -1920,19 +1986,19 @@
           <!-- WHAT YOU CAN DO WITH APS AI -->
           <section class="section works-do" aria-labelledby="do-heading">
             <div class="section-container">
-              <div class="feature-content" style="max-width: 620px; margin: 0 auto 90px; text-align: center;">
+              <div class="editorial-content" style="max-width: 560px; margin: 0 auto 120px; text-align: center;">
                 <span class="section-eyebrow">What you can do</span>
-                <h2 class="section-heading" style="margin-bottom: 0;">What you can do</h2>
+                <h2 class="section-heading" style="margin-left: auto; margin-right: auto; margin-bottom: 0;">What you can do</h2>
               </div>
 
-              <div class="feature-row">
-                <div class="feature-content">
-                  <h3 class="feature-heading">Find the information you need.</h3>
-                  <p class="feature-text">
+              <div class="editorial-row">
+                <div class="editorial-content">
+                  <h3 class="editorial-heading">Find the information you need.</h3>
+                  <p class="editorial-text">
                     Ask about school administration, academic information, activities, facilities, important dates and other school-related topics. APS AI helps you discover relevant information without having to navigate through multiple webpages yourself.
                   </p>
                 </div>
-                <div class="feature-visual">
+                <div class="editorial-visual">
                   <div class="device-stage">
                     <div class="device-connection-lines"></div>
                     <div class="device device-phone">
@@ -1951,8 +2017,8 @@
                 </div>
               </div>
 
-              <div class="feature-row visual-first">
-                <div class="feature-visual">
+              <div class="editorial-row visual-first">
+                <div class="editorial-visual">
                   <div class="preview-stack">
                     <div class="stack-glow"></div>
                     <div class="stack-item"><img src="/section4.jpg" alt="School notice preview" loading="lazy" /></div>
@@ -1960,22 +2026,22 @@
                     <div class="stack-item"><img src="/aps-school.jpg" alt="School webpage preview" loading="lazy" /></div>
                   </div>
                 </div>
-                <div class="feature-content">
-                  <h3 class="feature-heading">Make sense of school information.</h3>
-                  <p class="feature-text">
+                <div class="editorial-content">
+                  <h3 class="editorial-heading">Make sense of school information.</h3>
+                  <p class="editorial-text">
                     School information can be spread across notices, documents and webpages. APS AI helps bring relevant information into a more accessible experience, making it easier to understand and explore.
                   </p>
                 </div>
               </div>
 
-              <div class="feature-row">
-                <div class="feature-content">
-                  <h3 class="feature-heading">Ask in your own words.</h3>
-                  <p class="feature-text">
+              <div class="editorial-row">
+                <div class="editorial-content">
+                  <h3 class="editorial-heading">Ask in your own words.</h3>
+                  <p class="editorial-text">
                     You don't need to know the exact title of a notice or the webpage where information is published. Describe what you are looking for naturally, and APS AI will help you explore relevant school information.
                   </p>
                 </div>
-                <div class="feature-visual">
+                <div class="editorial-visual">
                   <div class="device-stage">
                     <div class="device-connection-lines"></div>
                     <div class="device device-tablet">
@@ -1995,11 +2061,11 @@
                 </div>
               </div>
 
-              <div class="feature-row visual-first">
-                <div class="feature-visual">
+              <div class="editorial-row visual-first">
+                <div class="editorial-visual">
                   <div class="device-stage">
                     <div class="device-connection-lines"></div>
-                    <div class="device device-laptop" style="transform: translateY(-12px);">
+                    <div class="device device-laptop" style="transform: translateY(-14px);">
                       <div class="device-frame">
                         <div class="device-screen">
                           <div class="mini-search"><input type="search" placeholder="Ask a question…" readonly /></div>
@@ -2009,14 +2075,14 @@
                         </div>
                       </div>
                     </div>
-                    <div class="device device-tablet" style="transform: translateY(10px) translateX(-60px); z-index: 2;">
+                    <div class="device device-tablet" style="transform: translateY(12px) translateX(-64px); z-index: 2;">
                       <div class="device-frame">
                         <div class="device-screen mini">
                           <div class="mini-search"><input type="search" placeholder="Ask a question…" readonly /></div>
                         </div>
                       </div>
                     </div>
-                    <div class="device device-phone" style="transform: translateY(22px) translateX(-110px); z-index: 3;">
+                    <div class="device device-phone" style="transform: translateY(26px) translateX(-118px); z-index: 3;">
                       <div class="device-frame">
                         <div class="device-screen mini">
                           <div class="mini-search"><input type="search" placeholder="Ask a question…" readonly /></div>
@@ -2025,9 +2091,9 @@
                     </div>
                   </div>
                 </div>
-                <div class="feature-content">
-                  <h3 class="feature-heading">Access APS AI from your browser.</h3>
-                  <p class="feature-text">
+                <div class="editorial-content">
+                  <h3 class="editorial-heading">Access APS AI from your browser.</h3>
+                  <p class="editorial-text">
                     APS AI is designed to be accessible through a web browser on supported devices. Open the website, enter your question and explore school information without needing a separate application installation.
                   </p>
                 </div>
@@ -2038,15 +2104,15 @@
           <!-- HOW TO GET THE BEST ANSWER -->
           <section class="section works-tips" aria-labelledby="tips-heading">
             <div class="section-container">
-              <div class="feature-content" style="max-width: 620px; margin: 0 auto 90px; text-align: center;">
+              <div class="editorial-content" style="max-width: 560px; margin: 0 auto 120px; text-align: center;">
                 <span class="section-eyebrow">How to get the best answer</span>
-                <h2 class="section-heading" style="margin-bottom: 0;">How to get the best answer</h2>
+                <h2 class="section-heading" style="margin-left: auto; margin-right: auto; margin-bottom: 0;">How to get the best answer</h2>
               </div>
 
-              <div class="feature-row">
-                <div class="feature-content">
-                  <h3 class="feature-heading">Be specific.</h3>
-                  <p class="feature-text">
+              <div class="editorial-row">
+                <div class="editorial-content">
+                  <h3 class="editorial-heading">Be specific.</h3>
+                  <p class="editorial-text">
                     The more clearly you describe what you are looking for, the easier it is to identify relevant information. Include details such as the event, academic year, class, date or school department whenever they are relevant to your question.
                   </p>
                   <div class="example-panel">
@@ -2059,7 +2125,7 @@
                     </div>
                   </div>
                 </div>
-                <div class="feature-visual">
+                <div class="editorial-visual">
                   <div class="device-stage">
                     <div class="device-connection-lines"></div>
                     <div class="device device-phone">
@@ -2078,8 +2144,8 @@
                 </div>
               </div>
 
-              <div class="feature-row visual-first">
-                <div class="feature-visual">
+              <div class="editorial-row visual-first">
+                <div class="editorial-visual">
                   <div class="device-stage">
                     <div class="device-connection-lines"></div>
                     <div class="device device-tablet">
@@ -2098,27 +2164,27 @@
                     </div>
                   </div>
                 </div>
-                <div class="feature-content">
-                  <h3 class="feature-heading">Ask follow-up questions.</h3>
-                  <p class="feature-text">
+                <div class="editorial-content">
+                  <h3 class="editorial-heading">Ask follow-up questions.</h3>
+                  <p class="editorial-text">
                     If you need more information, continue the conversation with a follow-up question. You can ask for clarification, explore a related topic or request additional details about the information you have found.
                   </p>
                 </div>
               </div>
 
-              <div class="feature-row">
-                <div class="feature-content">
-                  <h3 class="feature-heading">Check the original source.</h3>
-                  <p class="feature-text">
+              <div class="editorial-row">
+                <div class="editorial-content">
+                  <h3 class="editorial-heading">Check the original source.</h3>
+                  <p class="editorial-text">
                     When exploring school information, refer to the original official webpage or document whenever a source is provided. This helps you verify details and access the full information directly from its source.
                   </p>
                 </div>
-                <div class="feature-visual">
-                  <div class="visual-frame" style="height: 100%; width: 92%; overflow: visible;">
+                <div class="editorial-visual">
+                  <div class="visual-frame" style="height: 100%; width: 94%; overflow: visible;">
                     <div class="glass-panel" style="top: 10%; left: 5%; width: 90%; height: 80%;">
                       <img src="/section5.jpg" alt="Answer with source reference" loading="lazy" style="opacity: 0.85;" />
                     </div>
-                    <div class="source-panel" style="position: absolute; bottom: -52px; left: 50%; transform: translateX(-50%);">
+                    <div class="source-panel" style="position: absolute; bottom: -64px; left: 50%; transform: translateX(-50%);">
                       <span class="source-title">Shown source references are real pages made available to APS AI.</span>
                     </div>
                   </div>
@@ -2131,7 +2197,7 @@
           <section class="close-section" aria-labelledby="close-heading">
             <div class="close-glow"></div>
             <h2 id="close-heading" class="section-heading">Your school information. One place.</h2>
-            <p class="section-text" style="max-width: 700px;">
+            <p class="section-text">
               Finding school information should be simple. APS AI brings together a more convenient way to explore official school information, understand relevant documents and discover the details you need. Start with a question and let your school information become easier to find.
             </p>
             <a href="/" class="btn-cta" aria-label="Go to APS AI homepage">
@@ -2314,7 +2380,7 @@
           observer.observe(section);
         });
 
-        document.querySelectorAll('.feature-row').forEach(row => {
+        document.querySelectorAll('.editorial-row').forEach(row => {
           row.style.opacity = '0';
           row.style.transform = 'translateY(30px)';
           row.style.transition = 'opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1)';
