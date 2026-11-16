@@ -89,20 +89,20 @@
         --shadow-float: 0 32px 64px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.03);
       }
 
-      html, body {
-        height: 100%;
-      }
-
       html {
+        height: 100%;
         scroll-behavior: smooth;
+        overflow: hidden;
       }
 
       body {
+        height: 100%;
         margin: 0;
         font-family: var(--font-ui);
-        background: var(--bg-gradient);
+        background: var(--bg-deep);
         color: var(--text);
         overflow-x: hidden;
+        overflow-y: auto;
         -webkit-font-smoothing: antialiased;
         transition: background-color 0.3s ease;
         scrollbar-gutter: stable;
@@ -151,6 +151,7 @@
          PAGE FRAME & SURFACE
          ============================================================ */
       .page-frame {
+        height: 100%;
         min-height: 100vh;
         display: flex;
         flex-direction: column;
@@ -158,10 +159,10 @@
         padding: 24px;
         position: relative;
         z-index: 1;
+        overflow: hidden;
       }
 
       .page-surface {
-        flex: 1;
         width: 100%;
         max-width: 100%;
         background: var(--bg-surface);
@@ -170,8 +171,7 @@
         box-shadow: var(--shadow-float);
         display: flex;
         flex-direction: column;
-        min-height: calc(100vh - 48px);
-        overflow: hidden;
+        overflow-y: auto;
         position: relative;
       }
 
@@ -192,7 +192,7 @@
         }
         .page-surface {
           border-radius: var(--radius-xl);
-          min-height: calc(100vh - 32px);
+          overflow-y: hidden;
         }
       }
 
@@ -202,6 +202,7 @@
         }
         .page-surface {
           border-radius: var(--radius-lg);
+          overflow-y: hidden;
           min-height: calc(100vh - 24px);
         }
       }
@@ -1063,7 +1064,7 @@
         header { padding: 16px 20px; }
         .hero { 
           padding: 24px 16px 0; 
-          min-height: 100vh;
+          min-height: calc(100vh - 220px); 
           display: flex;
           flex-direction: column;
         }
@@ -1153,7 +1154,7 @@
          SCROLL-DOWN SECTIONS
          ============================================================ */
       .section {
-        padding: 120px 40px;
+        padding: 160px 40px;
         position: relative;
         overflow: hidden;
       }
@@ -1168,7 +1169,7 @@
         margin: 0 auto;
         display: grid;
         grid-template-columns: 1fr 1fr;
-        gap: 80px;
+        gap: 110px;
         align-items: center;
       }
 
@@ -1967,7 +1968,7 @@
         <nav class="menu-main-nav" aria-label="Menu">
           <ul class="menu-nav-list">
             <li><a href="/" class="menu-nav-link" aria-current="page">Home</a></li>
-            <li><a href="#how-it-works" class="menu-nav-link">How it works</a></li>
+            <li><a href="/how-it-works" class="menu-nav-link">How it works</a></li>
             <li><a href="#privacy" class="menu-nav-link">Privacy</a></li>
             <li><a href="#about" class="menu-nav-link">About</a></li>
             <li><a href="#coming-soon" class="menu-nav-link">Coming soon</a></li>
@@ -2032,9 +2033,6 @@
       <div class="section-container">
         <div class="section-content">
           <h2 id="intro-heading" class="section-heading">APS AI uses artificial intelligence to make finding school information simple and accessible.</h2>
-          <p class="section-text">
-            It brings together information from official school websites and documents to provide clear answers, help you discover important updates, and explore everything your school has to offer — all in one place.
-          </p>
         </div>
         <div class="section-visual" aria-hidden="true">
           <div class="visual-image-wrapper">
@@ -2126,6 +2124,7 @@
         </div>
         <nav class="footer-nav" aria-label="Footer navigation">
           <ul class="footer-links">
+            <li><a href="/how-it-works">How it works</a></li>
             <li><a href="#privacy">Privacy</a></li>
             <li><a href="#terms">Terms</a></li>
             <li><a href="#accessibility">Accessibility</a></li>
