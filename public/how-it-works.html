@@ -3,143 +3,154 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>APS AI — Changelog</title>
+    <title>How it works — APS AI</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Cormorant+Garamond:wght@400;500;600;700&display=swap" rel="stylesheet" />
     <style>
       :root {
-        --bg: #ffffff;
-        --text: #1a1a1a;
-        --muted: #555555;
-        --border: #e5e5e5;
-        --link: #0066cc;
-        --tag-bg: #f4f4f4;
+        --bg: #0a0a0b;
+        --bg-deep: #070708;
+        --bg-surface: #101216;
+        --bg-card: rgba(18, 20, 24, 0.92);
+        --text: #ffffff;
+        --text-muted: rgba(255, 255, 255, 0.62);
+        --text-soft: rgba(255, 255, 255, 0.35);
+        --primary: #0066ff;
+        --border-subtle: rgba(255, 255, 255, 0.05);
+        --border-default: rgba(255, 255, 255, 0.08);
+        --font-ui: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        --font-display: "Cormorant Garamond", Georgia, serif;
       }
-      * { box-sizing: border-box; }
+      :root[data-theme="light"] {
+        --bg: #f6f7f9;
+        --bg-deep: #eef0f3;
+        --bg-surface: #ffffff;
+        --bg-card: rgba(255, 255, 255, 0.96);
+        --text: #111111;
+        --text-muted: rgba(17, 17, 17, 0.62);
+        --text-soft: rgba(17, 17, 17, 0.42);
+        --border-subtle: rgba(17, 17, 17, 0.08);
+        --border-default: rgba(17, 17, 17, 0.12);
+      }
+      @media (prefers-color-scheme: light) {
+        :root:not([data-theme="dark"]) {
+          --bg: #f6f7f9; --bg-deep: #eef0f3; --bg-surface: #ffffff; --bg-card: rgba(255, 255, 255, 0.96);
+          --text: #111111; --text-muted: rgba(17, 17, 17, 0.62); --text-soft: rgba(17, 17, 17, 0.42);
+          --border-subtle: rgba(17, 17, 17, 0.08); --border-default: rgba(17, 17, 17, 0.12);
+        }
+      }
+      * { box-sizing: border-box; margin: 0; padding: 0; }
+      html { scroll-behavior: smooth; }
       body {
-        margin: 0;
-        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-        font-size: 16px;
-        line-height: 1.65;
+        font-family: var(--font-ui);
+        background: var(--bg-deep);
         color: var(--text);
-        background: var(--bg);
+        line-height: 1.7;
+        -webkit-font-smoothing: antialiased;
       }
-      main {
+      .wrap {
         max-width: 760px;
         margin: 0 auto;
         padding: 48px 24px 80px;
       }
+      a { color: var(--primary); text-decoration: none; }
+      a:hover { text-decoration: underline; }
+      .back { display: inline-block; margin-bottom: 32px; color: var(--text-muted); font-size: 0.9rem; }
       h1 {
-        font-size: 2rem;
+        font-family: var(--font-display);
+        font-size: clamp(2rem, 5vw, 3rem);
         font-weight: 600;
-        margin: 0 0 8px;
         letter-spacing: -0.02em;
-      }
-      .intro {
-        color: var(--muted);
-        margin: 0 0 40px;
-        padding-bottom: 24px;
-        border-bottom: 1px solid var(--border);
+        margin-bottom: 12px;
       }
       h2 {
-        font-size: 1.35rem;
+        font-family: var(--font-display);
+        font-size: 1.5rem;
         font-weight: 600;
-        margin: 48px 0 20px;
-        padding-bottom: 8px;
-        border-bottom: 1px solid var(--border);
+        margin: 40px 0 12px;
+        letter-spacing: -0.01em;
       }
-      h3 {
-        font-size: 1rem;
-        font-weight: 600;
-        margin: 28px 0 6px;
-      }
-      .meta {
+      .lede { color: var(--text-muted); margin-bottom: 32px; }
+      p { margin: 0 0 16px; color: var(--text-muted); }
+      p strong { color: var(--text); }
+      hr { border: none; border-top: 1px solid var(--border-subtle); margin: 40px 0; }
+      .step-num {
+        font-family: var(--font-display);
         font-size: 0.9rem;
-        color: var(--muted);
-        margin: 0 0 8px;
-      }
-      .tag {
-        display: inline-block;
-        font-size: 0.8rem;
-        color: var(--muted);
-        background: var(--tag-bg);
-        padding: 2px 8px;
-        border-radius: 4px;
-        margin-right: 6px;
-      }
-      p {
-        margin: 0 0 14px;
-      }
-      ul {
-        margin: 0 0 14px;
-        padding-left: 22px;
-      }
-      li {
+        letter-spacing: 0.12em;
+        color: var(--primary);
+        text-transform: uppercase;
         margin-bottom: 6px;
       }
-      a {
-        color: var(--link);
-        text-decoration: none;
+      .cta {
+        margin-top: 48px;
+        padding: 24px;
+        border: 1px solid var(--border-default);
+        border-radius: 16px;
+        background: var(--bg-surface);
       }
-      a:hover {
-        text-decoration: underline;
-      }
-      .note {
-        color: var(--muted);
-        font-size: 0.95rem;
-      }
+      .cta p { color: var(--text); }
     </style>
   </head>
   <body>
-    <main>
-      <h1>Changelog</h1>
-      <p class="intro">
-        A running log of updates, fixes, and improvements to APS AI. Entries are listed in reverse
-        chronological order. If something here affects how you use the product, we’ll call it out
-        plainly in the notes for that release.
-      </p>
+    <div class="wrap">
+      <a class="back" href="/">← Back to APS AI</a>
+      <h1>How APS AI Works</h1>
+      <p class="lede">School information, made easier to discover.</p>
+      <p>Finding information about your school should not feel like searching through a maze of webpages, notices and scattered documents. Whether you are looking for an academic calendar, school activities, administrative information, facilities or an important announcement, the information you need should be easier to reach.</p>
+      <p>APS AI is designed to make that experience more straightforward. Instead of navigating through multiple pages yourself, you can begin with a question written naturally, just as you would ask another person. APS AI then helps you explore relevant school information and understand the details that matter.</p>
+      <p>The idea is simple: spend less time searching for information and more time finding what you came for.</p>
 
-      <h2>November 2026</h2>
+      <hr />
 
-      <h3>Nov 14 — Initial public release</h3>
-      <p class="meta">
-        <span class="tag">Release</span>
-        <span class="tag">Web</span>
-      </p>
-      <p>
-        This is the first public version of APS AI. The goal for this release was simple: ship a
-        clean, dependable starting point rather than a long list of half-finished features. What’s
-        included today is the core web experience, the basic information pages, and the underlying
-        setup needed to serve the site reliably.
-      </p>
-      <p>Highlights in this release:</p>
-      <ul>
-        <li>Launched the main APS AI site with a streamlined layout focused on clarity and speed.</li>
-        <li>Added an overview of how APS AI works and what it’s meant to help with.</li>
-        <li>Set up hosting and asset delivery so pages load consistently across devices.</li>
-        <li>Established this changelog as the place where we’ll record notable changes going forward.</li>
-      </ul>
-      <p class="note">
-        Known limitations: this is an early release, so you may notice rough edges in copy or layout
-        on smaller screens. We’re collecting feedback and will prioritize fixes based on what people
-        actually run into.
-      </p>
+      <div class="step-num">01 — Start with a question.</div>
+      <h2>You don't need to know where to look.</h2>
+      <p>You do not have to remember the name of a webpage, know which section contains a particular notice or understand how the school's website is organised. Simply describe what you are looking for in your own words.</p>
+      <p>You might ask where to find the academic calendar, how to contact the school administration, what facilities are available or where information about upcoming activities is published. You can phrase your question naturally, without learning special commands or navigating complicated menus.</p>
+      <p>APS AI is built around the way people naturally look for information: by asking questions. Your question becomes the starting point for discovering the information you need.</p>
 
-      <h3>Nov 10 — Preview build</h3>
-      <p class="meta">
-        <span class="tag">Preview</span>
-      </p>
-      <p>
-        Shared a private preview build for internal testing. The focus during this phase was checking
-        content accuracy, basic navigation, and performance on common browsers. Feedback from the
-        preview informed the copy and structure changes that shipped in the public release.
-      </p>
+      <div class="step-num">02 — Explore information from school sources.</div>
+      <h2>Information begins with the source.</h2>
+      <p>APS AI is designed to help users discover information from official school websites and documents made available to the platform. These sources provide the underlying information that helps the system respond to questions about school-related topics.</p>
+      <p>Instead of requiring you to locate every relevant webpage or document yourself, APS AI helps bring relevant information into a more accessible conversational experience. This can make it easier to explore topics ranging from academic details and school activities to administration, facilities and important announcements.</p>
+      <p>The purpose is not to replace the original school sources. It is to make the information they contain easier to discover and understand.</p>
 
-      <h2>Coming up</h2>
-      <p>
-        Near-term work is centered on polish and documentation: clearer explanations of features,
-        better coverage of common questions, and small usability improvements based on early feedback.
-        When those changes ship, they’ll be documented here with dates and short notes on what changed
-        and why.
-      </p>
-    </main>
+      <div class="step-num">03 — Understand the answer.</div>
+      <h2>Clear explanations. Less unnecessary searching.</h2>
+      <p>Once you submit a question, APS AI processes it and generates a response using the information available to it. The aim is to present relevant details in a clear, readable format rather than making you work through multiple pages to understand the subject.</p>
+      <p>You can explore the response, identify the details relevant to your question and continue the conversation if you need more information. When a source is provided, you can also refer to the original material to check the information and explore it further.</p>
+      <p>An answer should be a useful starting point, not a reason to stop checking important details. For dates, policies, schedules and other information that may change, consulting the original school source remains important.</p>
+
+      <div class="step-num">04 — Keep exploring.</div>
+      <h2>One question can lead to another.</h2>
+      <p>Sometimes the first answer is all you need. Other times, it leads to another question. APS AI is designed to make that exploration feel natural.</p>
+      <p>You can ask follow-up questions to clarify a detail, explore a related subject or understand a particular part of the information more fully. You do not always need to start over or search for the same information again.</p>
+      <p>For example, you could begin by asking where to find the academic calendar and then ask which important dates are mentioned in it. You can gradually explore a subject through a conversation, making the process feel more direct and organised.</p>
+
+      <div class="step-num">05 — Accessible through your browser.</div>
+      <h2>No separate application required.</h2>
+      <p>APS AI is available through its website, allowing you to access the experience using a supported web browser. Whether you are using a smartphone, tablet, laptop or desktop computer, the same central idea remains: open APS AI, enter your question and explore the information you need.</p>
+      <p>There is no need to learn a complicated interface or navigate through a collection of separate tools. The experience is designed to keep the focus on the question and the information you are trying to find.</p>
+
+      <hr />
+
+      <div class="cta">
+        <p><strong>Information should be easier to find.</strong></p>
+        <p>APS AI brings a more convenient way to explore school information into one place. By combining natural-language questions with information from official school sources, it aims to make discovering relevant details simpler, clearer and more accessible.</p>
+        <p><strong>Start with a question. Discover what you need.</strong></p>
+      </div>
+    </div>
+    <script>
+      (function() {
+        var saved = 'dark';
+        try { saved = localStorage.getItem('theme') || 'dark'; } catch (e) {}
+        if (saved === 'light' || saved === 'dark') {
+          document.documentElement.setAttribute('data-theme', saved);
+        } else {
+          document.documentElement.removeAttribute('data-theme');
+        }
+      })();
+    </script>
   </body>
 </html>
