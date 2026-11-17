@@ -26,9 +26,10 @@ export default {
       if (!messages.length) {
         return new Response(JSON.stringify({ ok: false, error: "empty" }), { status: 400, headers: { "content-type": "application/json" } });
       }
+      const stream = body.stream === true;
       try {
         const apiKey = env.AI;
-const groqRes = await fetch("https://api.groq.com/openai/v1/chat/completions", {
+        const groqRes = await fetch("https://api.groq.com/openai/v1/chat/completions", {
           method: "POST",
           headers: {
             "content-type": "application/json",
@@ -38,12 +39,23 @@ const groqRes = await fetch("https://api.groq.com/openai/v1/chat/completions", {
             model: "openai/gpt-oss-20b",
             messages,
             temperature: 0.7,
+            stream: stream,
           }),
         });
-        const data = await groqRes.json();
         if (!groqRes.ok) {
+          const data = await groqRes.json();
           return new Response(JSON.stringify({ ok: false, error: (data && data.error && data.error.message) || groqRes.statusText }), { status: 500, headers: { "content-type": "application/json" } });
         }
+        if (stream) {
+          return new Response(groqRes.body, {
+            headers: {
+              "content-type": "text/event-stream",
+              "cache-control": "no-cache",
+              "connection": "keep-alive",
+            },
+          });
+        }
+        const data = await groqRes.json();
         const reply = (data && data.choices && data.choices[0] && data.choices[0].message && data.choices[0].message.content) || "";
         return new Response(JSON.stringify({ ok: true, reply: String(reply) }), { status: 200, headers: { "content-type": "application/json" } });
       } catch (e) {

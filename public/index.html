@@ -2162,45 +2162,20 @@
         line-height: 1.55;
         letter-spacing: -0.01em;
       }
-      /* Response action controls — compact row below the assistant answer */
+      /* Response action controls — copy only */
       .msg-actions {
         display: flex;
         align-items: center;
         gap: 10px;
         margin-top: 10px;
         align-self: flex-start;
+        opacity: 0;
+        transform: translateY(6px);
+        transition: opacity 0.22s ease, transform 0.22s ease;
       }
-      .msg-actions .feedback-capsule {
-        display: inline-flex;
-        align-items: center;
-        width: 76px;
-        height: 44px;
-        background: #191B1F;
-        border-radius: 9999px;
-        border: none;
-        padding: 0;
-      }
-      .msg-actions .feedback-btn {
-        flex: 1;
-        height: 100%;
-        background: none;
-        border: none;
-        border-radius: inherit;
-        padding: 0;
-        cursor: pointer;
-        color: #A5A5A8;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        transition: background 0.15s ease, color 0.15s ease;
-      }
-      .msg-actions .feedback-btn:hover {
-        background: rgba(255,255,255,0.06);
-        color: #ffffff;
-      }
-      .msg-actions .feedback-btn.selected {
-        background: #7B1E3E;
-        color: #ffffff;
+      .msg-actions.visible {
+        opacity: 1;
+        transform: translateY(0);
       }
       .msg-actions .copy-btn {
         width: 42px;
@@ -2213,7 +2188,8 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        transition: background 0.15s ease, color 0.15s ease;
+        transition: background 0.18s ease, color 0.18s ease, transform 0.18s ease;
+        box-shadow: 0 0 0 1px rgba(255,255,255,0.03);
       }
       .msg-actions .copy-btn:hover {
         background: rgba(255,255,255,0.06);
@@ -2222,9 +2198,76 @@
       .msg-actions .copy-btn.copied {
         background: #7B1E3E;
         color: #ffffff;
+        transform: scale(0.92);
+      }
+      .msg-actions .copy-btn.copied svg {
+        stroke-dasharray: 44;
+        stroke-dashoffset: 44;
+        animation: copyDraw 0.55s ease forwards;
+      }
+      @keyframes copyDraw {
+        to { stroke-dashoffset: 0; }
       }
       .msg-actions svg { width: 18px; height: 18px; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; flex-shrink: 0; }
-      .msg-actions .feedback-btn svg { stroke-width: 1.8; }
+
+      /* Thinking indicator — plain text on background, no bubble */
+      .msg.thinking {
+        align-self: flex-start;
+        max-width: 880px;
+        text-align: left;
+        padding: 0;
+        margin: 0;
+        font-size: 15px;
+        font-weight: 500;
+        color: #A5A5A8;
+        line-height: 1.5;
+        opacity: 0;
+        animation: thinkingIn 0.22s ease forwards;
+      }
+      @keyframes thinkingIn {
+        to { opacity: 1; }
+      }
+
+      /* Ambient processing glow — diffuse soft light, no hard edge */
+      .processing-glow {
+        position: absolute;
+        left: 50%;
+        top: 130px;
+        width: 620px;
+        height: 300px;
+        background: radial-gradient(600px 300px at 50% 40%, rgba(123, 30, 62, 0.16), transparent 70%);
+        filter: blur(46px);
+        opacity: 0;
+        pointer-events: none;
+        z-index: 1;
+        animation: glowPulse 4s ease-in-out infinite;
+        transform: translateX(-50%);
+      }
+      .processing-glow.enter {
+        animation: glowFadeIn 350ms ease forwards, glowPulse 4s ease-in-out 350ms infinite;
+      }
+      @keyframes glowFadeIn {
+        to { opacity: 1; }
+      }
+      @keyframes glowPulse {
+        0%, 100% { opacity: 0.55; transform: translateX(-50%) scale(1); }
+        50% { opacity: 0.85; transform: translateX(-50%) scale(1.04); }
+      }
+
+      /* New text appearance — gradual opacity + blur to crisp */
+      .msg-stream-text {
+        white-space: pre-wrap;
+        word-wrap: break-word;
+      }
+      .msg-stream-text .new-chunk {
+        opacity: 0;
+        filter: blur(4px);
+        animation: revealText 140ms ease forwards;
+      }
+      @keyframes revealText {
+        to { opacity: 1; filter: blur(0); }
+      }
+
       /* Loading / error states — minimal, dark */
       .msg.loading {
         align-self: flex-start;
@@ -2342,6 +2385,18 @@
         cursor: not-allowed;
       }
       .chat-send svg { width: 20px; height: 20px; stroke: currentColor; stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; }
+      /* Stop state — blue circle stays, arrow swaps to white square */
+      .chat-send.stop { background: #7B1E3E; color: #ffffff; }
+      .chat-send.stop svg { display: none; }
+      .chat-send.stop::after {
+        content: "";
+        display: block;
+        width: 13px;
+        height: 13px;
+        background: #ffffff;
+        border-radius: 2px;
+      }
+      .chat-send.stop:hover { background: #7B1E3E; opacity: 0.92; }
       @media (prefers-reduced-motion: reduce) {
         .chat-view, body.chat-active .hero { transition: none; }
       }
@@ -2788,6 +2843,7 @@
       let sending = false;
       let messages = [];
       let isSending = false;
+      let streamCtrl = null; // AbortController handle for Stop / cancel
 
       const chatView = document.getElementById('chatView');
       const chatScroll = document.getElementById('chatScroll');
@@ -2891,13 +2947,57 @@
         scrollToBottom();
       }
 
-      function showLoading() {
-        const div = document.createElement('div');
-        div.className = 'msg loading';
-        div.innerHTML = '<span></span><span></span><span></span>';
-        chatMessages.appendChild(div);
+      // Thinking indicator — plain text on background, no bubble
+      function startThinking() {
+        const thinking = document.createElement('div');
+        thinking.className = 'msg thinking';
+        thinking.textContent = 'Thinking…';
+        chatMessages.appendChild(thinking);
         scrollToBottom();
-        return div;
+
+        const glow = document.createElement('div');
+        glow.className = 'processing-glow enter';
+        chatScroll.appendChild(glow);
+
+        return function remove() {
+          thinking.remove();
+          glow.remove();
+        };
+      }
+
+      // Append a streamed chunk with a subtle reveal (opacity + blur -> crisp)
+      function appendChunk(el, chunk) {
+        const span = document.createElement('span');
+        span.className = 'new-chunk';
+        span.textContent = chunk;
+        el.appendChild(span);
+        // Force reflow so the hidden start state is established before animating in
+        span.getBoundingClientRect();
+        span.classList.remove('new-chunk');
+        scrollToBottom();
+      }
+
+      // Show the copy action once a response is complete
+      function showCopy(container, text) {
+        const actions = document.createElement('div');
+        actions.className = 'msg-actions visible';
+        const copy = document.createElement('button');
+        copy.type = 'button';
+        copy.className = 'copy-btn';
+        copy.setAttribute('aria-label', 'Copy response');
+        copy.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>';
+        copy.addEventListener('click', async () => {
+          try { await navigator.clipboard.writeText(text); } catch {}
+          copy.classList.add('copied');
+          copy.setAttribute('aria-label', 'Copied');
+          setTimeout(() => {
+            copy.classList.remove('copied');
+            copy.setAttribute('aria-label', 'Copy response');
+          }, 1400);
+        });
+        actions.appendChild(copy);
+        container.appendChild(actions);
+        scrollToBottom();
       }
 
       function showError(errMsg, onRetry) {
@@ -2914,24 +3014,73 @@
 
       function updateChatSend() {
         const has = chatInput.value.trim().length > 0;
-        chatSend.disabled = !has || isSending;
-        chatSend.classList.toggle('enabled', has && !isSending);
+        const stopping = chatSend.classList.contains('stop');
+        chatSend.disabled = stopping ? false : (!has || isSending);
+        chatSend.classList.toggle('enabled', stopping || (has && !isSending));
       }
 
-      async function sendToAI(msgs) {
-        const res = await fetch('/api/chat', {
-          method: 'POST',
-          headers: { 'content-type': 'application/json' },
-          body: JSON.stringify({ messages: msgs }),
-        });
-        const data = await res.json();
-        if (!res.ok || !data.ok) throw new Error((data && data.error) || 'Request failed');
-        return data.reply;
+      // Stream the real backend response; never simulates chunks
+      async function streamAI(msgs, onChunk) {
+        const controller = new AbortController();
+        streamCtrl = { abort: () => controller.abort() };
+        let result = { ok: false };
+        try {
+          const res = await fetch('/api/chat', {
+            method: 'POST',
+            headers: { 'content-type': 'application/json' },
+            body: JSON.stringify({ messages: msgs, stream: true }),
+            signal: controller.signal,
+          });
+          if (!res.ok || !res.body) {
+            const data = await res.json().catch(() => ({}));
+            result = { ok: false, error: (data && data.error) || 'Request failed' };
+            return result;
+          }
+          const reader = res.body.getReader();
+          const decoder = new TextDecoder();
+          let buffer = '';
+          let completed = false;
+          while (true) {
+            const { done, value } = await reader.read();
+            if (done) break;
+            buffer += decoder.decode(value, { stream: true });
+            let idx;
+            while ((idx = buffer.indexOf('\n\n')) >= 0) {
+              const event = buffer.slice(0, idx);
+              buffer = buffer.slice(idx + 2);
+              const dataLine = event.split('\n').find(l => l.startsWith('data: '));
+              if (!dataLine) continue;
+              const payload = dataLine.slice(6);
+              if (payload === '[DONE]') { completed = true; break; }
+              try {
+                const parsed = JSON.parse(payload);
+                const content = (parsed.choices && parsed.choices[0] && parsed.choices[0].delta && parsed.choices[0].delta.content) || '';
+                if (content) onChunk(content);
+              } catch {}
+            }
+            if (completed) break;
+          }
+          reader.releaseLock();
+          result = { ok: completed };
+        } catch (e) {
+          if (e.name === 'AbortError') result = { ok: false, aborted: true };
+          else result = { ok: false, error: String(e.message || e) };
+        } finally {
+          streamCtrl = null;
+        }
+        return result;
       }
 
       async function handleSend(text, fromHome) {
         text = text.trim();
-        if (!text || isSending) return;
+        if (!text) return;
+
+        // While generating, the Send button is a Stop button — cancel on click
+        if (isSending && streamCtrl) {
+          streamCtrl.abort();
+          return;
+        }
+
         isSending = true;
         updateChatSend();
 
@@ -2947,21 +3096,50 @@
         chatInput.value = '';
         updateChatSend();
 
-        const loader = showLoading();
+        // Send arrow -> Stop square (same blue circle, internal icon swaps)
+        chatSend.classList.add('stop');
+        chatSend.setAttribute('aria-label', 'Stop generating');
+
+        const removeThinking = startThinking();
+
+        const assistantDiv = document.createElement('div');
+        assistantDiv.className = 'msg assistant';
+        assistantDiv.style.opacity = '0';
+        assistantDiv.style.transition = 'opacity 220ms ease';
+        chatMessages.appendChild(assistantDiv);
+        scrollToBottom();
+
+        const msgText = document.createElement('div');
+        msgText.className = 'msg-stream-text';
+        assistantDiv.appendChild(msgText);
+
+        let full = '';
+        let streamed = false;
         try {
-          const reply = await sendToAI(messages);
-          loader.remove();
-          messages.push({ role: 'assistant', content: reply });
-          appendAssistantMessage(reply);
+          const result = await streamAI(messages.slice(-5), (chunk) => {
+            if (!streamed) {
+              streamed = true;
+              removeThinking();
+              assistantDiv.style.opacity = '1';
+            }
+            full += chunk;
+            appendChunk(msgText, chunk);
+          });
+
+          if (result.ok && full) {
+            messages.push({ role: 'assistant', content: full });
+            showCopy(assistantDiv, full);
+          }
         } catch (e) {
-          loader.remove();
+          removeThinking();
           showError(String(e.message || e), () => {
-            // retry last user turn
             const lastUser = [...messages].reverse().find(m => m.role === 'user');
             if (lastUser) handleSend(lastUser.content, false);
           });
         } finally {
           isSending = false;
+          chatSend.classList.remove('stop');
+          chatSend.setAttribute('aria-label', 'Send');
           updateChatSend();
           chatInput.focus();
         }
