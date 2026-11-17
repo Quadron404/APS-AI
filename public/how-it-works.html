@@ -77,11 +77,12 @@
       hr { border: none; border-top: 1px solid var(--border-subtle); margin: 40px 0; }
       .step-num {
         font-family: var(--font-display);
-        font-size: 0.9rem;
-        letter-spacing: 0.12em;
-        color: var(--primary);
-        text-transform: uppercase;
-        margin-bottom: 6px;
+        font-size: clamp(1.5rem, 3vw, 2rem);
+        font-weight: 600;
+        letter-spacing: -0.015em;
+        color: var(--text);
+        text-transform: none;
+        margin: 48px 0 8px;
       }
       .cta {
         margin-top: 48px;
