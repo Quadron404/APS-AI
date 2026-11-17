@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Privacy — APS AI</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Cormorant+Garamond:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <style>
+      :root {
+        --bg: #0a0a0b; --bg-deep: #070708; --bg-surface: #101216; --bg-card: rgba(18, 20, 24, 0.92);
+        --text: #ffffff; --text-muted: rgba(255, 255, 255, 0.62); --text-soft: rgba(255, 255, 255, 0.35);
+        --primary: #0066ff; --border-subtle: rgba(255, 255, 255, 0.05); --border-default: rgba(255, 255, 255, 0.08);
+        --font-ui: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        --font-display: "Cormorant Garamond", Georgia, serif;
+      }
+      :root[data-theme="light"] {
+        --bg: #f6f7f9; --bg-deep: #eef0f3; --bg-surface: #ffffff; --bg-card: rgba(255, 255, 255, 0.96);
+        --text: #111111; --text-muted: rgba(17, 17, 17, 0.62); --text-soft: rgba(17, 17, 17, 0.42);
+        --border-subtle: rgba(17, 17, 17, 0.08); --border-default: rgba(17, 17, 17, 0.12);
+      }
+      @media (prefers-color-scheme: light) {
+        :root:not([data-theme="dark"]) {
+          --bg: #f6f7f9; --bg-deep: #eef0f3; --bg-surface: #ffffff; --bg-card: rgba(255, 255, 255, 0.96);
+          --text: #111111; --text-muted: rgba(17, 17, 17, 0.62); --text-soft: rgba(17, 17, 17, 0.42);
+          --border-subtle: rgba(17, 17, 17, 0.08); --border-default: rgba(17, 17, 17, 0.12);
+        }
+      }
+      * { box-sizing: border-box; margin: 0; padding: 0; }
+      html { scroll-behavior: smooth; }
+      body { font-family: var(--font-ui); background: var(--bg-deep); color: var(--text); line-height: 1.7; -webkit-font-smoothing: antialiased; }
+      .wrap { max-width: 760px; margin: 0 auto; padding: 48px 24px 80px; }
+      a { color: var(--primary); text-decoration: none; }
+      a:hover { text-decoration: underline; }
+      .back { display: inline-block; margin-bottom: 32px; color: var(--text-muted); font-size: 0.9rem; }
+      h1 { font-family: var(--font-display); font-size: clamp(2rem, 5vw, 3rem); font-weight: 600; letter-spacing: -0.02em; margin-bottom: 12px; }
+      h2 { font-family: var(--font-display); font-size: 1.5rem; font-weight: 600; margin: 40px 0 12px; letter-spacing: -0.01em; }
+      .lede { color: var(--text-muted); margin-bottom: 32px; }
+      p { margin: 0 0 16px; color: var(--text-muted); }
+      p strong { color: var(--text); }
+      hr { border: none; border-top: 1px solid var(--border-subtle); margin: 40px 0; }
+      .step-num { font-family: var(--font-display); font-size: clamp(1.5rem, 3vw, 2rem); font-weight: 600; letter-spacing: -0.015em; color: var(--text); text-transform: none; margin: 48px 0 8px; }
+      .cta { margin-top: 48px; padding: 24px; border: 1px solid var(--border-default); border-radius: 16px; background: var(--bg-surface); }
+      .cta p { color: var(--text); }
+    </style>
+  </head>
+  <body>
+    <div class="wrap">
+      <a class="back" href="/">← Back to APS AI</a>
+      <h1>Privacy at APS AI</h1>
+      <p class="lede">Your information deserves clarity, care and transparency.</p>
+      <p>Privacy should never be something users have to guess about. When you use a digital service, you deserve to understand what information is involved, how it is processed, which technology providers help operate the service and what happens to the information you submit.</p>
+      <p>APS AI is designed to make school information easier to discover. Its purpose is to help users explore school-related information through a conversational interface, without making the privacy of those interactions an afterthought.</p>
+      <p>This page explains the privacy principles behind APS AI, the infrastructure identified in its current Cloudflare configuration and the considerations users should understand before sharing information. It is intended to make the platform's data practices understandable rather than hide important details behind complicated technical language.</p>
+
+      <hr />
+
+      <div class="step-num">01 — Start with what you share.</div>
+      <h2>Your questions are yours. Be mindful of the information they contain.</h2>
+      <p>When you use APS AI, you may enter questions, messages or other information into the website. These submissions form part of your interaction with the platform and may be processed by the systems involved in generating a response.</p>
+      <p>Most school-related questions do not require private personal details. You can ask about academic information, school activities, facilities, administration and announcements without including sensitive information about yourself or another person.</p>
+      <p>Please do not submit passwords, financial information, private identification documents, personal contact details or confidential school records. Avoid sharing information about students, teachers or other individuals unless there is a clear and authorised reason to do so.</p>
+      <p>A useful question rarely needs someone's private information.</p>
+
+      <div class="step-num">02 — Understand how your information travels.</div>
+      <h2>A digital experience involves more than the page you see.</h2>
+      <p>APS AI operates on Cloudflare infrastructure. Its deployed website Workers use Cloudflare's platform to deliver the website and its assets.</p>
+      <p>When you access the website, technical requests are handled by the infrastructure required to deliver the experience. When you submit information through an interactive feature, the handling of that information also depends on the application's implementation and any services connected to that feature.</p>
+      <p>It is important to distinguish between the website's hosting infrastructure, the application itself and any external services used to generate responses. Each may have a different role in processing information.</p>
+      <p>We aim to make these relationships understandable so that users can distinguish between the information needed to operate a website and the information submitted during an interaction.</p>
+
+      <div class="step-num">03 — Operational logs and diagnostics.</div>
+      <h2>Keeping the platform reliable requires technical visibility.</h2>
+      <p>APS AI's Cloudflare configuration includes operational observability on a Worker named <code>aps-ai-website</code>. Its current configuration has invocation logging enabled, log persistence enabled and a sampling rate of 100%.</p>
+      <p>These logs support operational monitoring, troubleshooting and investigation of technical issues. Cloudflare Workers Logs can record invocation information and application-generated diagnostic messages. The precise information present in a log depends on the events and messages produced by the application.</p>
+      <p>Operational logs should not be confused with a complete record of a user's conversation. The Cloudflare configuration alone does not establish whether message content is included in application-generated logs.</p>
+      <p>Cloudflare applies its own log retention rules, which vary according to the applicable plan and configuration. APS AI should not promise a specific retention period without confirming the effective settings.</p>
+
+      <div class="step-num">04 — AI services and external providers.</div>
+      <h2>Transparency does not end at our own website.</h2>
+      <p>Generating an AI response can involve services beyond the website that users see. Depending on the application's actual configuration, a question and relevant conversational context may be transmitted to an AI service provider for processing.</p>
+      <p>Such providers may operate under their own privacy policies, data-handling terms and retention arrangements. Their involvement should be disclosed clearly, including the provider's identity and the categories of information transmitted.</p>
+      <p>The Cloudflare Worker configuration inspected for APS AI does not, by itself, identify the AI provider or establish its data-retention practices. Those details must be verified against the application's actual request flow and provider configuration before any specific privacy guarantee is made.</p>
+      <p>Users should be able to understand which services participate in processing their information and why.</p>
+
+      <div class="step-num">05 — Cookies, browser storage and technical identifiers.</div>
+      <h2>The small technical details matter too.</h2>
+      <p>Websites may use cookies, browser storage and other technical identifiers to support functionality, remember preferences, maintain sessions or measure performance.</p>
+      <p>Whether these technologies are used, what information they contain and how long they remain available depend on the website's actual implementation.</p>
+      <p>The Cloudflare Worker configuration alone does not establish whether APS AI's frontend uses cookies, local browser storage, analytics scripts or other tracking technologies. These must be checked in the deployed website before making a claim that any particular technology is absent.</p>
+      <p>Our approach should be straightforward: explain the technologies that are actually in use, describe their purpose and avoid collecting information that is not necessary for the experience.</p>
+
+      <div class="step-num">06 — Protecting information.</div>
+      <h2>Security is an ongoing responsibility.</h2>
+      <p>Information handled by a digital platform deserves appropriate safeguards. This includes the infrastructure that delivers the website, the application systems that process requests and any external services involved in providing functionality.</p>
+      <p>APS AI uses Cloudflare Workers infrastructure for its deployed website. Cloudflare provides platform-level security and operational capabilities, but the existence of that infrastructure alone does not establish that every application-level security measure is implemented.</p>
+      <p>Security also depends on how the application is developed, how information is handled, how access is controlled and how its connected services are configured.</p>
+      <p>We believe security explanations should reflect actual safeguards, not broad promises that cannot be independently supported.</p>
+
+      <div class="step-num">07 — Your choices and responsibilities.</div>
+      <h2>Make informed decisions when using APS AI.</h2>
+      <p>You should be able to decide what information you choose to submit. For ordinary school-related enquiries, avoid including personal or confidential details.</p>
+      <p>Before using a feature that requests additional information, understand why it is needed and how it will be handled. If you are unsure whether something is appropriate to share, leave it out.</p>
+      <p>Where the platform provides controls for managing conversations, preferences or stored information, their purpose and limitations should be explained clearly. No deletion, account-management or privacy control should be advertised unless it is actually available and works as described.</p>
+
+      <div class="step-num">08 — Changes to this privacy information.</div>
+      <h2>Transparency must keep pace with the platform.</h2>
+      <p>APS AI may evolve as its features, infrastructure and connected services change. A change to the application can also change how information is processed.</p>
+      <p>This privacy information should therefore be reviewed whenever a significant change is made to the platform, including the introduction of new AI providers, analytics tools, account features, storage systems or data-processing services.</p>
+      <p>When the platform's practices change, the explanation of those practices should change too. Users should not have to rely on outdated statements to understand a service they are currently using.</p>
+
+      <hr />
+
+      <div class="cta">
+        <p><strong>Privacy is built on understanding.</strong></p>
+        <p>We believe that finding school information should be simple, and understanding how a digital platform handles information should be equally straightforward.</p>
+        <p>APS AI should be clear about the information users submit, the systems involved in processing it and the choices available to them. Trust is not established by making the biggest promises. It is established by explaining the facts, respecting the information involved and maintaining transparency as the platform develops.</p>
+        <p><strong>Know what you share. Understand what happens next.</strong></p>
+      </div>
+    </div>
+    <script>
+      (function() {
+        var saved = 'dark';
+        try { saved = localStorage.getItem('theme') || 'dark'; } catch (e) {}
+        if (saved === 'light' || saved === 'dark') {
+          document.documentElement.setAttribute('data-theme', saved);
+        } else {
+          document.documentElement.removeAttribute('data-theme');
+        }
+      })();
+    </script>
+  </body>
+</html>
