@@ -3,6 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/png" href="/logo.png" />
     <title>APS AI</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -300,10 +301,11 @@
         font-family: var(--font-display);
       }
 
-      .brand svg {
-        width: 22px;
-        height: 22px;
+      .brand img {
+        width: 28px;
+        height: 28px;
         flex-shrink: 0;
+        object-fit: contain;
       }
 
       /* Menu Button */
@@ -2078,9 +2080,7 @@
       <div class="page-surface">
         <header>
           <a href="/" class="brand" aria-label="Home">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <path d="M4 22h16V2H4zm2-5h12v-2H6zM4 20h16v-2H4z"/>
-            </svg>
+            <img src="/logo.png" alt="" aria-hidden="true" />
             <span>APS AI</span>
           </a>
           <button class="menu-button" id="menuButton" aria-label="Open menu" aria-expanded="false" aria-controls="menuPanel">
