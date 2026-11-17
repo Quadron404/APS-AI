@@ -1956,6 +1956,120 @@
           transition-duration: 0.01ms !important.
         }
       }
+
+      /* ============================================================
+         FEEDBACK MODAL
+         ============================================================ */
+      .fb-overlay {
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.55);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        display: none;
+        align-items: center;
+        justify-content: center;
+        z-index: 200;
+        padding: 16px;
+      }
+      .fb-overlay.visible { display: flex; }
+      .fb-modal {
+        width: 100%;
+        max-width: 520px;
+        background: #0D0F12;
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: 50px;
+        padding: 40px 32px 32px;
+        position: relative;
+        box-shadow: 0 24px 60px rgba(0, 0, 0, 0.6);
+      }
+      .fb-header {
+        position: relative;
+        text-align: center;
+        margin-bottom: 24px;
+      }
+      .fb-title {
+        font-size: 20px;
+        font-weight: 700;
+        color: #ffffff;
+      }
+      .fb-close {
+        position: absolute;
+        top: -12px;
+        right: -4px;
+        width: 55px;
+        height: 55px;
+        border-radius: 50%;
+        border: none;
+        background: #1a1c20;
+        color: #ffffff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        padding: 0;
+      }
+      .fb-close svg { width: 20px; height: 20px; stroke: currentColor; stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; }
+      .fb-textarea {
+        width: 100%;
+        height: 150px;
+        background: transparent;
+        border: 1px solid rgba(255, 255, 255, 0.18);
+        border-radius: 20px;
+        padding: 20px;
+        color: #ffffff;
+        font-family: var(--font-ui);
+        font-size: 18px;
+        line-height: 1.5;
+        resize: vertical;
+        outline: none;
+      }
+      .fb-textarea::placeholder {
+        color: #85868A;
+        font-weight: 600;
+        font-size: 20px;
+      }
+      .fb-textarea:focus {
+        border-color: rgba(255, 255, 255, 0.35);
+      }
+      .fb-submit {
+        width: 100%;
+        height: 70px;
+        margin-top: 30px;
+        border: none;
+        border-radius: 9999px;
+        background: #25272B;
+        color: #414348;
+        font-family: var(--font-ui);
+        font-size: 20px;
+        font-weight: 700;
+        cursor: not-allowed;
+        transition: background 0.2s ease, color 0.2s ease;
+      }
+      .fb-submit.enabled {
+        background: #3a3d42;
+        color: #ffffff;
+        cursor: pointer;
+      }
+      .fb-disclaimer {
+        margin-top: 20px;
+        text-align: center;
+        font-size: 16px;
+        font-weight: 600;
+        color: #A5A5A8;
+        line-height: 25px;
+        max-width: 420px;
+        margin-left: auto;
+        margin-right: auto;
+      }
+      .fb-status {
+        margin-top: 12px;
+        text-align: center;
+        font-size: 14px;
+        color: #A5A5A8;
+        min-height: 18px;
+      }
+
     </style>
   </head>
   <body>
@@ -2095,6 +2209,23 @@
       </div>
     </div>
 
+
+    <!-- Feedback Modal -->
+    <div class="fb-overlay" id="fbOverlay" aria-hidden="true">
+      <div class="fb-modal" role="dialog" aria-modal="true" aria-labelledby="fbTitle">
+        <div class="fb-header">
+          <h2 class="fb-title" id="fbTitle">Submit feedback</h2>
+          <button class="fb-close" id="fbClose" aria-label="Close">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+          </button>
+        </div>
+        <textarea class="fb-textarea" id="fbText" placeholder="Add details"></textarea>
+        <button class="fb-submit" id="fbSubmit" disabled>Submit</button>
+        <div class="fb-disclaimer">This form is for website feedback only. We can’t respond to personal questions or requests for customer support.</div>
+        <div class="fb-status" id="fbStatus"></div>
+      </div>
+    </div>
+
     <script>
       /* ============================================================
          MENU INTERACTION
@@ -2207,6 +2338,88 @@
         // Prevent clicks inside panel from closing
         menuPanel.addEventListener('click', (e) => {
           e.stopPropagation();
+        });
+      })();
+
+      /* ============================================================
+         FEEDBACK MODAL
+         ============================================================ */
+      (function() {
+        const overlay = document.getElementById('fbOverlay');
+        const closeBtn = document.getElementById('fbClose');
+        const text = document.getElementById('fbText');
+        const submit = document.getElementById('fbSubmit');
+        const status = document.getElementById('fbStatus');
+        const feedbackLinks = Array.from(document.querySelectorAll('a[href="#feedback"], .menu-nav-link')).filter(a => a.textContent.trim() === 'Feedback');
+
+        function openModal() {
+          overlay.classList.add('visible');
+          overlay.setAttribute('aria-hidden', 'false');
+          document.body.classList.add('menu-open');
+          text.value = '';
+          submit.disabled = true;
+          submit.classList.remove('enabled');
+          status.textContent = '';
+          setTimeout(() => text.focus(), 50);
+        }
+        function closeModal() {
+          overlay.classList.remove('visible');
+          overlay.setAttribute('aria-hidden', 'true');
+          document.body.classList.remove('menu-open');
+        }
+
+        feedbackLinks.forEach(link => {
+          link.addEventListener('click', (e) => {
+            e.preventDefault();
+            // close menu if open
+            const mb = document.getElementById('menuBackdrop');
+            if (mb && mb.classList.contains('visible')) {
+              document.getElementById('menuClose').click();
+            }
+            openModal();
+          });
+        });
+
+        closeBtn.addEventListener('click', closeModal);
+        overlay.addEventListener('click', (e) => {
+          if (e.target === overlay) closeModal();
+        });
+        document.addEventListener('keydown', (e) => {
+          if (e.key === 'Escape' && overlay.classList.contains('visible')) closeModal();
+        });
+
+        text.addEventListener('input', () => {
+          const has = text.value.trim().length > 0;
+          submit.disabled = !has;
+          submit.classList.toggle('enabled', has);
+        });
+
+        submit.addEventListener('click', async () => {
+          const msg = text.value.trim();
+          if (!msg) return;
+          submit.disabled = true;
+          submit.classList.remove('enabled');
+          status.textContent = 'Submitting…';
+          try {
+            const res = await fetch('/api/feedback', {
+              method: 'POST',
+              headers: { 'content-type': 'application/json' },
+              body: JSON.stringify({ message: msg }),
+            });
+            const data = await res.json();
+            if (res.ok && data.ok) {
+              status.textContent = 'Thanks for your feedback!';
+              text.value = '';
+            } else {
+              status.textContent = 'Something went wrong. Please try again.';
+              submit.disabled = false;
+              submit.classList.add('enabled');
+            }
+          } catch {
+            status.textContent = 'Network error. Please try again.';
+            submit.disabled = false;
+            submit.classList.add('enabled');
+          }
         });
       })();
 
