@@ -28,8 +28,7 @@ export default {
       }
       try {
         const apiKey = env.AI;
-        if (!apiKey) return new Response(JSON.stringify({ ok:false, error:"missing secret AI" }), { status: 500, headers: { "content-type": "application/json" } });
-        const groqRes = await fetch("https://api.groq.com/openai/v1/chat/completions", {
+const groqRes = await fetch("https://api.groq.com/openai/v1/chat/completions", {
           method: "POST",
           headers: {
             "content-type": "application/json",
