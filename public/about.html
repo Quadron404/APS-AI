@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>About — APS AI</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Cormorant+Garamond:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <style>
+      :root {
+        --bg: #0a0a0b; --bg-deep: #070708; --bg-surface: #101216; --bg-card: rgba(18, 20, 24, 0.92);
+        --text: #ffffff; --text-muted: rgba(255, 255, 255, 0.62); --text-soft: rgba(255, 255, 255, 0.35);
+        --primary: #0066ff; --border-subtle: rgba(255, 255, 255, 0.05); --border-default: rgba(255, 255, 255, 0.08);
+        --font-ui: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        --font-display: "Cormorant Garamond", Georgia, serif;
+      }
+      :root[data-theme="light"] {
+        --bg: #f6f7f9; --bg-deep: #eef0f3; --bg-surface: #ffffff; --bg-card: rgba(255, 255, 255, 0.96);
+        --text: #111111; --text-muted: rgba(17, 17, 17, 0.62); --text-soft: rgba(17, 17, 17, 0.42);
+        --border-subtle: rgba(17, 17, 17, 0.08); --border-default: rgba(17, 17, 17, 0.12);
+      }
+      @media (prefers-color-scheme: light) {
+        :root:not([data-theme="dark"]) {
+          --bg: #f6f7f9; --bg-deep: #eef0f3; --bg-surface: #ffffff; --bg-card: rgba(255, 255, 255, 0.96);
+          --text: #111111; --text-muted: rgba(17, 17, 17, 0.62); --text-soft: rgba(17, 17, 17, 0.42);
+          --border-subtle: rgba(17, 17, 17, 0.08); --border-default: rgba(17, 17, 17, 0.12);
+        }
+      }
+      * { box-sizing: border-box; margin: 0; padding: 0; }
+      html { scroll-behavior: smooth; }
+      body { font-family: var(--font-ui); background: var(--bg-deep); color: var(--text); line-height: 1.7; -webkit-font-smoothing: antialiased; }
+      .wrap { max-width: 760px; margin: 0 auto; padding: 48px 24px 80px; }
+      a { color: var(--primary); text-decoration: none; }
+      a:hover { text-decoration: underline; }
+      .back { display: inline-block; margin-bottom: 32px; color: var(--text-muted); font-size: 0.9rem; }
+      h1 { font-family: var(--font-display); font-size: clamp(2rem, 5vw, 3rem); font-weight: 600; letter-spacing: -0.02em; margin-bottom: 12px; }
+      h2 { font-family: var(--font-display); font-size: 1.5rem; font-weight: 600; margin: 40px 0 12px; letter-spacing: -0.01em; }
+      .lede { color: var(--text-muted); margin-bottom: 32px; }
+      p { margin: 0 0 16px; color: var(--text-muted); }
+      p strong { color: var(--text); }
+      hr { border: none; border-top: 1px solid var(--border-subtle); margin: 40px 0; }
+      .step-num { font-family: var(--font-display); font-size: clamp(1.5rem, 3vw, 2rem); font-weight: 600; letter-spacing: -0.015em; color: var(--text); text-transform: none; margin: 48px 0 8px; }
+      .cta { margin-top: 48px; padding: 24px; border: 1px solid var(--border-default); border-radius: 16px; background: var(--bg-surface); }
+      .cta p { color: var(--text); }
+    </style>
+  </head>
+  <body>
+    <div class="wrap">
+      <a class="back" href="/">← Back to APS AI</a>
+      <h1>About APS AI</h1>
+      <p class="lede">A new perspective on finding school information.</p>
+      <p>Information is useful only when people can find it.</p>
+      <p>Every school has information that matters to its community — academic details, important dates, activities, facilities, administration and announcements. Yet discovering that information can sometimes mean navigating through multiple webpages, opening different documents and searching through sections just to find one particular detail.</p>
+      <p>APS AI is built around a simple idea: make that process easier.</p>
+      <p>It introduces a more conversational approach to exploring school information, allowing users to begin with what they want to know rather than where they think the answer might be published.</p>
+      <p>Instead of making the structure of a website the starting point, APS AI places the question at the centre of the experience.</p>
+
+      <hr />
+
+      <div class="step-num">01 — The idea behind APS AI.</div>
+      <h2>Information should be accessible, not hidden behind navigation.</h2>
+      <p>The internet has made publishing information easier than ever. But finding a particular piece of information can still require time, patience and an understanding of how different websites are organised.</p>
+      <p>A useful detail might exist somewhere within a school website, an announcement or a document, yet remain difficult to locate when someone does not know exactly where to look.</p>
+      <p>APS AI explores a simpler way to approach this problem.</p>
+      <p>What if discovering school information could begin with an ordinary question? What if users could describe what they were looking for and explore the relevant information through a single, straightforward experience?</p>
+      <p>That question is the foundation of APS AI.</p>
+
+      <div class="step-num">02 — Made for school information.</div>
+      <h2>One focused purpose. A more convenient experience.</h2>
+      <p>APS AI is an information-discovery platform centred on the school environment.</p>
+      <p>Its purpose is to help users explore subjects such as academic information, school activities, facilities, administration, important dates and announcements without having to manually navigate through every relevant webpage.</p>
+      <p>The platform is designed around a clear distinction: it is an aid to discovering information, not a replacement for the school itself.</p>
+      <p>It does not take the place of teachers, administrators, official notices or school authorities. It offers another way to explore information and understand what has been published.</p>
+      <p>The focus remains on making existing school information easier to reach.</p>
+
+      <div class="step-num">03 — Why artificial intelligence?</div>
+      <h2>A more natural way to interact with information.</h2>
+      <p>Traditional websites organise information into pages, menus and categories. This structure is useful, but it can make discovery difficult when users do not know which section contains the answer.</p>
+      <p>Artificial intelligence introduces another possibility: interacting with information through natural language.</p>
+      <p>Rather than requiring users to navigate a predefined path, an AI-powered experience can interpret a question and help present relevant information in a conversational format.</p>
+      <p>APS AI brings this approach into the context of school information.</p>
+      <p>The technology is not the purpose in itself. Its value comes from helping people understand and discover information with less unnecessary effort.</p>
+
+      <div class="step-num">04 — Built around clarity.</div>
+      <h2>Less complexity. More meaningful discovery.</h2>
+      <p>A digital platform should make the experience easier, not introduce another layer of confusion.</p>
+      <p>That belief influences the way APS AI is presented. The experience is intended to keep attention on the question, the information and the process of discovering an answer.</p>
+      <p>Clear communication, straightforward navigation and an accessible interface are central to that approach.</p>
+      <p>There should be no need to understand complicated technical systems before using the platform. The starting point should remain familiar to everyone: ask a question about something you want to know.</p>
+
+      <div class="step-num">05 — Information deserves context.</div>
+      <h2>Answers are useful. Their sources matter too.</h2>
+      <p>School information can be important. An academic date, an administrative detail or an announcement should not be treated as an isolated statement without considering where it came from.</p>
+      <p>APS AI is intended to make school information easier to explore while keeping the importance of original publications in view.</p>
+      <p>AI-generated responses should be approached as assistance in discovering and understanding information. They should not be treated as independent school decisions, official instructions or a substitute for checking the original publication.</p>
+      <p>For information that affects important decisions, users should always refer to the relevant official school communication.</p>
+      <p>Convenience should never come at the expense of clarity.</p>
+
+      <div class="step-num">06 — An experience for everyone.</div>
+      <h2>Discover information from the device you already use.</h2>
+      <p>Accessing information should not require a complicated setup or an entirely new way of using the internet.</p>
+      <p>APS AI is presented as a browser-based experience, designed to make its information-discovery interface accessible through supported devices.</p>
+      <p>Whether someone opens the website on a smartphone, tablet, laptop or desktop computer, the central experience remains the same: begin with a question and explore the information.</p>
+      <p>The goal is to make the process feel familiar, direct and convenient.</p>
+
+      <div class="step-num">07 — A vision that continues.</div>
+      <h2>Start with a better way to discover. Keep making it better.</h2>
+      <p>APS AI begins with a focused objective: improve the way people discover school information.</p>
+      <p>That objective provides a direction for the platform's continued development. The emphasis should remain on improving clarity, making information easier to explore, refining the experience and ensuring that the platform remains useful for the people who use it.</p>
+      <p>The measure of progress should not simply be how much technology is introduced. It should be whether finding information becomes more straightforward.</p>
+      <p>Every improvement should serve that purpose.</p>
+
+      <hr />
+
+      <div class="cta">
+        <p><strong>The idea is simple.</strong></p>
+        <p>APS AI brings a conversational approach to an everyday need: finding information about your school.</p>
+        <p>It is built on the belief that useful information should be easier to discover, that technology should simplify rather than complicate, and that a better digital experience begins with understanding what people actually need.</p>
+        <p><strong>Your school. Your questions. A clearer way to discover.</strong></p>
+      </div>
+    </div>
+    <script>
+      (function() {
+        var saved = 'dark';
+        try { saved = localStorage.getItem('theme') || 'dark'; } catch (e) {}
+        if (saved === 'light' || saved === 'dark') {
+          document.documentElement.setAttribute('data-theme', saved);
+        } else {
+          document.documentElement.removeAttribute('data-theme');
+        }
+      })();
+    </script>
+  </body>
+</html>
