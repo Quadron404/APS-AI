@@ -2072,6 +2072,162 @@
         min-height: 18px;
       }
 
+
+      /* ============================================================
+         CHAT VIEW
+         ============================================================ */
+      .chat-view {
+        position: absolute;
+        top: 88px;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        display: flex;
+        flex-direction: column;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.35s ease;
+        z-index: 5;
+      }
+      body.chat-active .chat-view {
+        opacity: 1;
+        pointer-events: auto;
+      }
+      body.chat-active .hero {
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.25s ease;
+      }
+      .chat-scroll {
+        flex: 1;
+        overflow-y: auto;
+        padding: 24px 24px 12px;
+        scroll-behavior: smooth;
+      }
+      .chat-column {
+        max-width: 760px;
+        margin: 0 auto;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        gap: 18px;
+      }
+      .msg {
+        max-width: 78%;
+        padding: 14px 18px;
+        border-radius: 18px;
+        line-height: 1.6;
+        font-size: 16px;
+        white-space: pre-wrap;
+        word-wrap: break-word;
+      }
+      .msg.user {
+        align-self: flex-end;
+        background: rgba(0, 102, 255, 0.14);
+        border: 1px solid rgba(0, 102, 255, 0.25);
+        color: var(--text);
+      }
+      .msg.assistant {
+        align-self: flex-start;
+        background: var(--bg-card);
+        border: 1px solid var(--border-subtle);
+        color: var(--text-muted);
+      }
+      .msg.assistant .msg-text { color: var(--text); }
+      .msg.loading {
+        align-self: flex-start;
+        background: var(--bg-card);
+        border: 1px solid var(--border-subtle);
+        display: flex;
+        gap: 6px;
+        align-items: center;
+      }
+      .msg.loading span {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: var(--text-muted);
+        animation: bounce 1.2s infinite ease-in-out;
+      }
+      .msg.loading span:nth-child(2) { animation-delay: 0.15s; }
+      .msg.loading span:nth-child(3) { animation-delay: 0.3s; }
+      @keyframes bounce {
+        0%, 80%, 100% { transform: scale(0.7); opacity: 0.4; }
+        40% { transform: scale(1); opacity: 1; }
+      }
+      .msg.error {
+        align-self: flex-start;
+        background: rgba(255, 80, 80, 0.08);
+        border: 1px solid rgba(255, 80, 80, 0.25);
+        color: var(--text);
+      }
+      .msg.error button {
+        margin-top: 8px;
+        background: transparent;
+        border: 1px solid rgba(255,80,80,0.4);
+        color: #ff8080;
+        padding: 6px 12px;
+        border-radius: 8px;
+        cursor: pointer;
+        font-family: var(--font-ui);
+      }
+      .chat-composer {
+        flex-shrink: 0;
+        padding: 12px 24px 24px;
+      }
+      .composer-inner {
+        max-width: 760px;
+        margin: 0 auto;
+        display: flex;
+        align-items: flex-end;
+        gap: 10px;
+        background: var(--bg-card);
+        border: 1px solid var(--border-default);
+        border-radius: 24px;
+        padding: 10px 12px;
+        box-shadow: var(--shadow-card);
+      }
+      .chat-input {
+        flex: 1;
+        background: transparent;
+        border: none;
+        outline: none;
+        color: var(--text);
+        font-family: var(--font-ui);
+        font-size: 16px;
+        line-height: 1.5;
+        resize: none;
+        max-height: 160px;
+        padding: 6px 8px;
+      }
+      .chat-input::placeholder { color: var(--text-soft); }
+      .chat-send {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        border: none;
+        background: var(--primary);
+        color: #fff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        flex-shrink: 0;
+      }
+      .chat-send:disabled {
+        background: rgba(255,255,255,0.08);
+        color: var(--text-soft);
+        cursor: not-allowed;
+      }
+      .chat-send svg { width: 18px; height: 18px; stroke: currentColor; stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; }
+      @media (prefers-reduced-motion: reduce) {
+        .chat-view, body.chat-active .hero { transition: none; }
+      }
+      @media (max-width: 768px) {
+        .chat-view { top: 76px; }
+        .msg { max-width: 92%; }
+      }
+
     </style>
   </head>
   <body>
@@ -2473,6 +2629,14 @@
       startCarousel();
 
       let sending = false;
+      let messages = [];
+      let isSending = false;
+
+      const chatView = document.getElementById('chatView');
+      const chatScroll = document.getElementById('chatScroll');
+      const chatMessages = document.getElementById('chatMessages');
+      const chatInput = document.getElementById('chatInput');
+      const chatSend = document.getElementById('chatSend');
 
       function setSending(state) {
         sending = state;
@@ -2489,21 +2653,136 @@
         }
       }
 
+      function scrollToBottom() {
+        requestAnimationFrame(() => {
+          chatScroll.scrollTop = chatScroll.scrollHeight;
+        });
+      }
+
+      function escapeHtml(str) {
+        return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+      }
+
+      function appendUserMessage(text) {
+        const div = document.createElement('div');
+        div.className = 'msg user';
+        div.textContent = text;
+        chatMessages.appendChild(div);
+        scrollToBottom();
+      }
+
+      function appendAssistantMessage(text) {
+        const div = document.createElement('div');
+        div.className = 'msg assistant';
+        const inner = document.createElement('div');
+        inner.className = 'msg-text';
+        inner.innerHTML = escapeHtml(text).replace(/\n/g, '<br>');
+        div.appendChild(inner);
+        chatMessages.appendChild(div);
+        scrollToBottom();
+      }
+
+      function showLoading() {
+        const div = document.createElement('div');
+        div.className = 'msg loading';
+        div.innerHTML = '<span></span><span></span><span></span>';
+        chatMessages.appendChild(div);
+        scrollToBottom();
+        return div;
+      }
+
+      function showError(errMsg, onRetry) {
+        const div = document.createElement('div');
+        div.className = 'msg error';
+        div.textContent = 'Something went wrong: ' + errMsg;
+        const btn = document.createElement('button');
+        btn.textContent = 'Retry';
+        btn.addEventListener('click', onRetry);
+        div.appendChild(btn);
+        chatMessages.appendChild(div);
+        scrollToBottom();
+      }
+
+      function updateChatSend() {
+        const has = chatInput.value.trim().length > 0;
+        chatSend.disabled = !has || isSending;
+      }
+
+      async function sendToAI(msgs) {
+        const res = await fetch('/api/chat', {
+          method: 'POST',
+          headers: { 'content-type': 'application/json' },
+          body: JSON.stringify({ messages: msgs }),
+        });
+        const data = await res.json();
+        if (!res.ok || !data.ok) throw new Error((data && data.error) || 'Request failed');
+        return data.reply;
+      }
+
+      async function handleSend(text, fromHome) {
+        text = text.trim();
+        if (!text || isSending) return;
+        isSending = true;
+        updateChatSend();
+
+        if (fromHome) {
+          setSending(true);
+          stopCarousel();
+          document.body.classList.add('chat-active');
+          setTimeout(() => setSending(false), 300);
+        }
+
+        messages.push({ role: 'user', content: text });
+        appendUserMessage(text);
+        chatInput.value = '';
+        updateChatSend();
+
+        const loader = showLoading();
+        try {
+          const reply = await sendToAI(messages);
+          loader.remove();
+          messages.push({ role: 'assistant', content: reply });
+          appendAssistantMessage(reply);
+        } catch (e) {
+          loader.remove();
+          showError(String(e.message || e), () => {
+            // retry last user turn
+            const lastUser = [...messages].reverse().find(m => m.role === 'user');
+            if (lastUser) handleSend(lastUser.content, false);
+          });
+        } finally {
+          isSending = false;
+          updateChatSend();
+          chatInput.focus();
+        }
+      }
+
       function submitSearch() {
         const q = input.value.trim();
-        if (!q || sending) return;
-        setSending(true);
-        setTimeout(() => {
-          setSending(false);
-          input.value = '';
-          input.focus();
-        }, 1200);
+        if (!q || sending || isSending) return;
+        handleSend(q, true);
       }
 
       submit.addEventListener('click', submitSearch);
-
       input.addEventListener('keydown', (e) => {
         if (e.key === 'Enter') submitSearch();
+      });
+
+      chatInput.addEventListener('input', () => {
+        chatInput.style.height = 'auto';
+        chatInput.style.height = Math.min(chatInput.scrollHeight, 160) + 'px';
+        updateChatSend();
+      });
+      chatInput.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' && !e.shiftKey) {
+          e.preventDefault();
+          const q = chatInput.value.trim();
+          if (q && !isSending) handleSend(q, false);
+        }
+      });
+      chatSend.addEventListener('click', () => {
+        const q = chatInput.value.trim();
+        if (q && !isSending) handleSend(q, false);
       });
 
       input.focus();
@@ -2546,5 +2825,23 @@
 
 
     </script>
+        </main>
+
+      <div class="chat-view" id="chatView">
+        <div class="chat-scroll" id="chatScroll">
+          <div class="chat-column" id="chatMessages"></div>
+        </div>
+        <div class="chat-composer">
+          <div class="composer-inner">
+            <textarea id="chatInput" class="chat-input" placeholder="Ask APS AI anything…" rows="1"></textarea>
+            <button id="chatSend" class="chat-send" aria-label="Send" disabled>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      </div>
+    </div>
   </body>
 </html>

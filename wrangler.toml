@@ -11,3 +11,4 @@ binding = "ASSETS"
 [[kv_namespaces]]
 binding = "FEEDBACK"
 id = "1cab69a5d1a94104944f28cca8763a4d"
+
