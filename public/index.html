@@ -2092,6 +2092,150 @@
         min-height: 18px;
       }
 
+      /* ============================================================
+         PRIVACY ACKNOWLEDGEMENT MODAL
+         ============================================================ */
+      .privacy-overlay {
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.55);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        display: none;
+        align-items: center;
+        justify-content: center;
+        z-index: 300;
+        padding: 16px;
+      }
+      .privacy-overlay.visible { display: flex; }
+      .privacy-modal {
+        width: 100%;
+        max-width: 480px;
+        background: var(--bg-surface);
+        border: 1px solid var(--border-default);
+        border-radius: 40px;
+        padding: 32px 28px 28px;
+        position: relative;
+        box-shadow: var(--shadow-float);
+        text-align: center;
+      }
+      .privacy-title {
+        font-size: 20px;
+        font-weight: 700;
+        color: var(--text);
+        margin-bottom: 12px;
+      }
+      .privacy-message {
+        font-size: 16px;
+        color: var(--text-muted);
+        line-height: 1.6;
+        margin-bottom: 20px;
+      }
+      .privacy-message a {
+        color: var(--primary);
+        text-decoration: none;
+        font-weight: 500;
+      }
+      .privacy-message a:hover { text-decoration: underline; }
+      .privacy-checkbox-wrapper {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        margin-bottom: 24px;
+        cursor: pointer;
+      }
+      .privacy-checkbox-wrapper input[type="checkbox"] {
+        width: 22px;
+        height: 22px;
+        border-radius: 6px;
+        border: 1px solid var(--border-default);
+        background: var(--bg-surface);
+        appearance: none;
+        -webkit-appearance: none;
+        cursor: pointer;
+        position: relative;
+        transition: border-color 0.15s ease, background 0.15s ease;
+        flex-shrink: 0;
+      }
+      .privacy-checkbox-wrapper input[type="checkbox"]:hover { border-color: var(--border-strong); }
+      .privacy-checkbox-wrapper input[type="checkbox"]:focus-visible {
+        outline: 2px solid var(--primary);
+        outline-offset: 2px;
+      }
+      .privacy-checkbox-wrapper input[type="checkbox"]:checked {
+        background: var(--primary);
+        border-color: var(--primary);
+      }
+      .privacy-checkbox-wrapper input[type="checkbox"]:checked::after {
+        content: "";
+        position: absolute;
+        left: 7px;
+        top: 3px;
+        width: 5px;
+        height: 10px;
+        border: solid #fff;
+        border-width: 0 2.5px 2.5px 0;
+        transform: rotate(45deg);
+      }
+      .privacy-checkbox-label {
+        font-size: 15px;
+        color: var(--text);
+        font-weight: 500;
+        user-select: none;
+      }
+      .privacy-actions {
+        display: flex;
+        gap: 12px;
+        justify-content: center;
+      }
+      .privacy-btn {
+        height: 48px;
+        padding: 0 28px;
+        border-radius: 9999px;
+        border: none;
+        font-family: var(--font-ui);
+        font-size: 16px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: background 0.15s ease, color 0.15s ease, transform 0.1s ease, box-shadow 0.12s ease;
+      }
+      .privacy-btn.cancel {
+        background: transparent;
+        color: var(--text-muted);
+        border: 1px solid var(--border-default);
+      }
+      .privacy-btn.cancel:hover {
+        background: var(--hover-bg);
+        color: var(--text);
+      }
+      .privacy-btn.accept {
+        background: var(--primary);
+        color: #fff;
+        box-shadow: 0 6px 16px rgba(0, 102, 255, 0.45), 0 0 0 1px rgba(255, 255, 255, 0.08) inset;
+      }
+      .privacy-btn.accept:hover:not(:disabled) {
+        background: var(--primary-hover);
+        transform: scale(1.02);
+        box-shadow: 0 8px 24px rgba(0, 102, 255, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.12) inset;
+      }
+      .privacy-btn.accept:active:not(:disabled) {
+        background: var(--primary-active);
+        transform: scale(0.98);
+        box-shadow: 0 3px 10px rgba(0, 102, 255, 0.4), 0 0 0 1px rgba(255, 255, 255, 0.08) inset;
+      }
+      .privacy-btn.accept:disabled {
+        background: #3a3f4a;
+        color: #6a6f7a;
+        cursor: not-allowed;
+        transform: none;
+        box-shadow: none;
+      }
+      @media (max-width: 480px) {
+        .privacy-modal { border-radius: 32px; padding: 28px 20px 24px; }
+        .privacy-title { font-size: 18px; }
+        .privacy-message { font-size: 15px; }
+        .privacy-btn { height: 44px; padding: 0 24px; font-size: 15px; }
+      }
 
       /* ============================================================
          CHAT VIEW — APS AI minimal conversation interface
@@ -2130,11 +2274,10 @@
         overflow-y: auto;
         padding: 120px 24px 150px;
         scroll-behavior: smooth;
+        scrollbar-width: none;
+        -ms-overflow-style: none;
       }
-      .chat-scroll::-webkit-scrollbar { width: 8px; }
-      .chat-scroll::-webkit-scrollbar-track { background: transparent; }
-      .chat-scroll::-webkit-scrollbar-thumb { background: var(--border-default); border-radius: 4px; }
-      .chat-scroll::-webkit-scrollbar-thumb:hover { background: var(--border-strong); }
+      .chat-scroll::-webkit-scrollbar { display: none; }
       .chat-column {
         max-width: 880px;
         margin: 0 auto;
@@ -2427,17 +2570,17 @@
       }
       @media (max-width: 768px) {
         .chat-view { z-index: 30; }
-        .chat-scroll { padding: 32px 16px 140px; }
+        .chat-scroll { padding: 100px 16px 140px; }
         .chat-column { max-width: 100%; gap: 22px; }
         .msg.user { max-width: 82%; }
         .msg.assistant { max-width: 100%; font-size: 17px; line-height: 1.5; }
-        .chat-composer { width: auto; max-width: calc(100vw - 32px); left: 16px; right: 16px; transform: none; bottom: 16px; }
+        .chat-composer { width: auto; max-width: calc(100vw - 32px); left: 16px; right: 16px; transform: none; bottom: max(16px, env(safe-area-inset-bottom)); }
         .composer-inner { border-radius: 34px; height: auto; min-height: 60px; padding: 0 20px 0 28px; }
       }
       @media (max-width: 480px) {
-        .chat-scroll { padding: 24px 12px 120px; }
+        .chat-scroll { padding: 90px 12px 120px; }
         .msg.user { max-width: 88%; }
-        .chat-composer { bottom: 12px; left: 12px; right: 12px; max-width: calc(100vw - 24px); }
+        .chat-composer { bottom: max(12px, env(safe-area-inset-bottom)); left: 12px; right: 12px; max-width: calc(100vw - 24px); }
       }
 
     </style>
@@ -2608,8 +2751,23 @@
       </div>
     </div>
 
-
-
+    <!-- Privacy Acknowledgement Modal -->
+    <div class="privacy-overlay" id="privacyOverlay" aria-hidden="true">
+      <div class="privacy-modal" role="dialog" aria-modal="true" aria-labelledby="privacyTitle">
+        <h2 class="privacy-title" id="privacyTitle">Before continuing</h2>
+        <p class="privacy-message">
+          Please review our <a href="/privacy" target="_blank" rel="noopener">Privacy Policy</a>.
+        </p>
+        <label class="privacy-checkbox-wrapper">
+          <input type="checkbox" id="privacyCheckbox" aria-label="I acknowledge the Privacy Policy">
+          <span class="privacy-checkbox-label">I acknowledge the Privacy Policy</span>
+        </label>
+        <div class="privacy-actions">
+          <button type="button" class="privacy-btn cancel" id="privacyCancel">Cancel</button>
+          <button type="button" class="privacy-btn accept" id="privacyAccept" disabled>Accept & Continue</button>
+        </div>
+      </div>
+    </div>
 
 
     <script>
@@ -2689,7 +2847,7 @@
         });
 
         // Theme selector functionality (radio inputs)
-        function applyTheme(theme) {
+        function applyTheme(theme, explicitChoice) {
           const root = document.documentElement;
           if (theme === 'light' || theme === 'dark') {
             root.setAttribute('data-theme', theme);
@@ -2697,13 +2855,16 @@
             root.removeAttribute('data-theme');
           }
           try { localStorage.setItem('theme', theme); } catch (e) {}
+          if (explicitChoice) {
+            try { localStorage.setItem('theme_explicit', 'true'); } catch (e) {}
+          }
           currentTheme = theme;
           themeRadios.forEach(r => { r.checked = (r.value === theme); });
         }
 
         themeRadios.forEach(radio => {
           radio.addEventListener('change', () => {
-            if (radio.checked) applyTheme(radio.value);
+            if (radio.checked) applyTheme(radio.value, true);
           });
           radio.addEventListener('keydown', (e) => {
             if (e.key === 'Enter' || e.key === ' ') {
@@ -2713,12 +2874,20 @@
           });
         });
 
-        // initialize theme from saved preference
+        // initialize theme from saved preference — default to dark until user explicitly chooses
         (function initTheme() {
           let saved = 'dark';
-          try { saved = localStorage.getItem('theme') || 'dark'; } catch (e) {}
+          let hasExplicit = false;
+          try {
+            saved = localStorage.getItem('theme') || 'dark';
+            hasExplicit = localStorage.getItem('theme_explicit') === 'true';
+          } catch (e) {}
           if (!['light','dark','system'].includes(saved)) saved = 'dark';
-          applyTheme(saved);
+          // If no explicit choice, force dark (ignore saved 'system' or 'light')
+          if (!hasExplicit) {
+            saved = 'dark';
+          }
+          applyTheme(saved, false);
         })();
 
         // Prevent clicks inside panel from closing
@@ -3190,11 +3359,90 @@
         if (q && !isSending) handleSend(q, false);
       });
 
+      // Privacy acknowledgement modal logic
+      const privacyOverlay = document.getElementById('privacyOverlay');
+      const privacyCheckbox = document.getElementById('privacyCheckbox');
+      const privacyAccept = document.getElementById('privacyAccept');
+      const privacyCancel = document.getElementById('privacyCancel');
+      let pendingMessage = null;
+
+      function hasPrivacyAck() {
+        return document.cookie.split('; ').some(row => row.startsWith('aps_ai_privacy_ack='));
+      }
+
+      function setPrivacyAck() {
+        const expiry = new Date();
+        expiry.setTime(expiry.getTime() + 180 * 24 * 60 * 60 * 1000);
+        document.cookie = 'aps_ai_privacy_ack=v1; expires=' + expiry.toUTCString() + '; path=/; Secure; SameSite=Lax';
+      }
+
+      function showPrivacyModal(message) {
+        pendingMessage = message;
+        privacyOverlay.classList.add('visible');
+        privacyOverlay.setAttribute('aria-hidden', 'false');
+        document.body.classList.add('menu-open');
+        privacyCheckbox.checked = false;
+        privacyAccept.disabled = true;
+        privacyCheckbox.focus();
+      }
+
+      function hidePrivacyModal() {
+        privacyOverlay.classList.remove('visible');
+        privacyOverlay.setAttribute('aria-hidden', 'true');
+        document.body.classList.remove('menu-open');
+        pendingMessage = null;
+      }
+
+      privacyCheckbox.addEventListener('change', () => {
+        privacyAccept.disabled = !privacyCheckbox.checked;
+      });
+
+      privacyAccept.addEventListener('click', () => {
+        if (!privacyCheckbox.checked) return;
+        setPrivacyAck();
+        const msg = pendingMessage;
+        hidePrivacyModal();
+        if (msg) handleSend(msg, false);
+      });
+
+      privacyCancel.addEventListener('click', () => {
+        hidePrivacyModal();
+      });
+
+      privacyOverlay.addEventListener('click', (e) => {
+        if (e.target === privacyOverlay) hidePrivacyModal();
+      });
+
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && privacyOverlay.classList.contains('visible')) hidePrivacyModal();
+      });
+
+      // Wrap the original send handlers to check privacy acknowledgement
+      const originalHandleSend = handleSend;
+      handleSend = async function(text, fromHome) {
+        text = text.trim();
+        if (!text) return;
+
+        // If already sending (stop button), delegate to original
+        if (isSending && streamCtrl) {
+          streamCtrl.abort();
+          return;
+        }
+
+        // Check privacy acknowledgement on first user message (not from home search)
+        if (!fromHome && !hasPrivacyAck()) {
+          showPrivacyModal(text);
+          return;
+        }
+
+        originalHandleSend(text, fromHome);
+      };
+
       const chatAttach = document.getElementById('chatAttach');
       const chatAttachBtn = document.getElementById('chatAttachBtn');
       const chatMicBtn = document.getElementById('chatMicBtn');
-      chatAttachBtn.addEventListener('click', () => chatAttach.click());
-      chatMicBtn.addEventListener('click', () => {
+      if (chatAttachBtn) chatAttachBtn.addEventListener('click', () => chatAttach?.click());
+      if (chatMicBtn) chatMicBtn.addEventListener('click', () => {
         const pressed = chatMicBtn.classList.toggle('pressed');
         chatMicBtn.setAttribute('aria-pressed', String(pressed));
       });
