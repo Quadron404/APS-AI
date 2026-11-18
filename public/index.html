@@ -3429,8 +3429,8 @@
           return;
         }
 
-        // Check privacy acknowledgement on first user message (not from home search)
-        if (!fromHome && !hasPrivacyAck()) {
+        // Check privacy acknowledgement on FIRST user message ever (regardless of source)
+        if (!hasPrivacyAck()) {
           showPrivacyModal(text);
           return;
         }
